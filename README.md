@@ -1,2 +1,3 @@
 # memoclip
-Share &amp; Pin your favourite discovered resources on The Internet
+
+Share &amp; Pin your favourite discovered resources on the Web 🗂️
