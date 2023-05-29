@@ -1,4 +1,11 @@
-<script>
-    import "../app.postcss";
+<script lang="ts">
+	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import '../app.postcss';
 </script>
-<slot></slot>
+
+<div class="h-full p-10">
+	<ThemeToggle />
+	<main class="prose prose-base md:prose-xl mx-auto">
+		<slot />
+	</main>
+</div>
