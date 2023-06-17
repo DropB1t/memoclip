@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { enhance, type SubmitFunction } from '$app/forms';
+	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
-	import Icon from './Icon.svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
+
+	import { Palette, Sun, MoonStar } from 'lucide-svelte';
 
 	const submitUpdateTheme: SubmitFunction = ({ action }) => {
 		const theme = action.searchParams.get('theme');
@@ -12,28 +14,28 @@
 	};
 </script>
 
-<ul class="menu menu-horizontal px-1 z-50">
-	<li>
-		<button class="p-4 justify-center">
-			<Icon name="Palette" />
-		</button>
-		<ul class="mt-1 sm:mt-0">
-			<form method="POST" use:enhance={submitUpdateTheme}>
-				<li>
-					<button
-						class="p-4 bg-secodary justify-center hover:text-secondary-focus"
-						formaction="/?/setTheme&theme=bumblebee&redirectTo={$page.url.pathname}"
-					>
-						<Icon name="Sun" />
-					</button>
-					<button
-						class="p-4 bg-secodary justify-center hover:text-secondary-focus"
-						formaction="/?/setTheme&theme=night&redirectTo={$page.url.pathname}"
-					>
-						<Icon name="MoonStar" />
-					</button>
-				</li>
-			</form>
-		</ul>
-	</li>
-</ul>
+<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+<!-- svelte-ignore a11y-label-has-associated-control -->
+<div class="dropdown dropdown-hover">
+	<label tabindex="0" class="btn btn-ghost p-3 m-1"><Palette /></label>
+	<ul tabindex="0" class="dropdown-content menu shadow bg-base-100 rounded-lg">
+		<form method="POST" use:enhance={submitUpdateTheme}>
+			<li>
+				<button
+					class="p-3"
+					formaction="/?/setTheme&theme=bumblebee&redirectTo={$page.url.pathname}"
+				>
+					<Sun />
+				</button>
+			</li>
+			<li>
+				<button
+					class="p-3 mt-1"
+					formaction="/?/setTheme&theme=night&redirectTo={$page.url.pathname}"
+				>
+					<MoonStar />
+				</button>
+			</li>
+		</form>
+	</ul>
+</div>

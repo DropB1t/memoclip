@@ -3,7 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
+html {
+	@apply scroll-smooth !bg-base-200;
+}
+
 body {
-	@apply h-full overflow-x-hidden;
+	@apply h-full overflow-y-auto;
 }

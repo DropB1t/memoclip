@@ -14,7 +14,8 @@ const config = {
 
 	daisyui: {
 		themes: ['bumblebee', 'night'],
-		darkTheme: 'night'
+		darkTheme: 'night',
+		logs: false
 	}
 };
 
