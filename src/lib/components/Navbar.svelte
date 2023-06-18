@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Search, Settings2, LayoutDashboard, LineChart, Star } from 'lucide-svelte';
+	import { Search, Settings2, LayoutDashboard, LineChart, Star, Plus } from 'lucide-svelte';
 	let screenSize: number;
 </script>
 
@@ -11,6 +11,12 @@
 			<a href="/" class="active"><LayoutDashboard /></a>
 			<a href="/search">
 				<Search />
+			</a>
+			<a href="/memo/create">
+				<Plus />
+			</a>
+			<a href="/favourite">
+				<Star />
 			</a>
 			<a href="/stats">
 				<LineChart />
@@ -25,15 +31,24 @@
 			<li class="group py-1 hover:translate-x-1 transition-all">
 				<a
 					href="/"
-					class="active w-[56px] group-hover:w-fit overflow-hidden pl-0 py-0 pr-4 transition-[width]"
+					class="active w-[56px] group-hover:w-fit group-hover:bg-neutral group-hover:text-neutral-content hover:!active overflow-hidden pl-0 py-0 pr-4 transition-[width]"
 					><div class="p-4"><LayoutDashboard /></div>
 					Explore</a
 				>
 			</li>
 			<li class="group py-1 hover:translate-x-1 transition-all">
 				<a
-					href="/stats"
-					class="w-[56px] group-hover:w-fit overflow-hidden pl-0 py-0 pr-4 transition-[width]"
+					href="/memo/create"
+					class="w-[56px] group-hover:w-fit group-hover:bg-neutral group-hover:text-neutral-content hover:!active overflow-hidden pl-0 py-0 pr-4 transition-[width]"
+				>
+					<div class="p-4"><Plus /></div>
+					Add Memo
+				</a>
+			</li>
+			<li class="group py-1 hover:translate-x-1 transition-all">
+				<a
+					href="/favourite"
+					class="w-[56px] group-hover:w-fit group-hover:bg-neutral group-hover:text-neutral-content hover:!active overflow-hidden pl-0 py-0 pr-4 transition-[width]"
 				>
 					<div class="p-4"><Star /></div>
 					Favourite
@@ -42,7 +57,7 @@
 			<li class="group py-1 hover:translate-x-1 transition-all">
 				<a
 					href="/stats"
-					class="w-[56px] group-hover:w-fit overflow-hidden pl-0 py-0 pr-4 transition-[width]"
+					class="w-[56px] group-hover:w-fit group-hover:bg-neutral group-hover:text-neutral-content hover:!active overflow-hidden pl-0 py-0 pr-4 transition-[width]"
 				>
 					<div class="p-4"><LineChart /></div>
 					Statistics
@@ -51,7 +66,7 @@
 			<li class="group py-1 hover:translate-x-1 transition-all">
 				<a
 					href="/settings"
-					class="w-[56px] group-hover:w-fit overflow-hidden pl-0 py-0 pr-4 transition-[width]"
+					class="w-[56px] group-hover:w-fit group-hover:bg-neutral group-hover:text-neutral-content hover:!active overflow-hidden pl-0 py-0 pr-4 transition-[width]"
 				>
 					<div class="p-4"><Settings2 /></div>
 					Settings

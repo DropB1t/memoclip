@@ -4,7 +4,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
-	class="memo group card indicator bg-base-100 rounded-lg max-w-sm h-[600px] border-2 border-base-300 hover:border-secondary not-prose my-2"
+	class="memo group card indicator bg-base-100 rounded-lg w-80 md:w-96 max-h-[600px] border-2 border-secondary not-prose my-2"
 >
 	<!-- <div
 			class="indicator-item indicator-center badge badge-lg border-2 border-base-300 group-hover:border-primary p-1 py-3"
@@ -18,9 +18,12 @@
 		</div>
 		<figure class="">
 			<img
+				loading="lazy"
 				class="rounded-lg"
 				src="https://res.cloudinary.com/practicaldev/image/fetch/s--qByI1v3K--/c_imagga_scale,f_auto,fl_progressive,h_500,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/p4sfysev3s1jhw2ar2bi.png"
-				alt="Docker + MongoDB"
+				alt="Docker&MongoDB"
+				width="340"
+				height="170"
 			/>
 		</figure>
 	</div>
@@ -52,18 +55,21 @@
 			>
 				#container
 			</div>
-			<span class="text-secondary">. . .</span>
+			<span class="text-secondary ml-0.5 self-end">...</span>
 		</div>
 
 		<div class="divider my-0.5" />
 		<div class="card-actions flex justify-start items-center">
-			<a
-				class="btn btn-sm md:btn-md btn-outline btn-accent"
-				href="https://www.dev.to"
-				target="_blank"
-			>
-				<ExternalLink size="16" />
-			</a>
+			<div class="tooltip tooltip-accent" data-tip="dev.to">
+				<a
+					class="btn btn-sm md:btn-md btn-outline btn-accent"
+					href="https://www.dev.to"
+					target="_blank"
+				>
+					<ExternalLink size="18" />
+				</a>
+			</div>
+
 			<div class="ml-auto inline-flex items-center">
 				<div
 					class="px-2 font-mono font-semibold border-l-[1px] border-y-[1px] border-success rounded-s-lg inline-flex justify-around items-center"
@@ -72,7 +78,7 @@
 					<span class="pl-1">345</span>
 				</div>
 				<button class="btn btn-sm md:btn-md btn-outline btn-success rounded-s-none md:rounded-lg"
-					><Plus size="16" /></button
+					><Plus size="18" /></button
 				>
 			</div>
 		</div>

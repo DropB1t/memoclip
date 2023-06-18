@@ -38,6 +38,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@splidejs/splide-extension-url-hash": "^0.3.0",
 		"@splidejs/svelte-splide": "^0.2.9",
 		"lucide-svelte": "^0.242.0"
 	}

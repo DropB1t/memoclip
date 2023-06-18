@@ -7,7 +7,7 @@
 
 <Header />
 <main
-	class="flex flex-col md:flex-row md:flex-wrap gap-4 px-5 pt-10 md:px-20 mb-16 justify-around items-center z-0"
+	class="flex flex-col md:flex-row md:flex-wrap gap-5 px-2 md:px-20 pt-8 mb-16 justify-center items-center z-0"
 >
 	<slot />
 </main>

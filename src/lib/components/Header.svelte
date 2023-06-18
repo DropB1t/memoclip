@@ -1,13 +1,58 @@
 <script lang="ts">
 	import ThemeToggle from './ThemeToggle.svelte';
 	import { User, Bell, Search } from 'lucide-svelte';
+
+	export let duration = '300ms';
+	export let offset = 80;
+	export let tolerance = 5;
+
+	let headerClass = 'hdr-show';
+	let y = 0;
+	let lastY = 0;
+	let screenSize: number;
+
+	function setTransitionDuration(node: HTMLDivElement) {
+		node.style.transitionDuration = duration;
+	}
+
+	function deriveClass(y: number, dy: number) {
+		if (y < offset) {
+			return 'hdr-show';
+		}
+
+		if (Math.abs(dy) <= tolerance) {
+			return headerClass;
+		}
+
+		if (dy < 0) {
+			return 'hdr-hide';
+		}
+
+		return 'hdr-show';
+	}
+
+	function updateClass(y: number) {
+		const dy = lastY - y;
+		lastY = y;
+		return deriveClass(y, dy);
+	}
+
+	$: headerClass = screenSize < 768 ? updateClass(y) : '';
 </script>
+
+<svelte:window bind:innerWidth={screenSize} bind:scrollY={y} />
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <!-- svelte-ignore a11y-missing-attribute -->
-<div class="sticky top-0 bg-base-200 z-50 pt-5">
-	<div class="navbar w-11/12 bg-base-100 border-2 border-base-300 shadow-md rounded-lg mx-auto">
+<div
+	use:setTransitionDuration
+	class={headerClass + ' sticky top-0 w-full bg-base-200 z-50 md:pt-5'}
+	id="header"
+>
+	<div
+		class="navbar md:w-11/12 bg-base-100 md:border-2 border-base-300 shadow-md md:rounded-lg mx-auto"
+	>
 		<div class="navbar-start">
 			<a class="text-xl normal-case font-medium link-hover hover:text-secondary m-1" href="/"
 				>Memo<span class="text-secondary">Clip</span></a
@@ -31,7 +76,7 @@
 				<button class="btn btn-ghost p-3 m-1">
 					<div class="indicator">
 						<Bell />
-						<span class="badge badge-xs badge-primary indicator-item" />
+						<!-- <span class="badge badge-xs badge-primary indicator-item" /> -->
 					</div>
 				</button>
 				<div class="dropdown dropdown-end">
@@ -53,3 +98,15 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	#header {
+		transition: transform 300ms linear;
+	}
+	.hdr-show {
+		transform: translateY(0%);
+	}
+	.hdr-hide {
+		transform: translateY(-100%);
+	}
+</style>

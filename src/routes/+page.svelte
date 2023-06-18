@@ -3,4 +3,3 @@
 </script>
 
 <Crate />
-<Crate />
