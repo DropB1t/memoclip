@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
-	import type { SubmitFunction } from '@sveltejs/kit';
+	import type { SubmitFunction } from '../../routes/$types';
 
 	import { Palette, Sun, MoonStar } from 'lucide-svelte';
 

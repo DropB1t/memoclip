@@ -1,6 +1,9 @@
 <script lang="ts">
+	import type { LayoutData } from '../../routes/$types';
 	import ThemeToggle from './ThemeToggle.svelte';
 	import { User, Bell, Search } from 'lucide-svelte';
+
+	export let data: LayoutData;
 
 	export let duration = '300ms';
 	export let offset = 80;
@@ -58,42 +61,55 @@
 				>Memo<span class="text-secondary">Clip</span></a
 			>
 		</div>
-		<div class="navbar-center" />
+		<div class="navbar-center">
+			<div
+				class="hidden md:inline-flex font-semibold justify-end items-center rounded-lg input input-bordered border-2 focus-within:input-primary w-full max-w-xs px-1 m-1"
+			>
+				<Search />
+				<input
+					type="search"
+					placeholder="Search on Memo"
+					class="bg-base-100 text-base-content border-none focus:ring-0"
+				/>
+			</div>
+		</div>
 		<div class="navbar-end">
 			<div class="inline-flex justify-end items-center">
-				<div
-					class="hidden md:inline-flex font-semibold justify-end items-center rounded-lg input input-bordered border-1 focus-within:input-accent w-full max-w-xs px-1 m-1"
-				>
-					<Search />
-					<input
-						type="search"
-						placeholder="Search on Memo"
-						class="bg-base-100 text-base-content border-none focus:ring-0"
-					/>
-				</div>
-				<div class="hidden md:flex divider divider-horizontal py-1 mx-1" />
 				<ThemeToggle />
-				<button class="btn btn-ghost p-3 m-1">
-					<div class="indicator">
-						<Bell />
-						<!-- <span class="badge badge-xs badge-primary indicator-item" /> -->
-					</div>
-				</button>
-				<div class="dropdown dropdown-end">
-					<label tabindex="0" class="btn btn-ghost avatar p-3 m-1">
-						<div class="rounded-full ring ring-primary ring-offset-base-100 ring-offset-4">
-							<User />
+				<div class="hidden md:flex divider divider-horizontal py-1 mx-1" />
+				{#if data.session}
+					<button class="btn btn-ghost p-3 m-1">
+						<div class="indicator">
+							<Bell />
+							<!-- <span class="badge badge-xs badge-primary indicator-item" /> -->
 						</div>
-					</label>
-					<ul
-						tabindex="0"
-						class="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+					</button>
+					<div class="dropdown dropdown-end">
+						<label tabindex="0" class="btn btn-ghost avatar p-3 m-1">
+							<div class="rounded-full ring ring-primary ring-offset-base-100 ring-offset-4">
+								<User />
+							</div>
+						</label>
+						<ul
+							tabindex="0"
+							class="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+						>
+							<li><a>Profile</a></li>
+							<li><a>Settings</a></li>
+							<li>
+								<form action="/logout" method="POST">
+									<button type="submit">Logout</button>
+								</form>
+							</li>
+						</ul>
+					</div>
+				{:else}
+					<a
+						href="/register"
+						class="link link-hover link-secondary whitespace-nowrap font-bold p-2 m-1">Sign Up</a
 					>
-						<li><a>Profile</a></li>
-						<li><a>Settings</a></li>
-						<li><a>Logout</a></li>
-					</ul>
-				</div>
+					<a href="/login" class="btn btn-primary font-bold p-3 m-1">Login</a>
+				{/if}
 			</div>
 		</div>
 	</div>
