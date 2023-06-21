@@ -1,46 +1,56 @@
 <script lang="ts">
-	import type { LayoutData } from '../../routes/$types';
-	import ThemeToggle from './ThemeToggle.svelte';
-	import { User, Bell, Search } from 'lucide-svelte';
+	import { enhance } from '$app/forms'
+	import type { PageData, SubmitFunction } from '../../routes/$types'
+	import ThemeToggle from './ThemeToggle.svelte'
+	import { User, Bell, Search } from 'lucide-svelte'
 
-	export let data: LayoutData;
+	import { page } from '$app/stores'
 
-	export let duration = '300ms';
-	export let offset = 80;
-	export let tolerance = 5;
+	export let duration = '300ms'
+	export let offset = 80
+	export let tolerance = 5
 
-	let headerClass = 'hdr-show';
-	let y = 0;
-	let lastY = 0;
-	let screenSize: number;
+	let headerClass = 'hdr-show'
+	let y = 0
+	let lastY = 0
+	let screenSize: number
 
 	function setTransitionDuration(node: HTMLDivElement) {
-		node.style.transitionDuration = duration;
+		node.style.transitionDuration = duration
 	}
 
 	function deriveClass(y: number, dy: number) {
 		if (y < offset) {
-			return 'hdr-show';
+			return 'hdr-show'
 		}
 
 		if (Math.abs(dy) <= tolerance) {
-			return headerClass;
+			return headerClass
 		}
 
 		if (dy < 0) {
-			return 'hdr-hide';
+			return 'hdr-hide'
 		}
 
-		return 'hdr-show';
+		return 'hdr-show'
 	}
 
 	function updateClass(y: number) {
-		const dy = lastY - y;
-		lastY = y;
-		return deriveClass(y, dy);
+		const dy = lastY - y
+		lastY = y
+		return deriveClass(y, dy)
 	}
 
-	$: headerClass = screenSize < 768 ? updateClass(y) : '';
+	const submitLogout: SubmitFunction = async ({ cancel }) => {
+		const { error: err } = await $page.data.supabase.auth.signOut()
+
+		if (err) {
+			//Add Toast notification
+		}
+		cancel()
+	}
+
+	$: headerClass = screenSize < 768 ? updateClass(y) : ''
 </script>
 
 <svelte:window bind:innerWidth={screenSize} bind:scrollY={y} />
@@ -77,7 +87,7 @@
 			<div class="inline-flex justify-end items-center">
 				<ThemeToggle />
 				<div class="hidden md:flex divider divider-horizontal py-1 mx-1" />
-				{#if data.session}
+				{#if $page.data.session}
 					<button class="btn btn-ghost p-3 m-1">
 						<div class="indicator">
 							<Bell />
@@ -97,8 +107,13 @@
 							<li><a>Profile</a></li>
 							<li><a>Settings</a></li>
 							<li>
-								<form action="/logout" method="POST">
-									<button type="submit">Logout</button>
+								<form
+									action="/logout"
+									method="POST"
+									class="w-full flex justify-stretch items-start"
+									use:enhance={submitLogout}
+								>
+									<button type="submit" class="w-full text-left">Logout</button>
 								</form>
 							</li>
 						</ul>

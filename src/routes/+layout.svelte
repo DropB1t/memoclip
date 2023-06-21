@@ -15,7 +15,7 @@
 	onMount(() => {
 		const {
 			data: { subscription }
-		} = supabase.auth.onAuthStateChange((event, _session) => {
+		} = supabase.auth.onAuthStateChange((_event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth')
 			}
@@ -26,14 +26,17 @@
 </script>
 
 <GoTop />
-<Header {data} />
+<Header />
 
 <main
 	class="flex flex-col md:flex-row md:flex-wrap gap-5 px-2 md:px-20 pt-8 mb-16 justify-center items-center z-0"
 >
 	<slot />
 </main>
-<Navbar />
+
+{#if data.session}
+	<Navbar />
+{/if}
 
 {#if data.session}
 	<div

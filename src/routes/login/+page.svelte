@@ -28,8 +28,13 @@
 				/>
 			</div>
 		</div>
-		<div class="flex items-center p-6 pt-0">
+		<div class="flex items-center px-6">
 			<button class="btn btn-primary">Login</button>
 		</div>
 	</form>
+	<div class="p-6 pt-0 mt-2">
+		<h3 class="tracking-tight text-sm text-base-content">
+			Don't have an account? <a href="/register" class="link link-hover link-secondary">Sign up</a>
+		</h3>
+	</div>
 </div>

@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import { page } from '$app/stores';
-	import type { SubmitFunction } from '../../routes/$types';
+	import type { SubmitFunction } from '../../routes/$types'
+	import { enhance } from '$app/forms'
+	import { page } from '$app/stores'
 
-	import { Palette, Sun, MoonStar } from 'lucide-svelte';
+	import { Palette, Sun, MoonStar } from 'lucide-svelte'
 
 	const submitUpdateTheme: SubmitFunction = ({ action }) => {
-		const theme = action.searchParams.get('theme');
+		const theme = action.searchParams.get('theme')
 
 		if (theme) {
-			document.documentElement.setAttribute('data-theme', theme);
+			document.documentElement.setAttribute('data-theme', theme)
 		}
-	};
+	}
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
