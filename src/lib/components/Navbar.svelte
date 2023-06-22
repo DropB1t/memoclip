@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Search, LayoutDashboard, Star, Plus, Compass } from 'lucide-svelte'
+	import { page } from '$app/stores'
 	let screenSize: number
 </script>
 
@@ -8,17 +9,18 @@
 {#if screenSize < 768}
 	<nav class="z-40">
 		<div class="btm-nav btm-nav-sm">
-			<a href="/">
+			<a href="/" class:active={$page.url.pathname === '/'}>
 				<Compass />
 			</a>
-			<a href="/dashboard" class="active"><LayoutDashboard /></a>
-			<a href="/memo/create">
+			<a href="/dashboard" class:active={$page.url.pathname === '/dashboard'}><LayoutDashboard /></a
+			>
+			<a href="/editor" class:active={$page.url.pathname === '/editor'}>
 				<Plus />
 			</a>
-			<a href="/search">
+			<a href="/search" class:active={$page.url.pathname === '/search'}>
 				<Search />
 			</a>
-			<a href="/favourite">
+			<a href="/favourite" class:active={$page.url.pathname === '/favourite'}>
 				<Star />
 			</a>
 		</div>
@@ -29,27 +31,38 @@
 		<div class="divider px-4 my-0.5 max-w-[72px]" />
 		<ul class="menu font-semibold">
 			<li class="navbar-li group">
-				<a href="/" class="navbar-link hover:!active">
+				<a href="/" class="navbar-link hover:!active" class:active={$page.url.pathname === '/'}>
 					<div class="p-4"><Compass /></div>
 					Explore
 				</a>
 			</li>
 			<li class="navbar-li group">
-				<a href="/dashboard" class="active navbar-link hover:!active"
+				<a
+					href="/dashboard"
+					class="navbar-link hover:!active"
+					class:active={$page.url.pathname === '/dashboard'}
 					><div class="p-4"><LayoutDashboard /></div>
 					Dashboard</a
 				>
 			</li>
 			<li class="navbar-li group">
-				<a href="/memo/create" class="navbar-link hover:!active">
+				<a
+					href="/editor"
+					class="navbar-link hover:!active"
+					class:active={$page.url.pathname === '/editor'}
+				>
 					<div class="p-4"><Plus /></div>
 					Add Memo
 				</a>
 			</li>
 			<li class="navbar-li group">
-				<a href="/favourite" class="navbar-link hover:!active">
+				<a
+					href="/favorites"
+					class="navbar-link hover:!active"
+					class:active={$page.url.pathname === '/favorites'}
+				>
 					<div class="p-4"><Star /></div>
-					Favourite
+					Favorites
 				</a>
 			</li>
 		</ul>

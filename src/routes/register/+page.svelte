@@ -1,26 +1,27 @@
-<div class="flex items-center justify-center [&amp;>div]:w-full">
+<script lang="ts">
+	import type { PageData } from './$types'
+	import { superForm } from 'sveltekit-superforms/client'
+	import { XCircle } from 'lucide-svelte'
+	import { user } from '$lib/schemas'
+
+	export let data: PageData
+
+	const { form, errors, constraints, message, enhance, capture, restore } = superForm(data.form, {
+		taintedMessage: null,
+		validators: user
+	})
+
+	export const snapshot = { capture, restore }
+</script>
+
+<div class="flex flex-col items-center justify-center [&amp;>div]:w-full">
 	<div class="w-80 md:w-96 border-2 bg-base-100 text-base-content shadow-md rounded-lg">
 		<div class="flex flex-col p-6 space-y-1">
 			<h3 class="font-semibold tracking-tight text-2xl">Create an account</h3>
 			<p class="text-sm text-base-content">Enter your email below to create your account</p>
 		</div>
-		<form action="?/register" method="POST">
+		<form method="POST" use:enhance>
 			<div class="p-6 pt-0 grid gap-4">
-				<!-- <div class="grid grid-cols-2 gap-6">
-					<button
-						class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none border border-input hover:bg-accent hover:text-accent-focus h-10 py-2 px-4"
-						>Github</button
-					><button
-						class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none border border-input hover:bg-accent hover:text-accent-focus h-10 py-2 px-4"
-						>Google</button
-					>
-				</div>
-				<div class="relative">
-					<div class="absolute inset-0 flex items-center"><span class="w-full border-t" /></div>
-					<div class="relative flex justify-center text-xs uppercase">
-						<span class="bg-background px-2 text-muted-foreground">Or continue with</span>
-					</div>
-				</div> -->
 				<div class="form-control w-full max-w-xs">
 					<label class="label" for="email">
 						<span class="label-text font-medium leading-none">Email</span>
@@ -31,8 +32,72 @@
 						id="email"
 						placeholder="m@example.com"
 						type="email"
+						bind:value={$form.email}
+						{...$constraints.email}
 					/>
+					{#if $errors.email}
+						<label class="label" for="email">
+							<small class="label-text-alt text-error">{$errors.email}</small>
+						</label>
+					{/if}
 				</div>
+				<div class="form-control w-full max-w-xs">
+					<label class="label" for="username">
+						<span class="label-text font-medium leading-none">Username</span>
+					</label>
+					<input
+						class="input input-bordered input-md input-primary w-full max-w-xs focus:ring-0"
+						name="username"
+						id="username"
+						type="text"
+						bind:value={$form.username}
+						{...$constraints.username}
+					/>
+					{#if $errors.username}
+						<label class="label" for="username">
+							<small class="label-text-alt text-error">{$errors.username}</small>
+						</label>
+					{/if}
+				</div>
+				<div class="inline-flex gap-2">
+					<div class="form-control w-full max-w-xs">
+						<label class="label" for="firstName">
+							<span class="label-text font-medium leading-none">First name</span>
+						</label>
+						<input
+							class="input input-bordered input-md input-primary w-full max-w-xs focus:ring-0"
+							name="firstName"
+							id="firstName"
+							type="text"
+							bind:value={$form.firstName}
+							{...$constraints.firstName}
+						/>
+						{#if $errors.firstName}
+							<label class="label" for="firstName">
+								<small class="label-text-alt text-error">{$errors.firstName}</small>
+							</label>
+						{/if}
+					</div>
+					<div class="form-control w-full max-w-xs">
+						<label class="label" for="lastName">
+							<span class="label-text font-medium leading-none">Last name</span>
+						</label>
+						<input
+							class="input input-bordered input-md input-primary w-full max-w-xs focus:ring-0"
+							name="lastName"
+							id="lastName"
+							type="text"
+							bind:value={$form.lastName}
+							{...$constraints.lastName}
+						/>
+						{#if $errors.lastName}
+							<label class="label" for="lastName">
+								<small class="label-text-alt text-error">{$errors.lastName}</small>
+							</label>
+						{/if}
+					</div>
+				</div>
+
 				<div class="form-control w-full max-w-xs">
 					<label class="label" for="password">
 						<span class="label-text font-medium leading-none">Password</span>
@@ -42,7 +107,14 @@
 						name="password"
 						id="password"
 						type="password"
+						bind:value={$form.password}
+						{...$constraints.password}
 					/>
+					{#if $errors.password}
+						<label class="label" for="lastName">
+							<small class="label-text-alt text-error">{$errors.password}</small>
+						</label>
+					{/if}
 				</div>
 			</div>
 			<div class="flex items-center p-6 pt-0">
@@ -50,4 +122,10 @@
 			</div>
 		</form>
 	</div>
+	{#if $message}
+		<div class="alert alert-error rounded-lg shadow-md mt-2">
+			<XCircle />
+			<span>{$message}</span>
+		</div>
+	{/if}
 </div>

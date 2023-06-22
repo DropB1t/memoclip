@@ -23,7 +23,8 @@
 			<li>
 				<button
 					class="p-3"
-					formaction="/?/setTheme&theme=bumblebee&redirectTo={$page.url.pathname}"
+					formaction="/?/setTheme&theme=bumblebee&redirectTo={$page.url.pathname +
+						$page.url.search}"
 				>
 					<Sun />
 				</button>
@@ -31,7 +32,7 @@
 			<li>
 				<button
 					class="p-3 mt-1"
-					formaction="/?/setTheme&theme=night&redirectTo={$page.url.pathname}"
+					formaction="/?/setTheme&theme=night&redirectTo={$page.url.pathname + $page.url.search}"
 				>
 					<MoonStar />
 				</button>

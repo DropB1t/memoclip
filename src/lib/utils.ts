@@ -2,5 +2,11 @@ import type { RequestEvent } from '@sveltejs/kit'
 
 export function handleLoginRedirect(event: RequestEvent) {
 	const fromUrl = event.url.pathname + event.url.search
-	return `/login?redirectTo=${fromUrl}`
+	return `/login?loginTo=${fromUrl}`
+}
+
+export function convertNameToInitials(firstName: string, lastName: string): string {
+	const firstInitial = Array.from(firstName)[0]
+	const lastInitial = Array.from(lastName)[0]
+	return `${firstInitial}${lastInitial}`
 }

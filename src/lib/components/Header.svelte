@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { enhance } from '$app/forms'
-	import type { PageData, SubmitFunction } from '../../routes/$types'
+	import type { SubmitFunction } from '../../routes/$types'
 	import ThemeToggle from './ThemeToggle.svelte'
 	import { User, Bell, Search } from 'lucide-svelte'
 
 	import { page } from '$app/stores'
+	import { goto } from '$app/navigation'
 
 	export let duration = '300ms'
 	export let offset = 80
@@ -43,11 +44,11 @@
 
 	const submitLogout: SubmitFunction = async ({ cancel }) => {
 		const { error: err } = await $page.data.supabase.auth.signOut()
-
 		if (err) {
 			//Add Toast notification
 		}
 		cancel()
+		await goto('/')
 	}
 
 	$: headerClass = screenSize < 768 ? updateClass(y) : ''
@@ -64,10 +65,10 @@
 	id="header"
 >
 	<div
-		class="navbar md:w-11/12 bg-base-100 md:border-2 border-base-300 shadow-md md:rounded-lg mx-auto"
+		class="navbar md:w-11/12 bg-base-100 border-b-2 md:border-2 border-base-300 shadow-md md:rounded-lg mx-auto"
 	>
 		<div class="navbar-start">
-			<a class="text-xl normal-case font-medium link-hover hover:text-secondary m-1" href="/"
+			<a class="text-xl normal-case font-bold link-hover hover:text-secondary m-1" href="/"
 				>Memo<span class="text-secondary">Clip</span></a
 			>
 		</div>
@@ -78,6 +79,7 @@
 				<Search />
 				<input
 					type="search"
+					name="search"
 					placeholder="Search on Memo"
 					class="bg-base-100 text-base-content border-none focus:ring-0"
 				/>
@@ -87,7 +89,7 @@
 			<div class="inline-flex justify-end items-center">
 				<ThemeToggle />
 				<div class="hidden md:flex divider divider-horizontal py-1 mx-1" />
-				{#if $page.data.session}
+				{#if $page.data.session && $page.data.profile}
 					<button class="btn btn-ghost p-3 m-1">
 						<div class="indicator">
 							<Bell />
@@ -104,11 +106,11 @@
 							tabindex="0"
 							class="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
 						>
-							<li><a>Profile</a></li>
+							<li><a href="/profile/{$page.data.profile.username}">Profile</a></li>
 							<li><a>Settings</a></li>
 							<li>
 								<form
-									action="/logout"
+									action="/api/logout"
 									method="POST"
 									class="w-full flex justify-stretch items-start"
 									use:enhance={submitLogout}

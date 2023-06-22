@@ -1,9 +1,16 @@
 import { AuthApiError } from '@supabase/supabase-js'
-import type { Actions } from './$types'
+import type { Actions, PageServerLoad } from './$types'
 import { fail, redirect } from '@sveltejs/kit'
 
+export const load: PageServerLoad = async ({ locals }) => {
+	const session = await locals.getSession()
+	if (session) {
+		throw redirect(303, '/dashboard')
+	}
+}
+
 export const actions: Actions = {
-	login: async ({ url, request, locals }) => {
+	default: async ({ url, request, locals }) => {
 		const body = Object.fromEntries(await request.formData())
 
 		const { error: err } = await locals.supabase.auth.signInWithPassword({
@@ -18,10 +25,10 @@ export const actions: Actions = {
 			return fail(500, { error: 'Server error. Please try again' })
 		}
 
-		const redirectTo = url.searchParams.get('redirectTo')
+		const loginTo = url.searchParams.get('loginTo')
 
-		if (redirectTo) {
-			throw redirect(302, `/${redirectTo.slice(1)}`)
+		if (loginTo) {
+			throw redirect(302, `/${loginTo.slice(1)}`)
 		}
 
 		throw redirect(302, '/')

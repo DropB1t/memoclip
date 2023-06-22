@@ -2,7 +2,7 @@
 	<div class="p-6 space-y-1">
 		<h3 class="font-semibold tracking-tight text-2xl">Login</h3>
 	</div>
-	<form action="?/login" method="POST">
+	<form method="POST">
 		<div class="p-6 pt-0 grid gap-4">
 			<div class="form-control w-full max-w-xs">
 				<label class="label" for="email">

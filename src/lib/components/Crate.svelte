@@ -1,17 +1,18 @@
 <script lang="ts">
-	import '@splidejs/svelte-splide/css/core';
-	import { Splide, SplideSlide, SplideTrack } from '@splidejs/svelte-splide';
-	import { URLHash } from '@splidejs/splide-extension-url-hash';
-	import { ChevronLeft, ChevronRight, CornerDownLeft } from 'lucide-svelte';
-	import Memo from '$lib/components/Memo.svelte';
+	import '@splidejs/svelte-splide/css/core'
+	import { Splide, SplideSlide, SplideTrack } from '@splidejs/svelte-splide'
+	import { URLHash } from '@splidejs/splide-extension-url-hash'
+	import { ChevronLeft, ChevronRight, CornerDownLeft } from 'lucide-svelte'
+	import Memo from '$lib/components/Memo.svelte'
 
-	let crateSlider: Splide;
-	let toStart = false;
+	let crateSlider: Splide
+	let toStart = false
 
 	const options = {
 		type: 'slide',
 		wheel: true,
 		releaseWheel: true,
+		drag: false,
 		pagination: false,
 		perPage: 1,
 		lazyLoad: true,
@@ -24,19 +25,22 @@
 				height: '550px',
 				padding: '.5rem',
 				gap: '2rem'
+			},
+			640: {
+				drag: true
 			}
 		}
-	};
+	}
 
 	function goToStart(): void {
 		if (crateSlider) {
-			crateSlider.go(0);
+			crateSlider.go(0)
 		}
 	}
 </script>
 
 <div
-	class="flex flex-col items-center w-full sm:w-fit max-w-xl bg-base-100 border-2 border-neutral text-primary-content p-3 rounded-lg shadow-md shadow-neutral-focus/40 overflow-hidden"
+	class="flex flex-col items-center w-full sm:w-fit max-w-xl bg-base-100 border-2 border-base-300 text-primary-content p-3 rounded-lg shadow-md overflow-hidden"
 >
 	<h1 class="bg-primary w-fit text-md md:text-2xl font-bold font-mono p-2 rounded-lg">#docker</h1>
 	<Splide
@@ -50,7 +54,7 @@
 	>
 		<SplideTrack>
 			{#each Array(10) as _, i}
-				<SplideSlide data-splide-hash="docker-{i}">
+				<SplideSlide data-splide-hash="docker{i}">
 					<Memo />
 				</SplideSlide>
 			{/each}

@@ -1,7 +1,8 @@
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public'
-import { handleLoginRedirect } from '$lib/utils'
-import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit'
 import { redirect, type Handle, type ResolveOptions, error } from '@sveltejs/kit'
+import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit'
+import { handleLoginRedirect } from '$lib/utils'
+import type { Database } from '$lib/db_types'
 
 export const handle = (async ({ event, resolve }) => {
 	const opts: ResolveOptions = {}
@@ -16,7 +17,7 @@ export const handle = (async ({ event, resolve }) => {
 		opts.transformPageChunk = ({ html }) => html.replace('data-theme=""', `data-theme="${theme}"`)
 	}
 
-	event.locals.supabase = createSupabaseServerClient({
+	event.locals.supabase = createSupabaseServerClient<Database>({
 		supabaseUrl: PUBLIC_SUPABASE_URL,
 		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
 		event
@@ -33,7 +34,7 @@ export const handle = (async ({ event, resolve }) => {
 		return name === 'content-range'
 	}
 
-	if (event.url.pathname.startsWith('/dashboard')) {
+	if (event.route.id?.startsWith('/(protected)')) {
 		const session = await event.locals.getSession()
 		if (!session) {
 			throw redirect(303, handleLoginRedirect(event))

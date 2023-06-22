@@ -1,6 +1,9 @@
 <script lang="ts">
-	import Crate from '$lib/components/Crate.svelte'
-	import type { PageData } from './$types'
+	import Memo from '$lib/components/Memo.svelte'
 </script>
 
-<Crate />
+<Memo />
+<Memo />
+<Memo />
+<Memo />
+<Memo />

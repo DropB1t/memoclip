@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { Flame, ExternalLink, Plus, Boxes, User } from 'lucide-svelte';
+	import { Flame, ExternalLink, Plus, Boxes, User } from 'lucide-svelte'
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
-	class="memo group card indicator bg-base-100 rounded-lg w-80 md:w-96 max-h-[600px] border-2 border-secondary not-prose my-2"
+	class="memo group card indicator bg-base-100 rounded-lg w-80 md:w-96 h-fit md:h-[560px] border-2 border-secondary not-prose my-2"
 >
 	<!-- <div
 			class="indicator-item indicator-center badge badge-lg border-2 border-base-300 group-hover:border-primary p-1 py-3"
@@ -14,7 +14,7 @@
 	<div class="px-5 pt-5">
 		<div class="mb-0.5 link link-hover link-info inline-flex justify-start items-center">
 			<User size="18" />
-			<span class="text-sm font-medium ml-1">User_123</span>
+			<span class="text-sm font-mono font-medium ml-1">User_123</span>
 		</div>
 		<figure class="">
 			<img
@@ -30,12 +30,12 @@
 
 	<div class="card-body text-base-content p-5">
 		<h2
-			class="card-title cursor-pointer hover:text-secondary"
+			class="card-title cursor-pointer select-text hover:text-secondary"
 			on:click|stopPropagation|self={() => {}}
 		>
 			How to make your MongoDB container more secure?
 		</h2>
-		<p class="text-lg">
+		<p class="text-lg select-text">
 			Start it with docker The most simple way to get MongoDB instance in your machine is using
 			docker to run mongodb image on docker hub as below ...
 		</p>
