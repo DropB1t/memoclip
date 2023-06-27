@@ -2,7 +2,7 @@
 	import type { PageData } from './$types'
 	import { superForm } from 'sveltekit-superforms/client'
 	import { XCircle } from 'lucide-svelte'
-	import { user } from '$lib/schemas'
+	import { user } from '$lib/form_schemas'
 
 	export let data: PageData
 
@@ -14,7 +14,7 @@
 	export const snapshot = { capture, restore }
 </script>
 
-<div class="flex flex-col items-center justify-center [&amp;>div]:w-full">
+<div class="flex flex-col items-center justify-center [&amp;>div]:w-full mt-10">
 	<div class="w-80 md:w-96 border-2 bg-base-100 text-base-content shadow-md rounded-lg">
 		<div class="flex flex-col p-6 space-y-1">
 			<h3 class="font-semibold tracking-tight text-2xl">Create an account</h3>

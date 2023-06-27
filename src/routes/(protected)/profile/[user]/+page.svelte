@@ -29,10 +29,10 @@
 	}
 </script>
 
-<div class="fixed w-screen h-full left-0 top-0 pb-12 md:pb-0 pt-[72px] md:pt-24">
+<div class="fixed w-screen h-screen top-0 left-0 pb-12 md:pb-0 pt-[72px] md:pt-24">
 	<MemoList
 		bind:this={list}
-		endpoint="/api/feed"
+		endpoint="/api/created"
 		memos={data.memos}
 		next={data.next}
 		on:loaded={(e) => {
@@ -41,7 +41,7 @@
 			/* console.log(data.memos) */
 		}}
 	>
-		<h1 slot="header" class="text-2xl my-5 text-center font-semibold">Explore</h1>
+		<h1 slot="header" class="text-2xl my-5 text-center font-semibold">Your Memos</h1>
 		<p slot="empty" class="text-center">No memos yet :c</p>
 	</MemoList>
 </div>

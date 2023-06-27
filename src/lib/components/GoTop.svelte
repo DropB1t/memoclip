@@ -1,15 +1,15 @@
 <script>
-	import { ChevronUp } from 'lucide-svelte';
+	import { ChevronUp } from 'lucide-svelte'
 
-	export let showAtPixel = 800;
+	export let showAtPixel = 800
 
-	let scrollHeight = 0;
+	let scrollHeight = 0
 
 	const gotoTop = () => {
-		window.scrollTo({ top: 0, behavior: 'smooth' });
-	};
+		window.scrollTo({ top: 0, behavior: 'smooth' })
+	}
 
-	$: showGotoTop = scrollHeight > showAtPixel;
+	$: showGotoTop = scrollHeight > showAtPixel
 </script>
 
 {#if showGotoTop}

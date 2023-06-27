@@ -3,7 +3,7 @@
 	import { Splide, SplideSlide, SplideTrack } from '@splidejs/svelte-splide'
 	import { URLHash } from '@splidejs/splide-extension-url-hash'
 	import { ChevronLeft, ChevronRight, CornerDownLeft } from 'lucide-svelte'
-	import Memo from '$lib/components/Memo.svelte'
+	import Memo from '$lib/components/MemoCard.svelte'
 
 	let crateSlider: Splide
 	let toStart = false
@@ -55,7 +55,7 @@
 		<SplideTrack>
 			{#each Array(10) as _, i}
 				<SplideSlide data-splide-hash="docker{i}">
-					<Memo />
+					<!-- <MemoCard /> -->
 				</SplideSlide>
 			{/each}
 		</SplideTrack>

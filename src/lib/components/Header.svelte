@@ -3,9 +3,14 @@
 	import type { SubmitFunction } from '../../routes/$types'
 	import ThemeToggle from './ThemeToggle.svelte'
 	import { User, Bell, Search } from 'lucide-svelte'
+	import { convertNameToInitials } from '$lib/utils'
 
 	import { page } from '$app/stores'
 	import { goto } from '$app/navigation'
+
+	const userInitials = $page.data.user
+		? convertNameToInitials($page.data.user.first_name, $page.data.user.last_name)
+		: null
 
 	export let duration = '300ms'
 	export let offset = 80
@@ -65,7 +70,7 @@
 	id="header"
 >
 	<div
-		class="navbar md:w-11/12 bg-base-100 border-b-2 md:border-2 border-base-300 shadow-md md:rounded-lg mx-auto"
+		class="navbar md:w-11/12 bg-base-100 border-b-2 md:border-2 border-base-300 md:shadow-md md:rounded-lg mx-auto"
 	>
 		<div class="navbar-start">
 			<a class="text-xl normal-case font-bold link-hover hover:text-secondary m-1" href="/"
@@ -73,23 +78,25 @@
 			>
 		</div>
 		<div class="navbar-center">
-			<div
-				class="hidden md:inline-flex font-semibold justify-end items-center rounded-lg input input-bordered border-2 focus-within:input-primary w-full max-w-xs px-1 m-1"
-			>
-				<Search />
-				<input
-					type="search"
-					name="search"
-					placeholder="Search on Memo"
-					class="bg-base-100 text-base-content border-none focus:ring-0"
-				/>
-			</div>
+			{#if $page.url.pathname !== '/search'}
+				<div
+					class="hidden md:inline-flex font-semibold justify-end items-center rounded-lg input input-bordered border-2 focus-within:input-primary w-full max-w-xs px-1 m-1"
+				>
+					<Search />
+					<input
+						type="search"
+						name="search"
+						placeholder="Search on Memo"
+						class="bg-base-100 text-base-content border-none focus:ring-0"
+					/>
+				</div>
+			{/if}
 		</div>
 		<div class="navbar-end">
 			<div class="inline-flex justify-end items-center">
 				<ThemeToggle />
 				<div class="hidden md:flex divider divider-horizontal py-1 mx-1" />
-				{#if $page.data.session && $page.data.profile}
+				{#if $page.data.session}
 					<button class="btn btn-ghost p-3 m-1">
 						<div class="indicator">
 							<Bell />
@@ -97,17 +104,24 @@
 						</div>
 					</button>
 					<div class="dropdown dropdown-end">
-						<label tabindex="0" class="btn btn-ghost avatar p-3 m-1">
-							<div class="rounded-full ring ring-primary ring-offset-base-100 ring-offset-4">
-								<User />
+						<label
+							tabindex="0"
+							class="btn btn-ghost avatar p-3 m-1 flex justify-center items-center"
+						>
+							<div class="rounded-full ring ring-primary ring-offset-base-100 ring-offset-4 p-1">
+								{#if userInitials}
+									<span>{userInitials}</span>
+								{:else}
+									<User />
+								{/if}
 							</div>
 						</label>
 						<ul
 							tabindex="0"
 							class="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
 						>
-							<li><a href="/profile/{$page.data.profile.username}">Profile</a></li>
-							<li><a>Settings</a></li>
+							<li><a href="/profile">Profile</a></li>
+							<li><a href="/settings">Settings</a></li>
 							<li>
 								<form
 									action="/api/logout"

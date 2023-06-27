@@ -1,5 +1,7 @@
 import type { RequestEvent } from '@sveltejs/kit'
 
+export const PAGE_SIZE = 8
+
 export function handleLoginRedirect(event: RequestEvent) {
 	const fromUrl = event.url.pathname + event.url.search
 	return `/login?loginTo=${fromUrl}`

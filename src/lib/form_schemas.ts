@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-// Name has a default value just to display something in the form.
 export const user = z.object({
 	email: z.string().email({
 		message: 'Invalid email. Please enter a valid email address'
@@ -24,3 +23,13 @@ export const user = z.object({
 	password: z.string().trim().min(8, { message: 'Password must contain at least 8 characters' })
 	/* followed_tags: z.string().array() */
 })
+
+export const memo = z.object({
+	title: z.string().trim().nonempty().max(70),
+	description: z.string().trim().nonempty(),
+	link: z.string().url(),
+	image_url: z.string().url().optional(),
+	tags: z.array(z.string().trim().min(2).max(40)).min(1)
+})
+
+export type MemoExtractor = z.infer<typeof memo>

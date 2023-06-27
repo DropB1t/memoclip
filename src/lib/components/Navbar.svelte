@@ -9,10 +9,13 @@
 {#if screenSize < 768}
 	<nav class="z-40">
 		<div class="btm-nav btm-nav-sm">
-			<a href="/" class:active={$page.url.pathname === '/'}>
+			<a href="/" class:active={$page.url.pathname === '/'} data-sveltekit-preload-data="tap">
 				<Compass />
 			</a>
-			<a href="/dashboard" class:active={$page.url.pathname === '/dashboard'}><LayoutDashboard /></a
+			<a
+				href="/dashboard"
+				class:active={$page.url.pathname === '/dashboard'}
+				data-sveltekit-preload-data="tap"><LayoutDashboard /></a
 			>
 			<a href="/editor" class:active={$page.url.pathname === '/editor'}>
 				<Plus />
@@ -20,7 +23,11 @@
 			<a href="/search" class:active={$page.url.pathname === '/search'}>
 				<Search />
 			</a>
-			<a href="/favourite" class:active={$page.url.pathname === '/favourite'}>
+			<a
+				href="/favourite"
+				class:active={$page.url.pathname === '/favourite'}
+				data-sveltekit-preload-data="tap"
+			>
 				<Star />
 			</a>
 		</div>
