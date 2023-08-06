@@ -1,10 +1,35 @@
 <script lang="ts">
 	import { navigating } from '$app/stores'
-	import MemoList from '$lib/components/MemoList.svelte'
+	import MemoCard from '$lib/components/MemoCard.svelte'
+	import type { Memo } from '$lib/db_types.js'
+	import { tick } from 'svelte'
+	import InfiniteScroll from 'svelte-infinite-scroll'
 
 	export let data
 
-	let list: MemoList
+	let scroller: HTMLDivElement
+
+	let next = data.next
+	let memos = data.memos
+	let newBatch: Memo[] = []
+
+	$: memos = [...memos, ...newBatch]
+
+	const fetchMemos = async () => {
+		if (!next) return
+
+		const response = await fetch(`/api/feed?start=${next}`)
+		const result = await response.json()
+
+		if (response.ok) {
+			newBatch = result.memos
+			next = result.next
+		} else {
+			// TODO Handle error better
+			/* throw new Error('Impossibile to retrieve information form the link') */
+		}
+	}
+
 	let can_restore = false
 
 	$: if ($navigating) {
@@ -13,24 +38,53 @@
 
 	export const snapshot = {
 		capture: () => ({
-			data,
-			scroller: list?.capture()
+			memos,
+			next,
+			scrollPos: scroller.scrollTop
 		}),
-		restore: (values) => {
+		restore: async (values) => {
 			if (!can_restore) return
 
-			data.memos = values.data.memos
-			data.next = values.data.next
+			memos = values.memos
+			next = values.next
 
-			if (values.scroller) {
-				list.restore(values.scroller)
+			if (values.scrollPos) {
+				restorePos(values.scrollPos)
 			}
 		}
 	}
+
+	async function restorePos(scrollRestored: number) {
+		await tick()
+		console.log('[restored] ' + scrollRestored)
+		scroller.scrollTo(0, scrollRestored)
+	}
 </script>
 
-<div class="fixed w-screen h-screen top-0 left-0 pb-12 md:pb-0 pt-[72px] md:pt-24">
-	<MemoList
+<h1 class="text-2xl my-5 mt-12 text-center font-semibold">Your Memos</h1>
+
+<div
+	bind:this={scroller}
+	class="flex flex-col md:flex-row md:flex-wrap gap-5 justify-center items-center px-2"
+>
+	{#each memos as memo (memo.id)}
+		<div data-memo-id={memo.id} class="w-fit">
+			<MemoCard {memo} />
+		</div>
+	{:else}
+		<p class="text-center">No memos yet :c</p>
+	{/each}
+	<InfiniteScroll
+		window={true}
+		threshold={2 * 500}
+		hasMore={next != null}
+		on:loadMore={() => {
+			fetchMemos()
+		}}
+	/>
+</div>
+
+<!-- <MemoList
 		bind:this={list}
 		endpoint="/api/created"
 		memos={data.memos}
@@ -43,5 +97,4 @@
 	>
 		<h1 slot="header" class="text-2xl my-5 text-center font-semibold">Your Memos</h1>
 		<p slot="empty" class="text-center">No memos yet :c</p>
-	</MemoList>
-</div>
+	</MemoList> -->

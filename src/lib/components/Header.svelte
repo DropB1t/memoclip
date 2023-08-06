@@ -87,7 +87,7 @@
 						type="search"
 						name="search"
 						placeholder="Search on Memo"
-						class="bg-base-100 text-base-content border-none focus:ring-0"
+						class="w-full bg-base-100 text-base-content border-none focus:ring-0"
 					/>
 				</div>
 			{/if}
