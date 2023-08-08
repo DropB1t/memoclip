@@ -56,9 +56,7 @@
 
 	<div slot="footer" class="px-2 mb-8 mx-auto text-center">
 		{#if next}
-			<a class="link text-base-content font-semibold" href="{$page.url.pathname}?start={next}"
-				>next page</a
-			>
+			<a class="link text-base-content" href="{$page.url.pathname}?start={next}">next page</a>
 		{/if}
 	</div>
 </Scroller>

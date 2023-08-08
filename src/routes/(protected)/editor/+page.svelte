@@ -66,7 +66,7 @@
 	<div class="flex flex-col gap-2 max-w-lg w-full">
 		<div class="w-full border-2 border-base-300 bg-base-100 text-base-content shadow-md rounded-lg">
 			<div class="flex flex-col p-6 space-y-1">
-				<h3 class="font-semibold tracking-tight text-2xl">Extractor</h3>
+				<h3 class=" tracking-tight text-2xl">Extractor</h3>
 				<p class="text-sm text-base-content">Copy paste the link of your material</p>
 			</div>
 			<div class="p-6 pt-0 grid gap-4">
@@ -133,7 +133,7 @@
 			</div>
 		{:else}
 			<div class="flex flex-col p-6 space-y-1">
-				<h3 class="font-semibold tracking-tight text-2xl">Create new Memo</h3>
+				<h3 class=" tracking-tight text-2xl">Create new Memo</h3>
 				<p class="text-sm text-base-content">
 					Fill remaining fields or modify them if not satisfied
 				</p>
@@ -228,7 +228,7 @@
 										<button
 											class="badge {$errors.tags?.[i]
 												? 'badge-error'
-												: 'badge-secondary'}  badge-outline badge-md hover:text-accent-focus hover:font-semibold m-1"
+												: 'badge-secondary'}  badge-outline badge-md hover:text-accent-focus hover: m-1"
 											on:click|preventDefault={() => {
 												$form.tags = [...$form.tags.slice(0, i), ...$form.tags.slice(i + 1)]
 											}}

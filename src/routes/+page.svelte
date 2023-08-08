@@ -41,7 +41,7 @@
 			/* console.log(data.memos) */
 		}}
 	>
-		<h1 slot="header" class="text-2xl my-5 text-center font-semibold">Explore</h1>
+		<h1 slot="header" class="text-2xl my-5 text-center">Explore</h1>
 		<p slot="empty" class="text-center">No memos yet :c</p>
 	</MemoList>
 </div>

@@ -42,7 +42,7 @@
 <div
 	class="flex flex-col items-center w-full sm:w-fit max-w-xl bg-base-100 border-2 border-base-300 text-primary-content p-3 rounded-lg shadow-md overflow-hidden"
 >
-	<h1 class="bg-primary w-fit text-md md:text-2xl font-bold font-mono p-2 rounded-lg">#docker</h1>
+	<h1 class="bg-primary w-fit text-md md:text-2xl font-bold p-2 rounded-lg">#docker</h1>
 	<Splide
 		aria-label="crate"
 		hasTrack={false}

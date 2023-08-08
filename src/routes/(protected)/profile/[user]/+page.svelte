@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { navigating } from '$app/stores'
+	import { navigating, page } from '$app/stores'
 	import MemoCard from '$lib/components/MemoCard.svelte'
 	import type { Memo } from '$lib/db_types.js'
 	import { tick } from 'svelte'
@@ -9,21 +9,20 @@
 
 	let scroller: HTMLDivElement
 
-	let next = data.next
-	let memos = data.memos
-	let newBatch: Memo[] = []
+	let next = data.next as string
+	let memos = data.memos as Memo[]
 
-	$: memos = [...memos, ...newBatch]
-
-	const fetchMemos = async () => {
+	async function fetchMemos() {
 		if (!next) return
 
-		const response = await fetch(`/api/feed?start=${next}`)
+		const response = await fetch(`/api/created?start=${next}`)
 		const result = await response.json()
 
 		if (response.ok) {
-			newBatch = result.memos
-			next = result.next
+			const fetched_memo: Memo[] = result.memos
+			const new_next: string = result.next
+			memos = [...memos, ...fetched_memo]
+			next = new_next
 		} else {
 			// TODO Handle error better
 			/* throw new Error('Impossibile to retrieve information form the link') */
@@ -61,7 +60,7 @@
 	}
 </script>
 
-<h1 class="text-2xl my-5 mt-12 text-center font-semibold">Your Memos</h1>
+<h1 class="text-2xl my-5 mt-12 text-center">Your Memos</h1>
 
 <div
 	bind:this={scroller}
@@ -83,6 +82,11 @@
 		}}
 	/>
 </div>
+<div class="mt-4 mx-auto text-center">
+	{#if next}
+		<a class="link text-base-content" href="{$page.url.pathname}?start={next}">next page</a>
+	{/if}
+</div>
 
 <!-- <MemoList
 		bind:this={list}
@@ -95,6 +99,6 @@
 			/* console.log(data.memos) */
 		}}
 	>
-		<h1 slot="header" class="text-2xl my-5 text-center font-semibold">Your Memos</h1>
+		<h1 slot="header" class="text-2xl my-5 text-center ">Your Memos</h1>
 		<p slot="empty" class="text-center">No memos yet :c</p>
 	</MemoList> -->

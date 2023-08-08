@@ -17,7 +17,7 @@
 <div class="flex flex-col items-center justify-center [&amp;>div]:w-full mt-10">
 	<div class="w-80 md:w-96 border-2 bg-base-100 text-base-content shadow-md rounded-lg">
 		<div class="flex flex-col p-6 space-y-1">
-			<h3 class="font-semibold tracking-tight text-2xl">Create an account</h3>
+			<h3 class=" tracking-tight text-2xl">Create an account</h3>
 			<p class="text-sm text-base-content">Enter your email below to create your account</p>
 		</div>
 		<form method="POST" use:enhance>
