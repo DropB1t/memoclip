@@ -97,29 +97,25 @@
 				<ThemeToggle />
 				<div class="hidden md:flex divider divider-horizontal py-1 mx-1" />
 				{#if $page.data.session}
-					<button class="btn btn-ghost p-3 m-1">
+					<!-- <button class="btn btn-ghost p-3 m-1">
 						<div class="indicator">
 							<Bell />
-							<!-- <span class="badge badge-xs badge-primary indicator-item" /> -->
+							<span class="badge badge-xs badge-primary indicator-item" />
 						</div>
-					</button>
+					</button> -->
 					<div class="dropdown dropdown-end">
-						<label
-							tabindex="0"
-							class="btn btn-ghost avatar p-3 m-1 flex justify-center items-center"
-						>
-							<div class="rounded-full ring ring-primary ring-offset-base-100 ring-offset-4 p-1">
-								{#if userInitials}
-									<span>{userInitials}</span>
-								{:else}
-									<User />
-								{/if}
-							</div>
+						<label tabindex="0" class="btn btn-ghost border-2 border-secondary avatar p-3 m-1">
+							{#if userInitials}
+								<span class="text-md">{userInitials}</span>
+							{:else}
+								<User size="18" />
+							{/if}
 						</label>
 						<ul
 							tabindex="0"
 							class="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
 						>
+							<li class="menu-title text-base-content">{$page.data.user.username}</li>
 							<li><a href="/profile">Profile</a></li>
 							<li><a href="/settings">Settings</a></li>
 							<li>

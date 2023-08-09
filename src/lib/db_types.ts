@@ -1,4 +1,4 @@
-export type Json = string | number | boolean | null | { [key: string]: Json } | Json[]
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
 
 export type User = {
 	first_name: string
@@ -123,12 +123,6 @@ export interface Database {
 						referencedColumns: ['id']
 					},
 					{
-						foreignKeyName: 'user_favorites_memo_id_fkey'
-						columns: ['memo_id']
-						referencedRelation: 'memo_and_creator'
-						referencedColumns: ['id']
-					},
-					{
 						foreignKeyName: 'user_favorites_user_id_fkey'
 						columns: ['user_id']
 						referencedRelation: 'users'
@@ -138,49 +132,48 @@ export interface Database {
 			}
 		}
 		Views: {
-			memo_and_creator: {
-				Row: {
-					created_at: string | null
-					description: string | null
-					id: number | null
-					image_url: string | null
-					link: string | null
-					pins: number | null
-					profile_username: string | null
-					tags: string[] | null
-					title: string | null
-					user_id: string | null
-				}
-				Relationships: [
-					{
-						foreignKeyName: 'memos_user_id_fkey'
-						columns: ['user_id']
-						referencedRelation: 'users'
-						referencedColumns: ['id']
-					}
-				]
-			}
+			[_ in never]: never
 		}
 		Functions: {
-			get_favorites: {
-				Args: {
-					current_user_id: string
-				}
-				Returns: {
-					id: number
-					title: string
-					description: string
-					image_url: string
-					link: string
-					tags: string[]
-					pins: number
-					user_id: string
-					created_at: string
-					profile_username: string
-					is_favorite: boolean
-					added_at: string
-				}[]
-			}
+			get_favorites:
+				| {
+						Args: {
+							username: string
+						}
+						Returns: {
+							id: number
+							title: string
+							description: string
+							image_url: string
+							link: string
+							tags: string[]
+							pins: number
+							user_id: string
+							created_at: string
+							profile_username: string
+							is_favorite: boolean
+							added_at: string
+						}[]
+				  }
+				| {
+						Args: {
+							current_user_id: string
+						}
+						Returns: {
+							id: number
+							title: string
+							description: string
+							image_url: string
+							link: string
+							tags: string[]
+							pins: number
+							user_id: string
+							created_at: string
+							profile_username: string
+							is_favorite: boolean
+							added_at: string
+						}[]
+				  }
 			get_memos_with_favorites: {
 				Args: {
 					current_user_id: string | null

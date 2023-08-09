@@ -32,13 +32,12 @@
 <div class="fixed w-screen h-full left-0 top-0 pb-12 md:pb-0 pt-[72px] md:pt-24">
 	<MemoList
 		bind:this={list}
-		endpoint="/api/feed"
+		endpoint="/api/memos/feed"
 		memos={data.memos}
 		next={data.next}
 		on:loaded={(e) => {
 			data.memos = [...data.memos, ...e.detail.memos]
 			data.next = e.detail.next
-			/* console.log(data.memos) */
 		}}
 	>
 		<h1 slot="header" class="text-2xl my-5 text-center">Explore</h1>

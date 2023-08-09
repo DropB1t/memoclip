@@ -18,6 +18,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
+	data-memo-id={memo.id}
 	class="memo group card indicator bg-base-100 rounded-lg w-80 md:w-96 h-[510px] md:h-[560px] border-2 border-secondary not-prose my-2"
 >
 	{#if created > five_hours}

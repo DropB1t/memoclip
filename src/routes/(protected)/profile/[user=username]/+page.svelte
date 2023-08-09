@@ -6,13 +6,11 @@
 	import InfiniteScroll from 'svelte-infinite-scroll'
 
 	export let data
+	$: ({ memos, next } = data)
 
 	let scrollPos: number
 	let loading = false
 	let can_restore = false
-
-	let next = data.next as string
-	let memos = data.memos as Memo[]
 
 	$: if ($navigating) {
 		can_restore = $navigating.type === 'popstate'
@@ -44,7 +42,7 @@
 		if (loading || !next) return
 		loading = true
 
-		const response = await fetch(`/api/created?start=${next}`)
+		const response = await fetch(`/api/memos/${$page.params.user}/feed?start=${next}`)
 		const result = await response.json()
 
 		if (response.ok) {
@@ -63,13 +61,11 @@
 
 <svelte:window bind:scrollY={scrollPos} />
 
-<h1 class="text-2xl my-5 mt-12 text-center">Your Memos</h1>
+<h1 class="text-2xl my-5 mt-12 text-center">{$page.data.profile.username}'s Memos</h1>
 
-<div class="flex flex-col md:flex-row md:flex-wrap gap-5 justify-center items-center px-2">
+<div class="flex flex-col md:flex-row md:flex-wrap gap-5 justify-center items-center md:px-2">
 	{#each memos as memo (memo.id)}
-		<div data-memo-id={memo.id} class="w-fit">
-			<MemoCard {memo} />
-		</div>
+		<MemoCard {memo} />
 	{:else}
 		<p class="text-center">No memos yet :c</p>
 	{/each}

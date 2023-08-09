@@ -21,7 +21,6 @@ export const user = z.object({
 		.min(1)
 		.regex(/^[A-Za-z]{1,}$/),
 	password: z.string().trim().min(8, { message: 'Password must contain at least 8 characters' })
-	/* followed_tags: z.string().array() */
 })
 
 export const memo = z.object({
@@ -29,7 +28,16 @@ export const memo = z.object({
 	description: z.string().trim().nonempty(),
 	link: z.string().url(),
 	image_url: z.string().url().optional(),
-	tags: z.array(z.string().trim().min(2).max(40)).min(1)
+	tags: z
+		.array(
+			z
+				.string()
+				.trim()
+				.min(2)
+				.max(40)
+				.regex(/^[a-zA-Z0-9_]+$/)
+		)
+		.min(1)
 })
 
 export type MemoExtractor = z.infer<typeof memo>

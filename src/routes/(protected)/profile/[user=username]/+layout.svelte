@@ -17,10 +17,10 @@
 		<h1 class=" w-fit bg-primary text-primary-content text-md md:text-xl font-bold p-2 rounded-lg">
 			{data.profile.username}
 		</h1>
-		<h3 class="w-fit text-sm md:text-lg p-1 rounded-lg">
+		<h2 class="w-fit text-sm md:text-lg p-1 rounded-lg">
 			• {data.profile.first_name}
 			{data.profile.last_name}
-		</h3>
+		</h2>
 	</div>
 
 	<div class="divider my-0.5" />
@@ -32,7 +32,9 @@
 			</div>
 			<div class="stat-title text-primary-content">Memos Creted</div>
 			<div class="stat-value">{data.posts_created}</div>
-			<div class="stat-desc text-primary-content">Keep going ! :D</div>
+			{#if data.profile.id === data.user?.id}
+				<div class="stat-desc text-primary-content">Keep going ! :D</div>
+			{/if}
 		</div>
 		<div class="stat place-items-center md:place-items-start">
 			<div class="stat-figure">
@@ -40,7 +42,9 @@
 			</div>
 			<div class="stat-title text-primary-content">Favorite Memos</div>
 			<div class="stat-value">{data.posts_fav}</div>
-			<div class="stat-desc text-primary-content">Keep it strictly useful ;D</div>
+			{#if data.profile.id === data.user?.id}
+				<div class="stat-desc text-primary-content">Keep it strictly useful ;D</div>
+			{/if}
 		</div>
 	</div>
 	<div class="inline-flex mx-auto mt-5">
