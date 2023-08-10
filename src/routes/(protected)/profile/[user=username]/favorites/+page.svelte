@@ -1,45 +1,55 @@
 <script lang="ts">
-	import { page } from '$app/stores'
-	import { createEventDispatcher, tick } from 'svelte'
-	import type { Memo } from '$lib/db_types'
+	import { navigating, page } from '$app/stores'
 	import MemoCard from '$lib/components/MemoCard.svelte'
+	import type { Memo } from '$lib/db_types.js'
+	import { tick } from 'svelte'
 	import InfiniteScroll from 'svelte-infinite-scroll'
 
-	const dispatch = createEventDispatcher()
+	export let data
+	$: ({ memos, next } = data)
 
-	export let memos: Memo[]
-	export let next: string | null
-	export let endpoint: string
+	let scrollPos: number
 	let loading = false
+	let can_restore = false
 
-	let scroll_pos: number
-
-	export function capture() {
-		return scroll_pos
+	$: if ($navigating) {
+		can_restore = $navigating.type === 'popstate'
 	}
 
-	export function restore(scroll_pos: number) {
-		restorePos(scroll_pos)
+	export const snapshot = {
+		capture: () => ({
+			memos,
+			next,
+			scrollPos
+		}),
+		restore: async (values) => {
+			if (!can_restore) return
+
+			memos = values.memos
+			next = values.next
+			if (values.scrollPos) {
+				restorePos(values.scrollPos)
+			}
+		}
 	}
 
-	async function restorePos(scroll_pos: number) {
+	async function restorePos(scrollPos: number) {
 		await tick()
-		window.scrollTo({ top: scroll_pos, behavior: 'instant' })
+		window.scrollTo({ top: scrollPos, behavior: 'instant' })
 	}
 
 	async function fetchMemos() {
 		if (loading || !next) return
 		loading = true
 
-		const response = await fetch(`${endpoint}?start=${next}`)
+		const response = await fetch(`/api/memos/${$page.params.user}/fav?start=${next}`)
 		const result = await response.json()
 
 		if (response.ok) {
 			const fetched_memo: Memo[] = result.memos
 			const new_next: string = result.next
-			/* memos = [...memos, ...fetched_memo]
-			next = new_next */
-			dispatch('loaded', { fetched_memo, new_next })
+			memos = [...memos, ...fetched_memo]
+			next = new_next
 		} else {
 			// TODO Handle error better
 			/* throw new Error('Impossibile to retrieve information form the link') */
@@ -49,9 +59,9 @@
 	}
 </script>
 
-<svelte:window bind:scrollY={scroll_pos} />
+<svelte:window bind:scrollY={scrollPos} />
 
-<slot name="header" />
+<h1 class="text-2xl my-5 mt-12 text-center">{$page.data.profile.username}'s Favorites</h1>
 
 <div class="flex flex-col md:flex-row md:flex-wrap gap-5 justify-center items-center md:px-2">
 	{#each memos as memo (memo.id)}

@@ -25,7 +25,7 @@
 			</a>
 			<a
 				href="/favourite"
-				class:active={$page.url.pathname === '/favourite'}
+				class:active={$page.url.pathname === `/profile/${$page.data.user.username}/favorites`}
 				data-sveltekit-preload-data="tap"
 			>
 				<Star />
@@ -36,7 +36,7 @@
 {#if screenSize >= 768}
 	<div class="fixed h-fit left-0 inset-y-0 my-auto">
 		<div class="divider px-4 my-0.5 max-w-[72px]" />
-		<ul class="menu font-semibold">
+		<ul class="menu">
 			<li class="navbar-li group">
 				<a href="/" class="navbar-link hover:!active" class:active={$page.url.pathname === '/'}>
 					<div class="p-4"><Compass /></div>
@@ -66,7 +66,7 @@
 				<a
 					href="/favorites"
 					class="navbar-link hover:!active"
-					class:active={$page.url.pathname === '/favorites'}
+					class:active={$page.url.pathname === `/profile/${$page.data.user.username}/favorites`}
 				>
 					<div class="p-4"><Star /></div>
 					Favorites

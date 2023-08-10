@@ -18,6 +18,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
+	data-memo-id={memo.id}
 	class="memo group card indicator bg-base-100 rounded-lg w-80 md:w-96 h-[510px] md:h-[560px] border-2 border-secondary not-prose my-2"
 >
 	{#if created > five_hours}
@@ -31,7 +32,7 @@
 			href="/profile/{memo.profile_username}"
 		>
 			<User size="18" />
-			<span class="text-sm font-mono font-medium ml-1">{memo.profile_username}</span>
+			<span class="text-sm font-bold ml-1">{memo.profile_username}</span>
 		</a>
 		{#if memo.image_url}
 			<img
@@ -45,7 +46,7 @@
 			/>
 		{:else}
 			<div class="artboard-demo artboard-horizontal w-[340px] h-[170px] bg-secondary">
-				<span class="text-secondary-content text-lg font-semibold">Memo</span>
+				<span class="text-secondary-content text-lg">Memo</span>
 				<!-- 340x170 -->
 			</div>
 		{/if}
@@ -66,7 +67,7 @@
 				{#each tags as tag}
 					<a
 						href="/tag/{tag}"
-						class="badge badge-secondary badge-outline hover:text-accent-focus hover:font-semibold mr-1 mt-2"
+						class="badge badge-secondary badge-outline hover:text-accent-focus hover: mr-1 mt-2"
 					>
 						#{tag}
 					</a>
@@ -85,7 +86,7 @@
 
 			<div class="ml-auto inline-flex items-center">
 				<div
-					class="px-2 font-mono font-semibold border-l-[1px] border-y-[1px] border-success rounded-s-lg inline-flex justify-around items-center"
+					class="px-2 font-bold border-l-[1px] border-y-[1px] border-success rounded-s-lg inline-flex justify-around items-center"
 				>
 					<Boxes size="24" />
 					<span class="pl-1">{memo.pins}</span>

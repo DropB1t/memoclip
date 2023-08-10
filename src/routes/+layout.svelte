@@ -28,6 +28,7 @@
 <div class="px-2 md:px-20 pt-8 pb-16 z-0">
 	<slot />
 </div>
+<GoTop />
 
 {#if session}
 	<Navbar />

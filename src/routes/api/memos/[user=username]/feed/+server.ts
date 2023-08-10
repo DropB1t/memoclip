@@ -2,7 +2,7 @@ import { error, json } from '@sveltejs/kit'
 import type { RequestHandler } from './$types'
 import { PAGE_SIZE } from '$lib/utils'
 
-export const GET: RequestHandler = async ({ locals, url }) => {
+export const GET: RequestHandler = async ({ locals, url, params }) => {
 	const session = await locals.getSession()
 
 	if (!session) {
@@ -15,7 +15,7 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 		.rpc('get_memos_with_favorites', {
 			current_user_id: session.user.id
 		})
-		.eq('user_id', session.user.id)
+		.eq('profile_username', params.user)
 		.lte('created_at', start)
 		.order('created_at', { ascending: false })
 		.limit(PAGE_SIZE + 1)

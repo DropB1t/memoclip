@@ -80,14 +80,14 @@
 		<div class="navbar-center">
 			{#if $page.url.pathname !== '/search'}
 				<div
-					class="hidden md:inline-flex font-semibold justify-end items-center rounded-lg input input-bordered border-2 focus-within:input-primary w-full max-w-xs px-1 m-1"
+					class="hidden md:inline-flex justify-end items-center rounded-lg input input-bordered border-2 focus-within:input-primary w-full max-w-xs m-1"
 				>
 					<Search />
 					<input
 						type="search"
 						name="search"
 						placeholder="Search on Memo"
-						class="bg-base-100 text-base-content border-none focus:ring-0"
+						class="w-full bg-base-100 text-base-content border-none focus:ring-0"
 					/>
 				</div>
 			{/if}
@@ -97,29 +97,25 @@
 				<ThemeToggle />
 				<div class="hidden md:flex divider divider-horizontal py-1 mx-1" />
 				{#if $page.data.session}
-					<button class="btn btn-ghost p-3 m-1">
+					<!-- <button class="btn btn-ghost p-3 m-1">
 						<div class="indicator">
 							<Bell />
-							<!-- <span class="badge badge-xs badge-primary indicator-item" /> -->
+							<span class="badge badge-xs badge-primary indicator-item" />
 						</div>
-					</button>
+					</button> -->
 					<div class="dropdown dropdown-end">
-						<label
-							tabindex="0"
-							class="btn btn-ghost avatar p-3 m-1 flex justify-center items-center"
-						>
-							<div class="rounded-full ring ring-primary ring-offset-base-100 ring-offset-4 p-1">
-								{#if userInitials}
-									<span>{userInitials}</span>
-								{:else}
-									<User />
-								{/if}
-							</div>
+						<label tabindex="0" class="btn btn-ghost border-2 border-secondary avatar p-3 m-1">
+							{#if userInitials}
+								<span class="text-md">{userInitials}</span>
+							{:else}
+								<User size="18" />
+							{/if}
 						</label>
 						<ul
 							tabindex="0"
 							class="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
 						>
+							<li class="menu-title text-base-content">{$page.data.user.username}</li>
 							<li><a href="/profile">Profile</a></li>
 							<li><a href="/settings">Settings</a></li>
 							<li>

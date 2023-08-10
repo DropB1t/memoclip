@@ -2,7 +2,7 @@ import { error, json } from '@sveltejs/kit'
 import type { RequestHandler } from './$types'
 import { PAGE_SIZE } from '$lib/utils'
 
-export const GET: RequestHandler = async ({ locals, url }) => {
+export const GET: RequestHandler = async ({ locals, url, params }) => {
 	const session = await locals.getSession()
 
 	if (!session) {
@@ -13,7 +13,7 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 
 	const { data: memos, error: err } = await locals.supabase
 		.rpc('get_favorites', {
-			current_user_id: session.user.id
+			username: params.user
 		})
 		.lte('created_at', start)
 		.order('added_at', { ascending: false })

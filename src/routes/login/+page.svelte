@@ -1,7 +1,7 @@
 <div class="flex flex-col items-center justify-center [&amp;>div]:w-full mt-10">
 	<div class="w-80 md:w-96 border-2 bg-base-100 text-base-content shadow-md rounded-lg">
 		<div class="p-6 space-y-1">
-			<h3 class="font-semibold tracking-tight text-2xl">Login</h3>
+			<h3 class=" tracking-tight text-2xl">Login</h3>
 		</div>
 		<form method="POST">
 			<div class="p-6 pt-0 grid gap-4">
