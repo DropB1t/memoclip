@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { navigating, page } from '$app/stores'
 	import MemoList from '$lib/components/MemoList.svelte'
-	import type { Memo } from '$lib/db_types.js'
 
 	export let data
 	$: ({ memos, next } = data)
@@ -41,5 +40,7 @@
 		next = e.detail.new_next
 	}}
 >
-	<h1 class="text-2xl my-5 mt-12 text-center">{$page.data.profile.username}'s Memos</h1>
+	<h1 slot="header" class="text-2xl my-5 mt-12 text-center">
+		{$page.data.profile.username}'s Memos
+	</h1>
 </MemoList>

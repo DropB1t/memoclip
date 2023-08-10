@@ -2,7 +2,7 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 
 export type User = {
 	first_name: string
-	followed_tags: string[] | null
+	followed_tags: string[]
 	id: string
 	last_name: string
 	username: string
@@ -71,21 +71,21 @@ export interface Database {
 			profiles: {
 				Row: {
 					first_name: string
-					followed_tags: string[] | null
+					followed_tags: string[]
 					id: string
 					last_name: string
 					username: string
 				}
 				Insert: {
 					first_name: string
-					followed_tags?: string[] | null
+					followed_tags?: string[]
 					id: string
 					last_name: string
 					username: string
 				}
 				Update: {
 					first_name?: string
-					followed_tags?: string[] | null
+					followed_tags?: string[]
 					id?: string
 					last_name?: string
 					username?: string

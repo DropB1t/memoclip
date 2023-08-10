@@ -38,6 +38,7 @@ export const memo = z.object({
 				.regex(/^[a-zA-Z0-9_]+$/)
 		)
 		.min(1)
+		.max(25)
 })
 
 export type MemoExtractor = z.infer<typeof memo>

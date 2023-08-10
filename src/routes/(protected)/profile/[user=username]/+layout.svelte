@@ -4,10 +4,19 @@
 	import { PackagePlus, Star } from 'lucide-svelte'
 
 	export let data: LayoutData
+
+	$: ({ profile, posts_created, posts_fav, user } = data)
+
+	let num_tags = 15
+	let more_tags: boolean
+	let tags: string[] = data.profile.followed_tags
+
+	more_tags = data.profile.followed_tags.length > num_tags
+	tags = more_tags ? tags.slice(0, num_tags) : tags
 </script>
 
 <svelte:head>
-	<title>{data.profile.username} • MemoClip</title>
+	<title>{profile.username} • MemoClip</title>
 </svelte:head>
 
 <div
@@ -15,38 +24,57 @@
 >
 	<div class="inline-flex items-center gap-1">
 		<h1 class=" w-fit bg-primary text-primary-content text-md md:text-xl font-bold p-2 rounded-lg">
-			{data.profile.username}
+			{profile.username}
 		</h1>
 		<h2 class="w-fit text-sm md:text-lg p-1 rounded-lg">
-			• {data.profile.first_name}
-			{data.profile.last_name}
+			• {profile.first_name}
+			{profile.last_name}
 		</h2>
 	</div>
 
 	<div class="divider my-0.5" />
-
-	<div class="stats shadow bg-primary text-primary-content stats-vertical md:stats-horizontal mt-2">
-		<div class="stat place-items-center md:place-items-start">
-			<div class="stat-figure">
-				<PackagePlus />
+	<div class="flex flex-col md:flex-row w-full items-center md:items-start mt-2">
+		<div
+			class="stats min-w-fit w-full shadow bg-primary text-primary-content stats-vertical md:stats-horizontal"
+		>
+			<div class="stat place-items-center md:place-items-start">
+				<div class="stat-figure">
+					<PackagePlus />
+				</div>
+				<div class="stat-title text-primary-content">Memos Creted</div>
+				<div class="stat-value">{posts_created}</div>
+				{#if profile.id === user?.id}
+					<div class="stat-desc text-primary-content">Keep going ! :D</div>
+				{/if}
 			</div>
-			<div class="stat-title text-primary-content">Memos Creted</div>
-			<div class="stat-value">{data.posts_created}</div>
-			{#if data.profile.id === data.user?.id}
-				<div class="stat-desc text-primary-content">Keep going ! :D</div>
-			{/if}
+			<div class="stat place-items-center md:place-items-start">
+				<div class="stat-figure">
+					<Star />
+				</div>
+				<div class="stat-title text-primary-content">Favorite Memos</div>
+				<div class="stat-value">{posts_fav}</div>
+				{#if profile.id === user?.id}
+					<div class="stat-desc text-primary-content">Keep it strictly useful ;D</div>
+				{/if}
+			</div>
 		</div>
-		<div class="stat place-items-center md:place-items-start">
-			<div class="stat-figure">
-				<Star />
-			</div>
-			<div class="stat-title text-primary-content">Favorite Memos</div>
-			<div class="stat-value">{data.posts_fav}</div>
-			{#if data.profile.id === data.user?.id}
-				<div class="stat-desc text-primary-content">Keep it strictly useful ;D</div>
+		<div class="w-full mx-4 mt-2 md:mt-0 block text-center md:text-justify">
+			<h3 class="text-lg">Followed Tags</h3>
+			{#each tags as tag}
+				<a
+					href="/tag/{tag}"
+					class="font-bold badge badge-secondary badge-outline hover:text-accent-focus mr-1 mt-2 py-2"
+				>
+					#{tag}
+				</a>
+			{/each}
+			{#if more_tags && $page.url.pathname !== `/profile/${data.profile.username}/tags`}
+				<a href="/profile/{data.profile.username}/tags" class="link text-secondary self-end">more</a
+				>
 			{/if}
 		</div>
 	</div>
+
 	<div class="inline-flex mx-auto mt-5">
 		<div class="tabs tabs-boxed">
 			<a

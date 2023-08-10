@@ -14,6 +14,7 @@
 		tags_len = memo.tags.length
 		tags = tags_len > 2 ? memo.tags.slice(0, 2) : memo.tags
 	}
+	/* w-96 md:h-[450px] */
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -54,12 +55,12 @@
 
 	<div class="card-body text-base-content p-5">
 		<a
-			href="/memo/{memo.id}"
+			href="memo/{memo.id}"
 			class="card-title h-full max-h-[56px] cursor-pointer select-text hover:text-secondary"
 		>
 			{memo.title}
 		</a>
-		<p class="text-md select-text">
+		<p class="text-md select-text my-0.5">
 			{memo.description}
 		</p>
 		<div class="py-0.5 h-full max-h-12">

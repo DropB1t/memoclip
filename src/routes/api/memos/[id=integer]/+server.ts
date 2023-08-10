@@ -13,12 +13,11 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 			current_user_id: session.user.id
 		})
 		.eq('id', params.id)
+		.single()
 
 	if (err) {
 		throw error(500, 'Something went wrong while fetching the feed')
 	}
 
-	return json({
-		memo: memo[0]
-	})
+	return json(memo)
 }
