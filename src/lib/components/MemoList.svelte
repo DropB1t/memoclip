@@ -1,62 +1,80 @@
 <script lang="ts">
 	import { page } from '$app/stores'
-	import { createEventDispatcher } from 'svelte'
+	import { createEventDispatcher, tick } from 'svelte'
 	import type { Memo } from '$lib/db_types'
-	import Scroller from '$lib/components/Scroller.svelte'
 	import MemoCard from '$lib/components/MemoCard.svelte'
+	import InfiniteScroll from 'svelte-infinite-scroll'
+
+	const dispatch = createEventDispatcher()
 
 	export let memos: Memo[]
 	export let next: string | null
 	export let endpoint: string
+	let loading = false
+
+	let scroll_pos: number
 
 	export function capture() {
-		return scroller.capture()
+		return scroll_pos
 	}
 
-	export function restore(values: any) {
-		scroller.restore(values)
+	export function restore(scroll_pos: number) {
+		restorePos(scroll_pos)
 	}
 
-	const dispatch = createEventDispatcher()
+	async function restorePos(scroll_pos: number) {
+		await tick()
+		window.scrollTo({ top: scroll_pos, behavior: 'instant' })
+	}
 
-	let scroller: Scroller
-	let loading = false
-</script>
-
-<Scroller
-	bind:this={scroller}
-	items={memos}
-	on:more={async () => {
+	async function fetchMemos() {
 		if (loading || !next) return
 		loading = true
 
 		const response = await fetch(`${endpoint}?start=${next}`)
 		const result = await response.json()
 
-		if (response.ok && result) {
-			dispatch('loaded', result)
+		if (response.ok) {
+			const fetched_memo: Memo[] = result.memos
+			const new_next: string = result.next
+			/* memos = [...memos, ...fetched_memo]
+			next = new_next */
+			dispatch('loaded', { fetched_memo, new_next })
 		} else {
 			// TODO Handle error better
 			/* throw new Error('Impossibile to retrieve information form the link') */
 		}
 
 		loading = false
-	}}
->
-	<div slot="header" class="max-w-2xl px-4 mx-auto">
-		<slot name="header" />
-	</div>
+	}
+</script>
 
-	<div slot="item" let:item>
-		<MemoCard memo={item} />
-	</div>
-	<div slot="empty">
-		<slot name="empty" />
-	</div>
+<svelte:window bind:scrollY={scroll_pos} />
 
-	<div slot="footer" class="px-2 mb-8 mx-auto text-center">
-		{#if next}
-			<a class="link text-base-content" href="{$page.url.pathname}?start={next}">next page</a>
-		{/if}
-	</div>
-</Scroller>
+<slot name="header" />
+
+<div class="flex flex-col md:flex-row md:flex-wrap gap-5 justify-center items-center md:px-2">
+	{#each memos as memo (memo.id)}
+		<MemoCard {memo} />
+	{:else}
+		<p class="text-center">No memos yet :c</p>
+	{/each}
+	<InfiniteScroll
+		window={true}
+		threshold={500}
+		hasMore={next != null}
+		on:loadMore={() => {
+			fetchMemos()
+		}}
+	/>
+</div>
+
+<div class="mt-5 mx-auto text-center">
+	{#if loading}
+		<div class="my-auto text-center">
+			<span class="loading loading-dots text-secondary loading-lg" />
+		</div>
+	{:else if next}
+		<a class="link text-base-content" href="{$page.url.pathname}?start={next}">next page</a>
+	{/if}
+</div>

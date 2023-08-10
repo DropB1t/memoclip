@@ -3,6 +3,7 @@
 	import MemoList from '$lib/components/MemoList.svelte'
 
 	export let data
+	$: ({ memos, next } = data)
 
 	let list: MemoList
 	let can_restore = false
@@ -13,34 +14,31 @@
 
 	export const snapshot = {
 		capture: () => ({
-			data,
-			scroller: list?.capture()
+			memos,
+			next,
+			scroll_pos: list.capture()
 		}),
-		restore: (values) => {
+		restore: async (values) => {
 			if (!can_restore) return
 
-			data.memos = values.data.memos
-			data.next = values.data.next
-
-			if (values.scroller) {
-				list.restore(values.scroller)
+			memos = values.memos
+			next = values.next
+			if (values.scroll_pos) {
+				list.restore(values.scroll_pos)
 			}
 		}
 	}
 </script>
 
-<div class="fixed w-screen h-full left-0 top-0 pb-12 md:pb-0 pt-[72px] md:pt-24">
-	<MemoList
-		bind:this={list}
-		endpoint="/api/memos/feed"
-		memos={data.memos}
-		next={data.next}
-		on:loaded={(e) => {
-			data.memos = [...data.memos, ...e.detail.memos]
-			data.next = e.detail.next
-		}}
-	>
-		<h1 slot="header" class="text-2xl my-5 text-center">Explore</h1>
-		<p slot="empty" class="text-center">No memos yet :c</p>
-	</MemoList>
-</div>
+<MemoList
+	bind:this={list}
+	endpoint="/api/memos/feed"
+	{memos}
+	{next}
+	on:loaded={(e) => {
+		memos = [...memos, ...e.detail.fetched_memo]
+		next = e.detail.new_next
+	}}
+>
+	<h1 slot="header" class="text-2xl my-5 text-center">Explore</h1>
+</MemoList>

@@ -80,7 +80,7 @@
 		<div class="navbar-center">
 			{#if $page.url.pathname !== '/search'}
 				<div
-					class="hidden md:inline-flex justify-end items-center rounded-lg input input-bordered border-2 focus-within:input-primary w-full max-w-xs px-1 m-1"
+					class="hidden md:inline-flex justify-end items-center rounded-lg input input-bordered border-2 focus-within:input-primary w-full max-w-xs m-1"
 				>
 					<Search />
 					<input
