@@ -16,7 +16,7 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 		.single()
 
 	if (err) {
-		throw error(500, 'Something went wrong while fetching the feed')
+		throw error(500, 'Something went wrong while fetching the memo')
 	}
 
 	return json(memo)

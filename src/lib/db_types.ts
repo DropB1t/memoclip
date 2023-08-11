@@ -6,7 +6,7 @@ export type User = {
 	id: string
 	last_name: string
 	username: string
-} | null
+}
 
 export type Memo = {
 	id: number

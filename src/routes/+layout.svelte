@@ -32,9 +32,4 @@
 
 {#if session}
 	<Navbar />
-	<!-- <div
-		class="alert alert-info fixed inline-flex bottom-2 inset-x-0 mx-auto w-fit rounded-lg shadow-md py-2"
-	>
-		<span>Welcome, {user?.username} !</span>
-	</div> -->
 {/if}

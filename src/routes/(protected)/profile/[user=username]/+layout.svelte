@@ -23,7 +23,7 @@
 	class="w-full max-w-4xl border-2 bg-base-100 text-base-content border-secondary shadow-md rounded-lg flex flex-col items-center md:items-start justify-center p-5 mx-auto"
 >
 	<div class="inline-flex items-center gap-1">
-		<h1 class=" w-fit bg-primary text-primary-content text-md md:text-xl font-bold p-2 rounded-lg">
+		<h1 class="w-fit bg-primary text-primary-content text-md md:text-xl font-bold p-2 rounded-lg">
 			{profile.username}
 		</h1>
 		<h2 class="w-fit text-sm md:text-lg p-1 rounded-lg">

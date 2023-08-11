@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Flame, ExternalLink, Plus, Boxes, User, Check } from 'lucide-svelte'
+	import { Flame, ExternalLink, Plus, Boxes, Check, AtSign } from 'lucide-svelte'
 	import type { Memo } from '$lib/db_types'
 
 	export let memo: Memo
@@ -20,7 +20,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
 	data-memo-id={memo.id}
-	class="memo group card indicator bg-base-100 rounded-lg w-80 md:w-96 h-[510px] md:h-[560px] border-2 border-secondary not-prose my-2"
+	class="memo group card indicator bg-base-100 rounded-lg w-96 h-[510px] md:h-[560px] border-2 border-secondary not-prose my-2"
 >
 	{#if created > five_hours}
 		<div class="indicator-item indicator-center badge badge-lg border-2 border-secondary p-1 py-3">
@@ -29,11 +29,11 @@
 	{/if}
 	<div class="px-5 pt-5">
 		<a
-			class="mb-0.5 link link-hover link-info inline-flex justify-start items-center"
+			class="mb-1 link link-hover link-info inline-flex justify-start items-center"
 			href="/profile/{memo.profile_username}"
 		>
-			<User size="18" />
-			<span class="text-sm font-bold ml-1">{memo.profile_username}</span>
+			<AtSign size="15" />
+			<span class="text-base font-bold ml-0.5">{memo.profile_username}</span>
 		</a>
 		{#if memo.image_url}
 			<img
@@ -55,7 +55,7 @@
 
 	<div class="card-body text-base-content p-5">
 		<a
-			href="memo/{memo.id}"
+			href="/memo/{memo.id}"
 			class="card-title h-full max-h-[56px] cursor-pointer select-text hover:text-secondary"
 		>
 			{memo.title}
