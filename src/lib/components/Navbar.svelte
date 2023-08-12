@@ -54,6 +54,15 @@
 			</li>
 			<li class="navbar-li group">
 				<a
+					href="/search"
+					class="navbar-link hover:!active"
+					class:active={$page.url.pathname === '/search'}
+					><div class="p-4"><Search /></div>
+					Search</a
+				>
+			</li>
+			<li class="navbar-li group">
+				<a
 					href="/editor"
 					class="navbar-link hover:!active"
 					class:active={$page.url.pathname === '/editor'}

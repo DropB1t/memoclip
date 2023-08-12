@@ -61,7 +61,9 @@
 
 <svelte:window bind:scrollY={scrollPos} />
 
-<h1 class="text-2xl my-5 mt-12 text-center">{$page.data.profile.username}'s Favorites</h1>
+<h1 class="text-2xl my-5 mt-12 px-2 text-start md:text-center">
+	{$page.data.profile.username}'s Favorites
+</h1>
 
 <div class="flex flex-col md:flex-row md:flex-wrap gap-5 justify-center items-center md:px-2">
 	{#each memos as memo (memo.id)}

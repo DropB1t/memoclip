@@ -20,7 +20,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
 	data-memo-id={memo.id}
-	class="memo group card indicator bg-base-100 rounded-lg w-96 h-[510px] md:h-[560px] border-2 border-secondary not-prose my-2"
+	class="memo group card indicator bg-base-100 rounded-lg w-[22rem] h-[560px] border-2 border-secondary not-prose my-2"
 >
 	{#if created > five_hours}
 		<div class="indicator-item indicator-center badge badge-lg border-2 border-secondary p-1 py-3">
@@ -56,19 +56,19 @@
 	<div class="card-body text-base-content p-5">
 		<a
 			href="/memo/{memo.id}"
-			class="card-title h-full max-h-[56px] cursor-pointer select-text hover:text-secondary"
+			class="card-title h-full max-h-[56px] line-clamp-2 cursor-pointer select-text hover:text-secondary"
 		>
 			{memo.title}
 		</a>
-		<p class="text-md select-text my-0.5">
+		<p class="text-md h-full max-h-[95px] select-text line-clamp-4 my-1">
 			{memo.description}
 		</p>
-		<div class="py-0.5 h-full max-h-12">
+		<div class="my-1 h-full max-h-12">
 			{#if tags_len > 0}
 				{#each tags as tag}
 					<a
 						href="/tag/{tag}"
-						class="badge badge-secondary badge-outline hover:text-accent-focus hover: mr-1 mt-2"
+						class="font-bold text-base badge badge-secondary badge-outline hover:text-accent-focus mr-1"
 					>
 						#{tag}
 					</a>
@@ -111,15 +111,5 @@
 	}
 	.memo:hover {
 		transform: scale(1.01);
-	}
-	p {
-		width: 100%;
-		overflow: hidden;
-		max-height: 7rem;
-		-webkit-box-orient: vertical;
-		display: block;
-		display: -webkit-box;
-		text-overflow: ellipsis;
-		-webkit-line-clamp: 4;
 	}
 </style>

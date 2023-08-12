@@ -33,6 +33,7 @@ export const memo = z.object({
 			z
 				.string()
 				.trim()
+				.toLowerCase()
 				.min(2)
 				.max(40)
 				.regex(/^[a-zA-Z0-9_]+$/)

@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { navigating } from '$app/stores'
 	import MemoList from '$lib/components/MemoList.svelte'
+	import { Hash } from 'lucide-svelte'
 
 	export let data
-	$: ({ memos, next } = data)
+	$: ({ memos, next, tag } = data)
 
 	let list: MemoList
 	let can_restore = false
@@ -32,7 +33,7 @@
 
 <MemoList
 	bind:this={list}
-	endpoint="/api/memos/feed"
+	endpoint="/api/memos/tag/{tag}"
 	{memos}
 	{next}
 	on:loaded={(e) => {
@@ -40,5 +41,7 @@
 		next = e.detail.new_next
 	}}
 >
-	<h1 slot="header" class="text-2xl my-5 px-2 text-start md:text-center">Explore</h1>
+	<h1 slot="header" class="text-2xl my-5 px-2 text-start md:text-center">
+		<span class="inline-flex justify-center font-medium items-center"><Hash size="24" />{tag}</span>
+	</h1>
 </MemoList>

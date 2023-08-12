@@ -202,7 +202,7 @@
 									event.preventDefault()
 
 									if (!$form.tags.includes(tags_input.value)) {
-										$form.tags = [...$form.tags, tags_input.value]
+										$form.tags = [...$form.tags, tags_input.value.toLowerCase()]
 									}
 
 									tags_input.value = ''
