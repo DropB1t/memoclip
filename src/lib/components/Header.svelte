@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms'
 	import type { SubmitFunction } from '../../routes/$types'
 	import ThemeToggle from './ThemeToggle.svelte'
-	import { User, Bell, Search } from 'lucide-svelte'
+	import { User, Search } from 'lucide-svelte'
 	import { convertNameToInitials } from '$lib/utils'
 
 	import { page } from '$app/stores'
@@ -78,7 +78,7 @@
 			>
 		</div>
 		<div class="navbar-center">
-			{#if $page.url.pathname !== '/search'}
+			{#if $page.url.pathname !== '/search' && $page.data.session?.user}
 				<div
 					class="hidden md:inline-flex justify-end items-center rounded-lg input input-bordered border-2 focus-within:input-primary w-full max-w-xs m-1"
 				>

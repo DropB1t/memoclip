@@ -9,6 +9,7 @@
 	import { onMount } from 'svelte'
 
 	export let data: LayoutData
+
 	$: ({ supabase, session } = data)
 
 	onMount(() => {

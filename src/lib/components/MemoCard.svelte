@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { Flame, ExternalLink, Plus, Boxes, Check, AtSign } from 'lucide-svelte'
 	import type { Memo } from '$lib/db_types'
+	import { enhance } from '$app/forms'
+	import type { SubmitFunction } from '@sveltejs/kit'
 
 	export let memo: Memo
 
@@ -9,6 +11,25 @@
 
 	let five_hours = Date.now() - 1000 * 60 * 60 * 5
 	let created = new Date(memo.created_at).getTime()
+
+	let loading = false
+
+	const toggleFav: SubmitFunction = () => {
+		loading = true
+
+		return async ({ update, result }) => {
+			//console.log(result)
+			if (result.type === 'success') {
+				memo.is_favorite = !memo.is_favorite
+				memo.is_favorite ? memo.pins++ : memo.pins--
+			}
+			if (result.type === 'failure') {
+				console.log(result.data)
+			}
+			loading = false
+			await update()
+		}
+	}
 
 	if (memo.tags) {
 		tags_len = memo.tags.length
@@ -93,13 +114,24 @@
 					<span class="pl-1">{memo.pins}</span>
 				</div>
 
-				<button class="btn btn-sm md:btn-md btn-outline btn-success rounded-s-none md:rounded-lg">
-					{#if memo.is_favorite}
-						<Check size="18" />
-					{:else}
-						<Plus size="18" />
-					{/if}
-				</button>
+				<form action="/?/toggleFav" method="post" use:enhance={toggleFav}>
+					<input type="hidden" name="id" value={memo.id} />
+					<button
+						aria-label={memo.is_favorite ? 'pinned' : 'unpinned'}
+						type="submit"
+						name="pinned"
+						value={memo.is_favorite ? 'false' : 'true'}
+						class="btn btn-sm md:btn-md btn-outline btn-success text-center rounded-s-none md:rounded-lg"
+					>
+						{#if loading}
+							<span class="loading loading-spinner w-[18px]" />
+						{:else if memo.is_favorite}
+							<Check size="18" />
+						{:else}
+							<Plus size="18" />
+						{/if}
+					</button>
+				</form>
 			</div>
 		</div>
 	</div>
