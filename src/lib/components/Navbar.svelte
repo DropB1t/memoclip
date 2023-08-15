@@ -24,7 +24,7 @@
 				<Search />
 			</a>
 			<a
-				href="/favourite"
+				href="/favorites"
 				class:active={$page.url.pathname === `/profile/${$page.data.user.username}/favorites`}
 				data-sveltekit-preload-data="tap"
 			>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AtSign, Boxes, Check, ExternalLink, Plus } from 'lucide-svelte'
+	import { AtSign, Boxes, Check, ExternalLink, Plus, Calendar } from 'lucide-svelte'
 	import type { PageData } from './$types'
 	import { enhance } from '$app/forms'
 	import type { SubmitFunction } from '@sveltejs/kit'
@@ -8,13 +8,16 @@
 
 	$: ({ memo } = data)
 
+	let created = ''
+	$: created = new Date(memo.created_at).toLocaleString()
+
 	let loading = false
 
 	const toggleFav: SubmitFunction = () => {
 		loading = true
 
 		return async ({ update, result }) => {
-			console.log(result)
+			//console.log(result)
 			if (result.type === 'success') {
 				memo.is_favorite = !memo.is_favorite
 				memo.is_favorite ? memo.pins++ : memo.pins--
@@ -38,7 +41,7 @@
 			</h1>
 			<h2 class="text-lg text-info font-semibold">TLDR</h2>
 			<p class="lg:w-3/4 text-base border-l-2 border-info px-5 mb-1">{memo.description}</p>
-			<div class="block mb-5">
+			<div class="block mb-1">
 				{#each memo.tags as tag}
 					<a
 						href="/tag/{tag}"
@@ -47,6 +50,10 @@
 						#{tag}
 					</a>
 				{/each}
+			</div>
+			<div class="inline-flex font-medium justify-center items-center mb-5">
+				<Calendar size="18" />
+				<span class="ml-1"> {created}</span>
 			</div>
 			{#if memo.image_url}
 				<img
@@ -78,7 +85,7 @@
 						type="submit"
 						name="pinned"
 						value={memo.is_favorite ? 'false' : 'true'}
-						class="btn btn-sm md:btn-md btn-outline btn-success text-center rounded-s-none md:rounded-lg"
+						class="btn btn-md btn-outline btn-success text-center rounded-lg"
 					>
 						{#if loading}
 							<span class="loading loading-spinner w-[18px]" />

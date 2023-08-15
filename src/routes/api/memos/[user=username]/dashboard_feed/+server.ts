@@ -4,10 +4,9 @@ import { PAGE_SIZE } from '$lib/utils'
 
 export const GET: RequestHandler = async ({ locals, url, params }) => {
 	const session = await locals.getSession()
+	const user = locals.user
 
-	if (!session) {
-		throw error(401)
-	}
+	if (!session || !user || user.username !== params.user) throw error(401)
 
 	const start = url.searchParams.get('start')?.replace(' ', '+') || 'now()'
 
@@ -15,13 +14,12 @@ export const GET: RequestHandler = async ({ locals, url, params }) => {
 		.rpc('get_memos_with_favorites', {
 			current_user_id: session.user.id
 		})
-		.filter('tags', 'cs', `{"${params.tag}"}`)
+		.overlaps('tags', `{${user.followed_tags.map((el) => `"${el}"`)}}`)
 		.lte('created_at', start)
 		.order('created_at', { ascending: false })
 		.limit(PAGE_SIZE + 1)
 
 	if (err) {
-		console.dir(err)
 		throw error(500, 'Something went wrong while fetching the feed')
 	}
 

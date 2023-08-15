@@ -3,7 +3,7 @@ import type { Memo } from '$lib/db_types'
 
 export const load: PageServerLoad = async ({ url, fetch, params }) => {
 	const response = await fetch(
-		`/api/memos/tag/${params.tag}?start=${url.searchParams.get('start') || ''}`
+		`/api/memos/tags/${params.tag}?start=${url.searchParams.get('start') || ''}`
 	)
 	const { memos, next } = await response.json()
 

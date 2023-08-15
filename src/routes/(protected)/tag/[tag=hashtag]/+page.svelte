@@ -33,7 +33,7 @@
 
 <MemoList
 	bind:this={list}
-	endpoint="/api/memos/tag/{tag}"
+	endpoint="/api/memos/tags/{tag}"
 	{memos}
 	{next}
 	on:loaded={(e) => {
