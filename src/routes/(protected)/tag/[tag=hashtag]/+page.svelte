@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { navigating } from '$app/stores'
+	import FollowTagToggle from '$lib/components/FollowTagToggle.svelte'
 	import MemoList from '$lib/components/MemoList.svelte'
 	import { Hash } from 'lucide-svelte'
 
@@ -41,7 +42,13 @@
 		next = e.detail.new_next
 	}}
 >
-	<h1 slot="header" class="text-2xl my-5 px-2 text-start md:text-center">
-		<span class="inline-flex justify-center font-medium items-center"><Hash size="24" />{tag}</span>
-	</h1>
+	<div
+		slot="header"
+		class="w-full flex place-content-center my-5 mt-12 px-3 md:px-5 text-start md:text-center"
+	>
+		<h1 class="text-2xl inline-flex justify-center font-medium items-center">
+			<Hash size="24" />{tag}
+		</h1>
+		<FollowTagToggle {tag} />
+	</div>
 </MemoList>

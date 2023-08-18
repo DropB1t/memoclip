@@ -135,45 +135,32 @@ export interface Database {
 			[_ in never]: never
 		}
 		Functions: {
-			get_favorites:
-				| {
-						Args: {
-							username: string
-						}
-						Returns: {
-							id: number
-							title: string
-							description: string
-							image_url: string
-							link: string
-							tags: string[]
-							pins: number
-							user_id: string
-							created_at: string
-							profile_username: string
-							is_favorite: boolean
-							added_at: string
-						}[]
-				  }
-				| {
-						Args: {
-							current_user_id: string
-						}
-						Returns: {
-							id: number
-							title: string
-							description: string
-							image_url: string
-							link: string
-							tags: string[]
-							pins: number
-							user_id: string
-							created_at: string
-							profile_username: string
-							is_favorite: boolean
-							added_at: string
-						}[]
-				  }
+			append_tag: {
+				Args: {
+					new_tag: string
+					id: string
+				}
+				Returns: undefined
+			}
+			get_favorites: {
+				Args: {
+					username: string
+				}
+				Returns: {
+					id: number
+					title: string
+					description: string
+					image_url: string
+					link: string
+					tags: string[]
+					pins: number
+					user_id: string
+					created_at: string
+					profile_username: string
+					is_favorite: boolean
+					added_at: string
+				}[]
+			}
 			get_memos_with_favorites: {
 				Args: {
 					current_user_id: string | null
@@ -195,6 +182,13 @@ export interface Database {
 			increment_pins: {
 				Args: {
 					memo_id: number
+				}
+				Returns: undefined
+			}
+			remove_tag: {
+				Args: {
+					tag: string
+					id: string
 				}
 				Returns: undefined
 			}

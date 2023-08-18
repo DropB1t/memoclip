@@ -62,6 +62,52 @@ export const actions: Actions = {
 			}
 			return { success: true }
 		}
+	},
+	toggleFollow: async ({ request, locals }) => {
+		const session = await locals.getSession()
+
+		if (!session) throw error(401)
+
+		const data = await request.formData()
+
+		const followed = data.get('followed') === 'true'
+		const tag = String(data.get('tag'))
+		const id = session.user.id
+
+		if (!tag || !/^[a-zA-Z0-9_]+$/.test(tag)) return fail(412) // Precondition Failed
+
+		if (followed) {
+			const { error: err } = await locals.supabase.rpc('append_tag', {
+				new_tag: tag,
+				id
+			})
+
+			if (err) {
+				console.dir(err)
+				return fail(404, {
+					err: true,
+					err_msg: 'The memo you try to add to favorites does not exist'
+				})
+
+				throw error(500, 'Something went wrong :(')
+			}
+			return { success: true }
+		} else {
+			const { error: err } = await locals.supabase.rpc('remove_tag', {
+				tag,
+				id
+			})
+
+			if (err) {
+				console.dir(err)
+				return fail(404, {
+					err: true,
+					err_msg: 'The memo you try to add to favorites does not exist'
+				})
+				throw error(500, 'Something went wrong :(')
+			}
+			return { success: true }
+		}
 	}
 }
 
