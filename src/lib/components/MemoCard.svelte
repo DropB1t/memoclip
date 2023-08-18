@@ -88,7 +88,7 @@
 			{#if tags_len > 0}
 				{#each tags as tag}
 					<a
-						href="/tag/{tag}"
+						href="/tags/{tag}"
 						class="font-bold text-base badge badge-secondary badge-outline hover:text-accent-focus mr-1"
 					>
 						#{tag}

@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { AtSign, Boxes, Check, ExternalLink, Plus, Calendar } from 'lucide-svelte'
+	import { AtSign, Boxes, Check, ExternalLink, Plus, Calendar, Trash, Edit } from 'lucide-svelte'
 	import type { PageData } from './$types'
 	import { enhance } from '$app/forms'
 	import type { SubmitFunction } from '@sveltejs/kit'
+	import { page } from '$app/stores'
 
 	export let data: PageData
 
@@ -44,7 +45,7 @@
 			<div class="block mb-1">
 				{#each memo.tags as tag}
 					<a
-						href="/tag/{tag}"
+						href="/tags/{tag}"
 						class="font-bold badge badge-secondary badge-outline hover:text-accent-focus mr-1 mt-2 py-2"
 					>
 						#{tag}
@@ -70,13 +71,29 @@
 		<div
 			class="lg:w-1/4 flex flex-row-reverse flex-wrap-reverse lg:flex-nowrap lg:flex-col justify-between items-center"
 		>
+			{#if $page.data.session?.user.id === memo.user_id}
+				<div
+					class="inline-flex gap-1 place-content-between ml-auto lg:ml-0 mt-5 lg:mt-0 lg:mb-5 lg:w-full"
+				>
+					<button class="grow btn btn-md btn-outline btn-neutral rounded-lg"
+						><Edit size="18" /> Edit</button
+					>
+					<form action="?/deleteMemo" method="post">
+						<input type="hidden" name="id" value={memo.id} />
+						<button class="btn btn-md btn-square btn-outline btn-error rounded-lg"
+							><Trash size="18" /></button
+						>
+					</form>
+				</div>
+			{/if}
 			<a
-				class="w-72 lg:w-full bg-primary text-primary-content text-md lg:text-xl font-bold link-hover inline-flex justify-center items-center rounded-lg p-2 mt-5 lg:mt-0 mx-auto"
+				class="w-full bg-primary text-primary-content text-md lg:text-xl font-bold link-hover inline-flex justify-center items-center rounded-lg p-2 mt-5 lg:mt-0 mx-auto"
 				href="/profile/{memo.profile_username}"
 			>
 				<AtSign size="18" />
 				<span class="text-base font-bold ml-0.5">{memo.profile_username}</span>
 			</a>
+
 			<div class="w-fit lg:w-full flex flex-row-reverse lg:flex-col items-center lg:mt-auto">
 				<form action="/?/toggleFav" method="post" use:enhance={toggleFav}>
 					<input type="hidden" name="id" value={memo.id} />

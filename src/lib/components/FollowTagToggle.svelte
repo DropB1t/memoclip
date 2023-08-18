@@ -3,7 +3,6 @@
 	import { page } from '$app/stores'
 	import type { SubmitFunction } from '@sveltejs/kit'
 	import { Plus, X } from 'lucide-svelte'
-	import { onMount } from 'svelte'
 
 	export let tag: string
 	let following = false
@@ -11,6 +10,7 @@
 	$: if (tag) fetchFollow()
 
 	async function fetchFollow() {
+		loading = true
 		const { data, error: err } = await $page.data.supabase
 			.from('profiles')
 			.select('username')
@@ -21,9 +21,10 @@
 
 		if (data && data.length > 0) following = true
 		else following = false
+		loading = false
 	}
 
-	let loading = false
+	let loading = true
 
 	const toggleFollow: SubmitFunction = () => {
 		loading = true
@@ -52,10 +53,10 @@
 			type="submit"
 			name="followed"
 			value={following ? 'false' : 'true'}
-			class="btn btn-sm btn-neutral btn-outline text-center rounded-s-none md:rounded-lg"
+			class="min-w-[127px] btn btn-sm btn-neutral btn-outline text-center rounded-s-none md:rounded-lg"
 		>
 			{#if loading}
-				<span class="loading loading-spinner w-[18px]" />
+				<span class="loading loading-dots w-[18px]" />
 			{:else if following}
 				<X size="18" /> Unfollow
 			{:else}

@@ -12,7 +12,7 @@
 >
 	{#each $page.data.profile.followed_tags as tag}
 		<a
-			href="/tag/{tag}"
+			href="/tags/{tag}"
 			class="font-bold badge badge-secondary badge-outline hover:text-accent-focus mr-1 mt-2 py-2"
 		>
 			#{tag}
