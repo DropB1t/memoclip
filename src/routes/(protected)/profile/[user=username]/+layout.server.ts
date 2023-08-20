@@ -15,7 +15,7 @@ export const load = (async ({ locals, params }) => {
 	const posts_created = async () => {
 		const { count: posts_created } = await locals.supabase
 			.from('memos')
-			.select('*', { count: 'estimated', head: true })
+			.select('', { count: 'estimated', head: true })
 			.eq('user_id', profile.id)
 
 		return posts_created

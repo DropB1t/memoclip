@@ -2,11 +2,12 @@
 	import { enhance } from '$app/forms'
 	import type { SubmitFunction } from '../../routes/$types'
 	import ThemeToggle from './ThemeToggle.svelte'
-	import { User, Search } from 'lucide-svelte'
+	import { User } from 'lucide-svelte'
 	import { convertNameToInitials } from '$lib/utils'
 
 	import { page } from '$app/stores'
 	import { goto } from '$app/navigation'
+	import Search from './Search.svelte'
 
 	const userInitials = $page.data.user
 		? convertNameToInitials($page.data.user.first_name, $page.data.user.last_name)
@@ -79,7 +80,7 @@
 		</div>
 		<div class="navbar-center">
 			{#if $page.url.pathname !== '/search' && $page.data.session?.user}
-				<div
+				<!-- <div
 					class="hidden md:inline-flex justify-end items-center rounded-lg input input-bordered border-2 focus-within:input-primary w-full max-w-xs m-1"
 				>
 					<Search />
@@ -89,6 +90,9 @@
 						placeholder="Search on Memo"
 						class="w-full bg-base-100 text-base-content border-none focus:ring-0"
 					/>
+				</div> -->
+				<div class="hidden md:inline-flex">
+					<Search />
 				</div>
 			{/if}
 		</div>

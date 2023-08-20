@@ -10,6 +10,9 @@
 	export let memos: Memo[]
 	export let next: string | null
 	export let endpoint: string
+	export let hasMore: boolean = next != null
+	export let query: string = ''
+
 	let loading = false
 
 	let scroll_pos: number
@@ -31,7 +34,9 @@
 		if (loading || !next) return
 		loading = true
 
-		const response = await fetch(`${endpoint}?start=${next}`)
+		query = query != '' ? '&query=' + query : ''
+
+		const response = await fetch(`${endpoint}?start=${next}${query}`)
 		const result = await response.json()
 
 		if (response.ok) {
@@ -57,12 +62,12 @@
 	{#each memos as memo (memo.id)}
 		<MemoCard {memo} />
 	{:else}
-		<p class="text-center">No memos yet :c</p>
+		<slot name="empy"><p class="text-center">No memos yet :c</p></slot>
 	{/each}
 	<InfiniteScroll
 		window={true}
 		threshold={500}
-		hasMore={next != null}
+		{hasMore}
 		on:loadMore={() => {
 			fetchMemos()
 		}}
