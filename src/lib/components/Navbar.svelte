@@ -86,7 +86,7 @@
 	</div>
 {/if}
 
-<style global lang="postcss">
+<style lang="postcss">
 	.navbar-li {
 		@apply py-1 hover:translate-x-1 transition-all;
 	}
