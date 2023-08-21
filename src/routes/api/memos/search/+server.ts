@@ -11,13 +11,7 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 		.rpc('get_memos_with_favorites', {
 			current_user_id: locals.user?.id ?? null
 		})
-		.textSearch(
-			'fts',
-			`${query
-				.trim()
-				.split(' ')
-				.reduce((prev, next) => prev + ' | ' + next)}`
-		)
+		.textSearch('fts', `'${query.trim()}'`)
 		.lte('created_at', start)
 		.limit(PAGE_SIZE + 1)
 

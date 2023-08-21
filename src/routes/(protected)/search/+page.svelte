@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { navigating } from '$app/stores'
+	import { navigating, page } from '$app/stores'
 	import MemoList from '$lib/components/MemoList.svelte'
 	import Search from '$lib/components/Search.svelte'
 	import { tick } from 'svelte'

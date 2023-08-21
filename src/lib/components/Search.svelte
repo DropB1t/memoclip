@@ -33,13 +33,7 @@
 		const { data, error: err } = await $page.data.supabase
 			.from('memos')
 			.select('title')
-			.textSearch(
-				'fts',
-				`${value
-					.trim()
-					.split(' ')
-					.reduce((prev, next) => prev + ' | ' + next)}`
-			)
+			.textSearch('fts', `'${value.trim()}'`)
 
 		if (err) console.dir(err)
 
@@ -61,8 +55,7 @@
 
 	const submitValue = async () => {
 		if (value) {
-			goto(`/search/?query=${value}`)
-			/* if ($page.url.pathname !== '/search') {
+			if ($page.url.pathname !== '/search') {
 				goto(`/search/?query=${value}`)
 			} else {
 				const response = await fetch(`/api/memos/search?query=${value}`)
@@ -76,7 +69,7 @@
 					// TODO Handle error better
 					throw new Error('Impossibile to retrieve information from the link')
 				}
-			} */
+			}
 		}
 	}
 
@@ -99,11 +92,11 @@
 
 <div class="flex flex-col justify-center items-center w-full group">
 	<form
+		action="/search"
 		class="w-full max-w-2xl inline-flex justify-center items-center rounded-lg input input-bordered border-2 focus-within:input-primary"
 		autocomplete="off"
-		on:submit|preventDefault={submitValue}
 	>
-		<button type="submit">
+		<button type="submit" class="hover:scale-95">
 			<Search />
 		</button>
 
