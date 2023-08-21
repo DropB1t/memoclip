@@ -35,7 +35,6 @@ export const actions: Actions = {
 
 			if (err) {
 				if (err.code === '23503') {
-					//console.dir(err)
 					return fail(404, {
 						err: true,
 						err_msg: 'The memo you try to add to favorites does not exist'

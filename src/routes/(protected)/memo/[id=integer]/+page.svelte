@@ -2,8 +2,10 @@
 	import { AtSign, Boxes, Check, ExternalLink, Plus, Calendar, Trash, Edit } from 'lucide-svelte'
 	import type { PageData } from './$types'
 	import { enhance } from '$app/forms'
-	import type { SubmitFunction } from '@sveltejs/kit'
 	import { page } from '$app/stores'
+	import type { SubmitFunction } from '@sveltejs/kit'
+	import toast from 'svelte-french-toast'
+	import { toast_opt } from '$lib/utils'
 
 	export let data: PageData
 
@@ -18,13 +20,13 @@
 		loading = true
 
 		return async ({ update, result }) => {
-			//console.log(result)
 			if (result.type === 'success') {
 				memo.is_favorite = !memo.is_favorite
 				memo.is_favorite ? memo.pins++ : memo.pins--
+				toast.success(memo.is_favorite ? 'Successfully pinned' : 'Successfully unpinned', toast_opt)
 			}
 			if (result.type === 'failure') {
-				console.log(result.data)
+				toast.error('Failed to pin the memo', toast_opt)
 			}
 			loading = false
 			await update()

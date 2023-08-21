@@ -16,10 +16,9 @@ export const actions: Actions = {
 		const { error: err } = await locals.supabase.from('memos').delete().eq('id', id)
 
 		if (err) {
-			//console.dir(err)
 			return fail(404, {
 				err: true,
-				err_msg: 'Error in deleting the memo'
+				err_msg: 'Failed in deleting the memo'
 			})
 		}
 

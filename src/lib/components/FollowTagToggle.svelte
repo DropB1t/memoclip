@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms'
 	import { page } from '$app/stores'
+	import { toast_opt } from '$lib/utils'
 	import type { SubmitFunction } from '@sveltejs/kit'
 	import { Plus, X } from 'lucide-svelte'
+	import toast from 'svelte-french-toast'
 
 	export let tag: string
 	let following = false
@@ -30,12 +32,12 @@
 		loading = true
 
 		return async ({ update, result }) => {
-			//console.log(result)
 			if (result.type === 'success') {
 				following = !following
+				toast.success('Successfully followed the tag', toast_opt)
 			}
 			if (result.type === 'failure') {
-				console.log(result.data)
+				toast.error('Failed to follow the tag', toast_opt)
 			}
 			loading = false
 			await update()

@@ -3,13 +3,23 @@
 	import Header from '$lib/components/Header.svelte'
 	import Navbar from '$lib/components/Navbar.svelte'
 	import GoTop from '$lib/components/GoTop.svelte'
-	import { Toaster } from 'svelte-french-toast'
+	import { Toaster, toast } from 'svelte-french-toast'
 
 	import type { LayoutData } from './$types'
 	import { invalidate } from '$app/navigation'
 	import { onMount } from 'svelte'
+	import { page } from '$app/stores'
+	import { toast_opt } from '$lib/utils'
 
 	export let data: LayoutData
+
+	if ($page.form?.err) {
+		toast.error($page.form!.err_msg, toast_opt)
+	}
+
+	if ($page.form?.success) {
+		toast.success('Success', toast_opt)
+	}
 
 	$: ({ supabase, session } = data)
 

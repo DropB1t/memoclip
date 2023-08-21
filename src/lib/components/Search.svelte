@@ -44,7 +44,6 @@
 	}
 
 	let hiLiteIndex = 0
-	//$: console.log(hiLiteIndex + ' - ' + ( previews.length - 1 ))
 
 	const setInputVal = (memoTitle: string) => {
 		value = memoTitle
@@ -65,7 +64,6 @@
 					const new_next: string = result.next
 					dispatch('searchPerformed', { fetched_memo, new_next, query: value })
 				} else {
-					// TODO Handle error better
 					throw new Error('Impossibile to retrieve information from the link')
 				}
 			}

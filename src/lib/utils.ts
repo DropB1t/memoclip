@@ -1,4 +1,5 @@
 import type { RequestEvent } from '@sveltejs/kit'
+import type { ToastOptions } from 'svelte-french-toast'
 
 export const PAGE_SIZE = 25
 
@@ -11,4 +12,8 @@ export function convertNameToInitials(firstName: string, lastName: string): stri
 	const firstInitial = Array.from(firstName)[0]
 	const lastInitial = Array.from(lastName)[0]
 	return `${firstInitial}${lastInitial}`
+}
+
+export const toast_opt: ToastOptions = {
+	position: 'bottom-center'
 }
