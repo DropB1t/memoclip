@@ -3,6 +3,7 @@
 	import Header from '$lib/components/Header.svelte'
 	import Navbar from '$lib/components/Navbar.svelte'
 	import GoTop from '$lib/components/GoTop.svelte'
+	import { Toaster } from 'svelte-french-toast'
 
 	import type { LayoutData } from './$types'
 	import { invalidate } from '$app/navigation'
@@ -25,6 +26,7 @@
 	})
 </script>
 
+<Toaster />
 <Header />
 <div class="px-2 md:px-20 pt-8 pb-16 z-0">
 	<slot />

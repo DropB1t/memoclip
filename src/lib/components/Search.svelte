@@ -7,7 +7,6 @@
 
 	const dispatch = createEventDispatcher()
 
-	let searchInput: HTMLInputElement
 	let focused: boolean = false
 	export let value = ''
 
@@ -25,15 +24,17 @@
 		if (value.trim() != '') {
 			clearTimeout(timer)
 			previews = [{ title: value }]
-			timer = setTimeout(search, 200)
+			timer = setTimeout(() => {
+				search(value)
+			}, 200)
 		}
 	}
 
-	const search = async () => {
+	const search = async (q: string) => {
 		const { data, error: err } = await $page.data.supabase
 			.from('memos')
 			.select('title')
-			.textSearch('fts', `'${value.trim()}'`)
+			.textSearch('fts', `'${q.trim()}'`)
 
 		if (err) console.dir(err)
 
@@ -49,8 +50,6 @@
 		value = memoTitle
 		previews = []
 		hiLiteIndex = 0
-		searchInput.focus()
-		//submitValue()
 	}
 
 	const submitValue = async () => {
@@ -90,7 +89,7 @@
 
 <svelte:window on:keydown={navigateList} />
 
-<div class="flex flex-col justify-center items-center w-full group">
+<div class="flex flex-col justify-center items-center w-full">
 	<form
 		action="/search"
 		class="w-full max-w-2xl inline-flex justify-center items-center rounded-lg input input-bordered border-2 focus-within:input-primary"
@@ -108,7 +107,6 @@
 				focused = false
 			}}
 			bind:value
-			bind:this={searchInput}
 			on:input={debouncedSearch}
 			type="text"
 			name="query"
@@ -117,9 +115,9 @@
 		/>
 	</form>
 
-	{#if previews.length > 0}
+	{#if previews.length > 0 && focused}
 		<ul
-			class="hidden group-focus-within:block bg-base-100 w-full max-w-2xl mt-2 rounded-lg z-[99] border-2 border-primary"
+			class="bg-base-100 w-full max-w-2xl mt-2 rounded-lg z-[99] border-2 border-primary"
 			class:float-prev={$page.url.pathname !== '/search'}
 		>
 			{#each previews as preview, i}
@@ -127,7 +125,9 @@
 				<li
 					class="py-2 line-clamp-1 px-4 text-lg border-b-2 last:border-b-0 hover:cursor-pointer hover:text-accent-focus"
 					class:active-prev={i === hiLiteIndex}
-					on:click={() => setInputVal(preview.title)}
+					on:mousedown={() => {
+						goto(`/search/?query=${preview.title}`)
+					}}
 				>
 					{preview.title}
 				</li>
