@@ -17,27 +17,19 @@
 
 	let loading = false
 
-	sync()
-
-	function sync() {
-		update_memo(memo.id, memo.pins, memo.is_favorite)
-	}
-
 	const toggleFav: SubmitFunction = () => {
 		loading = true
-
-		return async ({ update, result }) => {
+		return async ({ result }) => {
 			if (result.type === 'success') {
-				memo.is_favorite = !memo.is_favorite
-				memo.is_favorite ? memo.pins++ : memo.pins--
-				sync()
+				memo.is_favorite = !$state[memo.id].is_favorite
+				memo.pins = memo.is_favorite ? $state[memo.id].pins + 1 : $state[memo.id].pins - 1
+				update_memo(memo.id, memo.pins, memo.is_favorite)
 				toast.success(memo.is_favorite ? 'Successfully pinned' : 'Successfully unpinned', toast_opt)
 			}
 			if (result.type === 'failure') {
 				toast.error('Failed to pin the memo', toast_opt)
 			}
 			loading = false
-			await update()
 		}
 	}
 

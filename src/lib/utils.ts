@@ -15,5 +15,5 @@ export function convertNameToInitials(firstName: string, lastName: string): stri
 }
 
 export const toast_opt: ToastOptions = {
-	position: 'bottom-center'
+	position: 'top-center'
 }

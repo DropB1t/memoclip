@@ -4,7 +4,7 @@
 	import type { Memo } from '$lib/db_types'
 	import MemoCard from '$lib/components/MemoCard.svelte'
 	import InfiniteScroll from 'svelte-infinite-scroll'
-	import { init_memos } from '$lib/memo_state.js'
+	import { init_memos, state } from '$lib/memo_state.js'
 	import toast from 'svelte-french-toast'
 	import { toast_opt } from '$lib/utils'
 
@@ -14,9 +14,11 @@
 	export let next: string | null
 	export let endpoint: string
 	export let hasMore: boolean = next != null
+	export let can_restore: boolean
+
 	export let query: string = ''
 
-	$: init_memos(memos)
+	$: if (!can_restore) init_memos(memos)
 
 	let loading = false
 
@@ -51,9 +53,9 @@
 			memos = [...memos, ...fetched_memo]
 			next = new_next
 			*/
+			init_memos(fetched_memo)
 			dispatch('loaded', { fetched_memo, new_next })
 		} else {
-			// TODO Handle error better
 			toast.error('Failed to load memos :c', toast_opt)
 		}
 

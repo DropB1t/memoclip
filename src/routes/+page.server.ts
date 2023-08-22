@@ -34,6 +34,7 @@ export const actions: Actions = {
 				.insert({ user_id: session.user.id, memo_id: id })
 
 			if (err) {
+				//console.dir(err)
 				if (err.code === '23503') {
 					return fail(404, {
 						err: true,
@@ -82,11 +83,10 @@ export const actions: Actions = {
 			})
 
 			if (err) {
-				console.dir(err)
-				return fail(404, {
+				/* return fail(404, {
 					err: true,
-					err_msg: 'The memo you try to add to favorites does not exist'
-				})
+					err_msg: 'Failed in following the tag'
+				}) */
 
 				throw error(500, 'Something went wrong :(')
 			}
@@ -98,11 +98,6 @@ export const actions: Actions = {
 			})
 
 			if (err) {
-				console.dir(err)
-				return fail(404, {
-					err: true,
-					err_msg: 'The memo you try to add to favorites does not exist'
-				})
 				throw error(500, 'Something went wrong :(')
 			}
 			return { success: true }

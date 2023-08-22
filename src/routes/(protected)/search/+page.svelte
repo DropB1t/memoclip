@@ -53,7 +53,6 @@
 		{memos}
 		{next}
 		{query}
-		hasMore={false}
 		on:loaded={(e) => {
 			memos = [...memos, ...e.detail.fetched_memo]
 			next = e.detail.new_next
