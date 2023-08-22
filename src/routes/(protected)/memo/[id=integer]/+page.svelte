@@ -89,8 +89,9 @@
 				<div
 					class="inline-flex gap-1 place-content-between ml-auto lg:ml-0 mt-5 lg:mt-0 lg:mb-5 lg:w-full"
 				>
-					<button class="grow btn btn-md btn-outline btn-neutral rounded-lg"
-						><Edit size="18" /> Edit</button
+					<a
+						href="/editor/{data.memo.id}"
+						class="grow btn btn-md btn-outline btn-neutral rounded-lg"><Edit size="18" /> Edit</a
 					>
 					<form action="?/deleteMemo" method="post">
 						<input type="hidden" name="id" value={data.memo.id} />

@@ -42,4 +42,8 @@ export const memo = z.object({
 		.max(25)
 })
 
+export const memo_to_edit = memo.extend({
+	id: z.number().positive()
+})
+
 export type MemoExtractor = z.infer<typeof memo>
