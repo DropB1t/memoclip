@@ -17,10 +17,6 @@
 		toast.error($page.form!.err_msg, toast_opt)
 	}
 
-	if ($page.form?.success) {
-		toast.success('Success', toast_opt)
-	}
-
 	$: ({ supabase, session } = data)
 
 	onMount(() => {

@@ -6,6 +6,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit'
 	import toast from 'svelte-french-toast'
 	import { toast_opt } from '$lib/utils'
+	import { state, update_memo } from '$lib/memo_state.js'
 
 	export let data: PageData
 
@@ -16,6 +17,12 @@
 
 	let loading = false
 
+	sync()
+
+	function sync() {
+		update_memo(data.memo.id, data.memo.pins, data.memo.is_favorite)
+	}
+
 	const toggleFav: SubmitFunction = () => {
 		loading = true
 
@@ -23,6 +30,7 @@
 			if (result.type === 'success') {
 				memo.is_favorite = !memo.is_favorite
 				memo.is_favorite ? memo.pins++ : memo.pins--
+				sync()
 				toast.success(memo.is_favorite ? 'Successfully pinned' : 'Successfully unpinned', toast_opt)
 			}
 			if (result.type === 'failure') {
@@ -100,15 +108,15 @@
 				<form action="/?/toggleFav" method="post" use:enhance={toggleFav}>
 					<input type="hidden" name="id" value={memo.id} />
 					<button
-						aria-label={memo.is_favorite ? 'pinned' : 'unpinned'}
+						aria-label={$state[memo.id].is_favorite ? 'pinned' : 'unpinned'}
 						type="submit"
 						name="pinned"
-						value={memo.is_favorite ? 'false' : 'true'}
+						value={$state[memo.id].is_favorite ? 'false' : 'true'}
 						class="btn btn-md btn-outline btn-success text-center rounded-lg"
 					>
 						{#if loading}
 							<span class="loading loading-spinner w-[18px]" />
-						{:else if memo.is_favorite}
+						{:else if $state[memo.id].is_favorite}
 							<Check size="18" />
 						{:else}
 							<Plus size="18" />
@@ -118,7 +126,7 @@
 				<div
 					class="w-fit lg:w-full p-2 font-bold border-[1px] border-success rounded-lg inline-flex justify-center items-center mx-2 lg:mx-0 lg:my-2"
 				>
-					<span class="p-1">{memo.pins}</span>
+					<span class="p-1">{$state[memo.id].pins}</span>
 					<Boxes size="24" />
 				</div>
 			</div>

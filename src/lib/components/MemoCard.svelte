@@ -5,6 +5,7 @@
 	import { enhance } from '$app/forms'
 	import toast from 'svelte-french-toast'
 	import { toast_opt } from '$lib/utils'
+	import { state, update_memo } from '$lib/memo_state'
 
 	export let memo: Memo
 
@@ -16,6 +17,12 @@
 
 	let loading = false
 
+	sync()
+
+	function sync() {
+		update_memo(memo.id, memo.pins, memo.is_favorite)
+	}
+
 	const toggleFav: SubmitFunction = () => {
 		loading = true
 
@@ -23,6 +30,7 @@
 			if (result.type === 'success') {
 				memo.is_favorite = !memo.is_favorite
 				memo.is_favorite ? memo.pins++ : memo.pins--
+				sync()
 				toast.success(memo.is_favorite ? 'Successfully pinned' : 'Successfully unpinned', toast_opt)
 			}
 			if (result.type === 'failure') {
@@ -113,21 +121,21 @@
 					class="px-2 font-bold border-l-[1px] border-y-[1px] border-success rounded-s-lg inline-flex justify-around items-center"
 				>
 					<Boxes size="24" />
-					<span class="pl-1">{memo.pins}</span>
+					<span class="pl-1">{$state[memo.id].pins}</span>
 				</div>
 
 				<form action="/?/toggleFav" method="post" use:enhance={toggleFav}>
 					<input type="hidden" name="id" value={memo.id} />
 					<button
-						aria-label={memo.is_favorite ? 'pinned' : 'unpinned'}
+						aria-label={$state[memo.id].is_favorite ? 'pinned' : 'unpinned'}
 						type="submit"
 						name="pinned"
-						value={memo.is_favorite ? 'false' : 'true'}
+						value={$state[memo.id].is_favorite ? 'false' : 'true'}
 						class="btn btn-sm md:btn-md btn-outline btn-success text-center rounded-s-none md:rounded-lg"
 					>
 						{#if loading}
 							<span class="loading loading-spinner w-[18px]" />
-						{:else if memo.is_favorite}
+						{:else if $state[memo.id].is_favorite}
 							<Check size="18" />
 						{:else}
 							<Plus size="18" />
