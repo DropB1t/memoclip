@@ -13,7 +13,7 @@ export const GET: RequestHandler = async ({ locals, url, params }) => {
 
 	const { data: memos, error: err } = await locals.supabase
 		.rpc('get_favorites', {
-			username: params.user
+			in_username: params.user
 		})
 		.lte('created_at', start)
 		.order('added_at', { ascending: false })

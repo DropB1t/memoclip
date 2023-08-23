@@ -58,8 +58,6 @@
 				exporting = false
 			})
 	}
-
-	/* $: console.log($form) */
 </script>
 
 <div class="flex flex-col md:flex-row items-start justify-center mt-5">

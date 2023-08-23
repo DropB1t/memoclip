@@ -20,9 +20,9 @@ export const actions: Actions = {
 
 		if (err) {
 			if (err instanceof AuthApiError && err.status === 400) {
-				return fail(400, { error: 'Invalid credentials' })
+				return fail(400, { err: true, err_msg: err.message })
 			}
-			return fail(500, { error: 'Server error. Please try again' })
+			return fail(500, { err: true, err_msg: 'Server error. Please try again' })
 		}
 
 		const loginTo = url.searchParams.get('loginTo')

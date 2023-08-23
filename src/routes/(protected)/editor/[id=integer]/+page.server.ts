@@ -17,15 +17,16 @@ export const actions: Actions = {
 	updateMemo: async ({ request, locals: { supabase } }) => {
 		const form = await superValidate(request, memo_to_edit)
 
-		console.log(form)
-
 		if (!form.valid) {
 			return fail(400, { form })
 		}
 
 		let { id, ...data } = form.data
 
-		if (!id) return fail(412) // Precondition Failed
+		if (!id || !data.link)
+			return message(form, 'Id or Link has been compromised, please retry again', {
+				status: 412
+			}) // Precondition Failed
 
 		const { error: err } = await supabase
 			.from('memos')

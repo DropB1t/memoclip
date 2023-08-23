@@ -31,7 +31,8 @@ export const actions: Actions = {
 		if (pinned) {
 			const { error: err } = await locals.supabase
 				.from('user_favorites')
-				.insert({ user_id: session.user.id, memo_id: id })
+				.insert({ user_id: session.user.id, memo_id: id, added_at: 'now()' })
+				.select()
 
 			if (err) {
 				//console.dir(err)

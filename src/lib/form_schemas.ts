@@ -8,7 +8,7 @@ export const user = z.object({
 		.string()
 		.trim()
 		.min(4, { message: 'The username must be 4 characters or more' })
-		.max(10, { message: 'The username must be 10 characters or less' })
+		.max(25, { message: 'The username must be 25 characters or less' })
 		.regex(/^[a-zA-Z0-9_]+$/, 'The username must contain only letters, numbers and underscore (_)'),
 	firstName: z
 		.string()

@@ -3,6 +3,7 @@
 	import MemoList from '$lib/components/MemoList.svelte'
 
 	export let data
+	$: ({ memos, next } = data)
 
 	let list: MemoList
 	let can_restore = false
@@ -13,14 +14,13 @@
 
 	export const snapshot = {
 		capture: () => ({
-			data,
+			next,
 			scroll_pos: list.capture()
 		}),
 		restore: async (values) => {
 			if (!can_restore) return
 
-			data.memos = values.data.memos
-			data.next = values.data.next
+			next = values.next
 			if (values.scroll_pos) {
 				list.restore(values.scroll_pos)
 			}
@@ -31,12 +31,11 @@
 <MemoList
 	bind:this={list}
 	endpoint="/api/memos/feed"
-	memos={data.memos}
-	next={data.next}
-	{can_restore}
+	{memos}
+	{next}
 	on:loaded={(e) => {
-		data.memos = [...data.memos, ...e.detail.fetched_memo]
-		data.next = e.detail.new_next
+		memos = [...memos, ...e.detail.fetched_memo]
+		next = e.detail.new_next
 	}}
 >
 	<h1 slot="header" class="text-2xl my-5 px-2 text-start md:text-center">Explore</h1>

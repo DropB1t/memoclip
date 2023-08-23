@@ -30,5 +30,5 @@ export const load = (async ({ locals, params }) => {
 		return posts_fav
 	}
 
-	return { profile, posts_created: posts_created(), posts_fav: posts_fav() }
+	return { profile, streamed: { posts_created: posts_created(), posts_fav: posts_fav() } }
 }) satisfies LayoutServerLoad

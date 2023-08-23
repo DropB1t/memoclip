@@ -2,11 +2,11 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 
 export type User = {
 	first_name: string
-	followed_tags: string[]
+	followed_tags: string[] | null
 	id: string
 	last_name: string
 	username: string
-}
+} | null
 
 export type Memo = {
 	id: number
@@ -29,6 +29,7 @@ export interface Database {
 				Row: {
 					created_at: string
 					description: string
+					fts: unknown | null
 					id: number
 					image_url: string | null
 					link: string
@@ -40,6 +41,7 @@ export interface Database {
 				Insert: {
 					created_at?: string
 					description: string
+					fts?: unknown | null
 					id?: number
 					image_url?: string | null
 					link: string
@@ -51,6 +53,7 @@ export interface Database {
 				Update: {
 					created_at?: string
 					description?: string
+					fts?: unknown | null
 					id?: number
 					image_url?: string | null
 					link?: string
@@ -144,7 +147,7 @@ export interface Database {
 			}
 			get_favorites: {
 				Args: {
-					username: string
+					in_username: string
 				}
 				Returns: {
 					id: number
@@ -175,15 +178,10 @@ export interface Database {
 					pins: number
 					user_id: string
 					created_at: string
+					fts: unknown
 					profile_username: string
 					is_favorite: boolean
 				}[]
-			}
-			increment_pins: {
-				Args: {
-					memo_id: number
-				}
-				Returns: undefined
 			}
 			remove_tag: {
 				Args: {

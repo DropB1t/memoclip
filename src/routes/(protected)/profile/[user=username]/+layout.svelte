@@ -5,7 +5,7 @@
 
 	export let data: LayoutData
 
-	$: ({ profile, posts_created, posts_fav, user } = data)
+	$: ({ profile, user } = data)
 
 	let num_tags = 15
 	let more_tags: boolean
@@ -42,7 +42,12 @@
 					<PackagePlus />
 				</div>
 				<div class="stat-title text-primary-content">Memos Creted</div>
-				<div class="stat-value">{posts_created}</div>
+				{#await data.streamed.posts_created}
+					<span class="loading loading-spinner w-[18px]" />
+				{:then posts_created}
+					<div class="stat-value">{posts_created}</div>
+				{/await}
+
 				{#if profile.id === user?.id}
 					<div class="stat-desc text-primary-content">Keep going ! :D</div>
 				{/if}
@@ -52,7 +57,11 @@
 					<Star />
 				</div>
 				<div class="stat-title text-primary-content">Favorite Memos</div>
-				<div class="stat-value">{posts_fav}</div>
+				{#await data.streamed.posts_fav}
+					<span class="loading loading-spinner w-[18px]" />
+				{:then posts_fav}
+					<div class="stat-value">{posts_fav}</div>
+				{/await}
 				{#if profile.id === user?.id}
 					<div class="stat-desc text-primary-content">Keep it strictly useful ;D</div>
 				{/if}
