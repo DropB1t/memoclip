@@ -3,6 +3,8 @@
 	import { superForm } from 'sveltekit-superforms/client'
 	import { XCircle } from 'lucide-svelte'
 	import { user } from '$lib/schemas'
+	import toast from 'svelte-french-toast'
+	import { toast_opt } from '$lib/utils'
 
 	export let data: PageData
 
@@ -11,10 +13,20 @@
 		validators: user
 	})
 
+	$: if ($message) {
+		toast.error($message, { ...toast_opt, duration: 2000 })
+	}
+
 	export const snapshot = { capture, restore }
 </script>
 
 <div class="flex flex-col items-center justify-center [&amp;>div]:w-full mt-10">
+	<!-- {#if $message}
+		<div class="alert alert-error flex-inline w-full max-w-sm rounded-lg shadow-md mt-2">
+			<XCircle />
+			<span>{$message}</span>
+		</div>
+	{/if} -->
 	<div class="w-80 md:w-96 border-2 bg-base-100 text-base-content shadow-md rounded-lg">
 		<div class="flex flex-col p-6 space-y-1">
 			<h3 class=" tracking-tight text-2xl">Create an account</h3>
@@ -122,10 +134,4 @@
 			</div>
 		</form>
 	</div>
-	{#if $message}
-		<div class="alert alert-error rounded-lg shadow-md mt-2">
-			<XCircle />
-			<span>{$message}</span>
-		</div>
-	{/if}
 </div>

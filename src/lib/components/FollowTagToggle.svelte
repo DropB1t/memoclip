@@ -55,7 +55,7 @@
 			type="submit"
 			name="followed"
 			value={following ? 'false' : 'true'}
-			class="min-w-[127px] btn btn-sm btn-neutral btn-outline text-center rounded-s-none md:rounded-lg"
+			class="min-w-[127px] btn btn-sm btn-neutral btn-outline text-center rounded-lg"
 		>
 			{#if loading}
 				<span class="loading loading-dots w-[18px]" />

@@ -37,9 +37,10 @@
 		const data = await response.json()
 
 		if (response.ok && data) {
+			err = null
 			return data
 		} else {
-			throw new Error('Impossibile to retrieve information form the link')
+			err = 'Impossibile to retrieve information form the link'
 		}
 	}
 
