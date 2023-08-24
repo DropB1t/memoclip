@@ -1,7 +1,7 @@
 import type { RequestEvent } from '@sveltejs/kit'
 import type { ToastOptions } from 'svelte-french-toast'
 
-export const PAGE_SIZE = 5
+export const PAGE_SIZE = 25
 
 export function handleLoginRedirect(event: RequestEvent) {
 	const fromUrl = event.url.pathname + event.url.search

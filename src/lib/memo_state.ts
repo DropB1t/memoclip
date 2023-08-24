@@ -18,7 +18,6 @@ export const state = { subscribe }
 
 export function init_memos(memos: Memo[]) {
 	update((lookup) => {
-		console.dir(lookup)
 		for (const memo of memos) {
 			if (!lookup[memo.id]) {
 				lookup[memo.id] = {

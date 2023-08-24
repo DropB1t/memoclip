@@ -25,7 +25,7 @@ export const user = z.object({
 
 export const memo = z.object({
 	title: z.string().trim().nonempty().max(70),
-	description: z.string().trim().nonempty(),
+	description: z.string().trim().nonempty().max(500),
 	link: z.string().url(),
 	image_url: z.string().url().optional(),
 	tags: z

@@ -1,7 +1,7 @@
 import { AuthApiError } from '@supabase/supabase-js'
 import type { Actions, PageServerLoad } from './$types'
 import { fail, redirect } from '@sveltejs/kit'
-import { user } from '$lib/form_schemas'
+import { user } from '$lib/schemas'
 import { message, superValidate } from 'sveltekit-superforms/server'
 
 export const load: PageServerLoad = async ({ locals }) => {

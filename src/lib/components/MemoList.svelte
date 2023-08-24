@@ -6,6 +6,7 @@
 	import InfiniteScroll from 'svelte-infinite-scroll'
 	import { init_memos } from '$lib/memo_state.js'
 	import toast from 'svelte-french-toast'
+	import { state } from '$lib/memo_state'
 	import { toast_opt } from '$lib/utils'
 
 	const dispatch = createEventDispatcher()
@@ -20,6 +21,12 @@
 	$: init_memos(memos)
 
 	let loading = false
+
+	$: if ($page.url.pathname === `/profile/${$page.data.user.username}/favorites`) {
+		memos = memos.filter((memo) => {
+			return $state[memo.id].is_favorite
+		})
+	}
 
 	let scroll_pos: number
 

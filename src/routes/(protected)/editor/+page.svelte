@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { memo } from '$lib/form_schemas'
-	import type { MemoExtractor } from '$lib/form_schemas'
+	import { memo } from '$lib/schemas'
+	import type { MemoExtractor } from '$lib/schemas'
 	import type { PageData } from './$types'
 	import { superForm } from 'sveltekit-superforms/client'
 	import { scale } from 'svelte/transition'

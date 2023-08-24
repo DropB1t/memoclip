@@ -6,6 +6,7 @@
 	import toast from 'svelte-french-toast'
 	import { toast_opt } from '$lib/utils'
 	import { state, update_memo } from '$lib/memo_state'
+	import { beforeUpdate } from 'svelte'
 
 	export let memo: Memo
 
@@ -17,12 +18,30 @@
 
 	let loading = false
 
+	const sync = () => {
+		if ($state[memo.id].is_favorite && memo.is_favorite != $state[memo.id].is_favorite)
+			memo.is_favorite = $state[memo.id].is_favorite
+
+		if ($state[memo.id].pins && memo.pins != $state[memo.id].pins) {
+			memo.pins = $state[memo.id].pins
+		}
+	}
+
+	beforeUpdate(() => {
+		sync()
+	})
+
 	const toggleFav: SubmitFunction = () => {
 		loading = true
 		return async ({ result }) => {
 			if (result.type === 'success') {
-				memo.is_favorite = !$state[memo.id].is_favorite
-				memo.pins = memo.is_favorite ? $state[memo.id].pins + 1 : $state[memo.id].pins - 1
+				if (result.data!.action === 'pinned') {
+					memo.is_favorite = true
+					memo.pins = $state[memo.id].pins + 1
+				} else if (result.data!.action === 'unpinned') {
+					memo.is_favorite = false
+					memo.pins = $state[memo.id].pins - 1
+				}
 				update_memo(memo.id, memo.pins, memo.is_favorite)
 				toast.success(memo.is_favorite ? 'Successfully pinned' : 'Successfully unpinned', toast_opt)
 			}

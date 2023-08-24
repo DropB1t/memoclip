@@ -22,13 +22,20 @@ export const actions: Actions = {
 			})
 		}
 
-		throw redirect(303, '/')
+		throw redirect(303, locals.user ? `/profile/${locals.user.username}` : '/')
 	}
 }
 
 export const load = (async ({ fetch, params }) => {
 	const response = await fetch(`/api/memos/${params.id}`)
-	const memo: Memo = await response.json()
 
-	return { memo }
+	const data = await response.json()
+
+	if (!response.ok && response.status >= 400) {
+		throw error(response.status, {
+			message: data.message
+		})
+	}
+
+	return { memo: data as Memo }
 }) satisfies PageServerLoad

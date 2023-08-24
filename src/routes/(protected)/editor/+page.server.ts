@@ -2,7 +2,7 @@ import type { Actions, PageServerLoad } from './$types'
 import { AuthApiError } from '@supabase/supabase-js'
 import { superValidate, message } from 'sveltekit-superforms/server'
 import { fail, redirect } from '@sveltejs/kit'
-import { memo } from '$lib/form_schemas'
+import { memo } from '$lib/schemas'
 
 export const load = (async () => {
 	const form = await superValidate(memo)

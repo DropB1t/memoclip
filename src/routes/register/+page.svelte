@@ -2,7 +2,7 @@
 	import type { PageData } from './$types'
 	import { superForm } from 'sveltekit-superforms/client'
 	import { XCircle } from 'lucide-svelte'
-	import { user } from '$lib/form_schemas'
+	import { user } from '$lib/schemas'
 
 	export let data: PageData
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores'
 	import type { LayoutData } from './$types'
-	import { PackagePlus, Star } from 'lucide-svelte'
+	import { AtSign, PackagePlus, Star } from 'lucide-svelte'
 
 	export let data: LayoutData
 
@@ -22,13 +22,15 @@
 <div
 	class="w-full max-w-4xl border-2 bg-base-100 text-base-content border-secondary shadow-md rounded-lg flex flex-col items-center md:items-start justify-center p-5 mx-auto"
 >
-	<div class="inline-flex items-center gap-1">
-		<h1 class="w-fit bg-primary text-primary-content text-md md:text-xl font-bold p-2 rounded-lg">
-			{profile.username}
-		</h1>
-		<h2 class="w-fit text-sm md:text-lg p-1 rounded-lg">
-			• {profile.first_name}
+	<div class="flex flex-col justify-start items-start gap-1">
+		<h1
+			class="w-fit inline-flex justify-center items-center gap-1 bg-primary text-primary-content text-md md:text-xl font-bold p-2 rounded-lg"
+		>
+			{profile.first_name}
 			{profile.last_name}
+		</h1>
+		<h2 class="w-fit inline-flex justify-center items-center gap-1 text-sm">
+			<AtSign size="14" />{profile.username}
 		</h2>
 	</div>
 

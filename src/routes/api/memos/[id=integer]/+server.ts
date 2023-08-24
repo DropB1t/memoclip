@@ -16,6 +16,10 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 		.single()
 
 	if (err) {
+		if (!memo && (err.code = 'PGRST116'))
+			throw error(404, {
+				message: `Memo id:${params.id} has not been found`
+			})
 		throw error(500, 'Something went wrong while fetching the memo')
 	}
 

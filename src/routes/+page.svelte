@@ -14,12 +14,14 @@
 
 	export const snapshot = {
 		capture: () => ({
+			memos,
 			next,
 			scroll_pos: list.capture()
 		}),
 		restore: async (values) => {
 			if (!can_restore) return
 
+			memos = values.memos
 			next = values.next
 			if (values.scroll_pos) {
 				list.restore(values.scroll_pos)

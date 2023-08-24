@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { memo_to_edit } from '$lib/form_schemas'
+	import { memo_to_edit } from '$lib/schemas'
 	import type { PageData } from './$types'
 	import { superForm } from 'sveltekit-superforms/client'
 	import { scale } from 'svelte/transition'

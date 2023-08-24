@@ -44,7 +44,7 @@ export const actions: Actions = {
 				}
 				throw error(500, 'Something went wrong :(')
 			}
-			return { success: true }
+			return { action: 'pinned' }
 		} else {
 			const { error: err } = await locals.supabase
 				.from('user_favorites')
@@ -61,7 +61,7 @@ export const actions: Actions = {
 				}
 				throw error(500, 'Something went wrong :(')
 			}
-			return { success: true }
+			return { action: 'unpinned' }
 		}
 	},
 	toggleFollow: async ({ request, locals }) => {
