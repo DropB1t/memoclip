@@ -12,7 +12,7 @@ export type Memo = {
 	id: number
 	title: string
 	description: string
-	image_url: string
+	image_url: string | null
 	link: string
 	tags: string[]
 	pins: number

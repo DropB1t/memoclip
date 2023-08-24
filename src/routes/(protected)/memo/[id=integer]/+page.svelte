@@ -7,6 +7,7 @@
 	import toast from 'svelte-french-toast'
 	import { toast_opt } from '$lib/utils'
 	import { state, update_memo } from '$lib/memo_state.js'
+	import logo from '$lib/assets/logo.png'
 
 	export let data: PageData
 
@@ -80,7 +81,15 @@
 					class="rounded-lg w-full max-w-xl self-center lg:self-start"
 					src={memo.image_url}
 					alt={memo.title}
+					width="340"
+					height="170"
 				/>
+			{:else}
+				<div
+					class="artboard-demo artboard-horizontal self-center lg:self-start w-full max-w-xl h-[150px] bg-base-200/25 border-2 border-primary rounded-lg"
+				>
+					<img src={logo} alt="MemoClip Logo" width="64" height="64" />
+				</div>
 			{/if}
 		</div>
 		<div

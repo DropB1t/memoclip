@@ -27,14 +27,14 @@ export const memo = z.object({
 	title: z.string().trim().nonempty().max(70),
 	description: z.string().trim().nonempty().max(500),
 	link: z.string().url(),
-	image_url: z.string().url().optional(),
+	image_url: z.string().url().nullable(),
 	tags: z
 		.array(
 			z
 				.string()
 				.trim()
 				.toLowerCase()
-				.min(2)
+				.min(1)
 				.max(40)
 				.regex(/^[a-zA-Z0-9_]+$/)
 		)

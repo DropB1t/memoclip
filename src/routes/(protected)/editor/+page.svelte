@@ -6,6 +6,7 @@
 	import { scale } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
 	import { XCircle, CornerDownLeft } from 'lucide-svelte'
+	import logo from '$lib/assets/logo.png'
 
 	export let data: PageData
 
@@ -22,9 +23,9 @@
 	let tags_input: HTMLInputElement
 	let exported: boolean = false
 	let exporting: boolean = false
-	let src_img: string | null = null
 
-	$: src_img = $form.image_url ?? null
+	let img_err: boolean = false
+
 	$: exported = $form.link != '' ? true : false
 
 	async function fetchExtractor() {
@@ -138,15 +139,28 @@
 			</div>
 			<form method="POST" action="?/createMemo" use:enhance>
 				<div class="p-6 pt-0 grid gap-4">
-					{#if src_img}
+					{#if $form.image_url}
 						<img
-							class="rounded-lg w-full"
+							class="rounded-lg w-full border-2 border-primary"
 							style="aspect-ratio: 2"
-							src={src_img}
+							src={$form.image_url}
 							alt="Preview"
 							width="340"
 							height="170"
+							on:error={() => {
+								form.set({ ...$form, image_url: null })
+								img_err = true
+							}}
 						/>
+					{:else}
+						<div
+							class="artboard-demo artboard-horizontal w-full max-w-[340px] h-[170px] bg-base-200/25 border-2 border-primary rounded-lg mx-auto"
+						>
+							<img src={logo} alt="MemoClip Logo" width="48" height="48" />
+						</div>
+						{#if img_err}
+							<p class="text-sm text-info">Could not fetch the image from the source</p>
+						{/if}
 					{/if}
 					<div class="form-control w-full">
 						<label class="label" for="title">

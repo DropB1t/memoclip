@@ -13,7 +13,7 @@ export const actions: Actions = {
 	createMemo: async ({ request, locals: { supabase, user } }) => {
 		const form = await superValidate(request, memo)
 
-		//console.log(form)
+		console.log(form)
 
 		if (!form.valid) {
 			return fail(400, { form })

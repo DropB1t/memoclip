@@ -13,7 +13,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				description: article.description,
 				link: article.url,
 				tags: [],
-				image_url: article.image ?? null
+				image_url: article.image && article.image != '' ? article.image : null
 			})
 		}
 		return json(null)

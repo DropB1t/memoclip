@@ -5,8 +5,9 @@
 	import { enhance } from '$app/forms'
 	import toast from 'svelte-french-toast'
 	import { toast_opt } from '$lib/utils'
-	import { state, update_memo } from '$lib/memo_state'
 	import { beforeUpdate } from 'svelte'
+	import { state, update_memo } from '$lib/memo_state'
+	import logo from '$lib/assets/logo.png'
 
 	export let memo: Memo
 
@@ -18,11 +19,19 @@
 
 	let loading = false
 
+	$: is_favorite = memo.is_favorite
+	$: pins = memo.pins
+
+	if (memo.tags) {
+		tags_len = memo.tags.length
+		tags = tags_len > 2 ? memo.tags.slice(0, 2) : memo.tags
+	}
+
 	const sync = () => {
-		if ($state[memo.id].is_favorite && memo.is_favorite != $state[memo.id].is_favorite)
+		if ($state[memo.id] && memo.is_favorite != $state[memo.id].is_favorite)
 			memo.is_favorite = $state[memo.id].is_favorite
 
-		if ($state[memo.id].pins && memo.pins != $state[memo.id].pins) {
+		if ($state[memo.id] && memo.pins != $state[memo.id].pins) {
 			memo.pins = $state[memo.id].pins
 		}
 	}
@@ -52,10 +61,6 @@
 		}
 	}
 
-	if (memo.tags) {
-		tags_len = memo.tags.length
-		tags = tags_len > 2 ? memo.tags.slice(0, 2) : memo.tags
-	}
 	/* w-96 md:h-[450px] */
 </script>
 
@@ -80,7 +85,7 @@
 		{#if memo.image_url}
 			<img
 				loading="lazy"
-				class="rounded-lg w-full"
+				class="rounded-lg w-full border-2 border-primary"
 				style="aspect-ratio: 2"
 				src={memo.image_url}
 				alt={memo.title}
@@ -88,9 +93,10 @@
 				height="170"
 			/>
 		{:else}
-			<div class="artboard-demo artboard-horizontal w-[340px] h-[170px] bg-secondary">
-				<span class="text-secondary-content text-lg">Memo</span>
-				<!-- 340x170 -->
+			<div
+				class="artboard-demo artboard-horizontal w-full h-[154px] bg-base-200/25 border-2 border-primary rounded-lg"
+			>
+				<img src={logo} alt="MemoClip Logo" width="48" height="48" />
 			</div>
 		{/if}
 	</div>
@@ -132,21 +138,21 @@
 					class="px-2 font-bold border-l-[1px] border-y-[1px] border-success rounded-s-lg inline-flex justify-around items-center"
 				>
 					<Boxes size="24" />
-					<span class="pl-1">{$state[memo.id].pins}</span>
+					<span class="pl-1">{pins}</span>
 				</div>
 
 				<form action="/?/toggleFav" method="post" use:enhance={toggleFav}>
 					<input type="hidden" name="id" value={memo.id} />
 					<button
-						aria-label={$state[memo.id].is_favorite ? 'pinned' : 'unpinned'}
+						aria-label={is_favorite ? 'pinned' : 'unpinned'}
 						type="submit"
 						name="pinned"
-						value={$state[memo.id].is_favorite ? 'false' : 'true'}
+						value={is_favorite ? 'false' : 'true'}
 						class="btn btn-sm md:btn-md btn-outline btn-success text-center rounded-s-none md:rounded-lg"
 					>
 						{#if loading}
 							<span class="loading loading-spinner w-[18px]" />
-						{:else if $state[memo.id].is_favorite}
+						{:else if is_favorite}
 							<Check size="18" />
 						{:else}
 							<Plus size="18" />
