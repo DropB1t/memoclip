@@ -30,6 +30,11 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Explore</title>
+	<meta name="description" content="Explore Memos" />
+</svelte:head>
+
 <MemoList
 	bind:this={list}
 	endpoint="/api/memos/feed"

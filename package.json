@@ -45,7 +45,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@fontsource-variable/roboto-mono": "^5.0.4",
 		"@fontsource/zen-kaku-gothic-new": "^5.0.3",
 		"@splidejs/splide-extension-url-hash": "^0.3.0",
 		"@splidejs/svelte-splide": "^0.2.9",

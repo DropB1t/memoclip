@@ -37,6 +37,11 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Search - MemoClip</title>
+	<meta name="description" content="Search memos" />
+</svelte:head>
+
 <Search
 	value={query}
 	on:searchPerformed={(e) => {

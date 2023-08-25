@@ -51,6 +51,11 @@
 	}
 </script>
 
+<svelte:head>
+	<title>{memo.title} - MemoClip</title>
+	<meta name="description" content={memo.description} />
+</svelte:head>
+
 <div
 	class="w-full max-w-4xl border-2 bg-base-100 text-base-content border-secondary shadow-md rounded-lg p-5 mx-auto"
 >

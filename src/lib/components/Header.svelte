@@ -121,7 +121,7 @@
 						>
 							<li class="menu-title text-base-content">{$page.data.user.username}</li>
 							<li><a href="/profile">Profile</a></li>
-							<li><a href="/settings">Settings</a></li>
+							<!-- <li><a href="/settings">Settings</a></li> -->
 							<li>
 								<form
 									action="/api/logout"

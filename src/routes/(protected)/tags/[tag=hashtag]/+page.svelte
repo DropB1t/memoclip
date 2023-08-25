@@ -7,6 +7,8 @@
 	export let data
 	$: ({ memos, next, tag } = data)
 
+	let titleTag = data.tag.charAt(0).toUpperCase() + data.tag.slice(1)
+
 	let list: MemoList
 	let can_restore = false
 
@@ -31,6 +33,11 @@
 		}
 	}
 </script>
+
+<svelte:head>
+	<title>{titleTag} - MemoClip</title>
+	<meta name="description" content="#{titleTag} - MemoClip" />
+</svelte:head>
 
 <MemoList
 	bind:this={list}

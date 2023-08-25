@@ -1,3 +1,8 @@
+<svelte:head>
+	<title>Login to MemoClip</title>
+	<meta name="description" content="Login page for MemoClip" />
+</svelte:head>
+
 <div class="flex flex-col items-center justify-center [&amp;>div]:w-full mt-10">
 	<div class="w-80 md:w-96 border-2 bg-base-100 text-base-content shadow-md rounded-lg">
 		<div class="p-6 space-y-1">

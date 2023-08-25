@@ -30,6 +30,11 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Dashboard</title>
+	<meta name="description" content="Explore all new memos of your followed tags" />
+</svelte:head>
+
 <MemoList
 	bind:this={list}
 	endpoint="/api/memos/{$page.data.user.username}/dashboard_feed"

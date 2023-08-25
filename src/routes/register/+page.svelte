@@ -20,6 +20,11 @@
 	export const snapshot = { capture, restore }
 </script>
 
+<svelte:head>
+	<title>Register</title>
+	<meta name="description" content="Register page for MemoClip" />
+</svelte:head>
+
 <div class="flex flex-col items-center justify-center [&amp;>div]:w-full mt-10">
 	<!-- {#if $message}
 		<div class="alert alert-error flex-inline w-full max-w-sm rounded-lg shadow-md mt-2">
