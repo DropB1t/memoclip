@@ -22,9 +22,12 @@
 
 	let loading = false
 
-	$: if ($page.url.pathname === `/profile/${$page.data.user.username}/favorites`) {
+	$: if (
+		$page.data.user &&
+		$page.url.pathname === `/profile/${$page.data.user.username}/favorites`
+	) {
 		memos = memos.filter((memo) => {
-			return $state[memo.id].is_favorite
+			return $state[memo.id] && $state[memo.id].is_favorite
 		})
 	}
 

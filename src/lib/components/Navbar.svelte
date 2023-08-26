@@ -25,7 +25,7 @@
 			</a>
 			<a
 				href="/favorites"
-				class:active={$page.url.pathname === `/profile/${$page.data.user.username}/favorites`}
+				class:active={$page.url.pathname === `/profile/${$page.data.user?.username}/favorites`}
 				data-sveltekit-preload-data="tap"
 			>
 				<Star />
@@ -75,7 +75,7 @@
 				<a
 					href="/favorites"
 					class="navbar-link hover:!active"
-					class:active={$page.url.pathname === `/profile/${$page.data.user.username}/favorites`}
+					class:active={$page.url.pathname === `/profile/${$page.data.user?.username}/favorites`}
 				>
 					<div class="p-4"><Star /></div>
 					Favorites

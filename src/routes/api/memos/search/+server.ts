@@ -3,8 +3,15 @@ import { PAGE_SIZE } from '$lib/utils.js'
 import { json, error } from '@sveltejs/kit'
 
 export const GET: RequestHandler = async ({ locals, url }) => {
+	const session = await locals.getSession()
+
+	if (!session) {
+		throw error(401)
+	}
+
 	const query = url.searchParams.get('query')
 	if (!query) throw error(400, 'Pass valid query parameter')
+
 	const start = url.searchParams.get('start')?.replace(' ', '+') || 'now()'
 
 	const { data: memos, error: err } = await locals.supabase

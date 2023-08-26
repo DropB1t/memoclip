@@ -1,8 +1,8 @@
 import { redirect } from '@sveltejs/kit'
-import type { PageLoad } from './$types'
+import type { PageServerLoad } from './$types'
 import type { Memo } from '$lib/db_types'
 
-export const load: PageLoad = async ({ url, fetch, parent }) => {
+export const load: PageServerLoad = async ({ url, fetch, parent }) => {
 	const { user } = await parent()
 
 	if (!user) throw redirect(307, '/login')
@@ -14,6 +14,7 @@ export const load: PageLoad = async ({ url, fetch, parent }) => {
 
 	return {
 		memos: memos as Memo[],
-		next: next as string
+		next: next as string,
+		user
 	}
 }

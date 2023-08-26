@@ -1,8 +1,7 @@
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public'
-import { redirect, type Handle, type ResolveOptions, error } from '@sveltejs/kit'
+import type { Handle, ResolveOptions } from '@sveltejs/kit'
 import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit'
-import { handleLoginRedirect } from '$lib/utils'
-import type { Database, User } from '$lib/db_types'
+import type { Database } from '$lib/db_types'
 
 export const handle = (async ({ event, resolve }) => {
 	const opts: ResolveOptions = {}
@@ -34,25 +33,17 @@ export const handle = (async ({ event, resolve }) => {
 		return name === 'content-range'
 	}
 
-	const session = await event.locals.getSession()
-
-	if (event.route.id?.startsWith('/(protected)')) {
+	/* if (event.route.id?.startsWith('/(protected)')) {
 		if (!session) {
-			throw redirect(303, handleLoginRedirect(event))
+			throw redirect(303, handleLoginRedirect(event.url))
 		}
-	}
+	} */
 
 	/* if (event.url.pathname.startsWith('/api') && event.request.method === 'POST') {
 		if (!session) {
 			throw error(303, '/')
 		}
 	} */
-
-	if (session) {
-		event.locals.user = (
-			await event.locals.supabase.from('profiles').select().eq('id', session.user.id).single()
-		).data as User
-	}
 
 	return await resolve(event, opts)
 }) satisfies Handle

@@ -1,7 +1,7 @@
-import type { PageLoad } from './$types'
+import type { PageServerLoad } from './$types'
 import type { Memo } from '$lib/db_types'
 
-export const load: PageLoad = async ({ url, fetch, params }) => {
+export const load: PageServerLoad = async ({ url, fetch, params }) => {
 	const response = await fetch(
 		`/api/memos/${params.user}/fav?start=${url.searchParams.get('start') || ''}`
 	)

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { navigating, page } from '$app/stores'
+	import { navigating } from '$app/stores'
 	import MemoList from '$lib/components/MemoList.svelte'
 
 	export let data
-	$: ({ memos, next } = data)
+	$: ({ memos, next, user } = data)
 
 	let list: MemoList
 	let can_restore = false
@@ -37,7 +37,7 @@
 
 <MemoList
 	bind:this={list}
-	endpoint="/api/memos/{$page.data.user.username}/dashboard_feed"
+	endpoint="/api/memos/{user.username}/dashboard_feed"
 	{memos}
 	{next}
 	on:loaded={(e) => {

@@ -12,10 +12,11 @@ declare global {
 		interface Locals {
 			supabase: SupabaseClient<Database>
 			getSession(): Promise<Session | null>
-			user?: User
+			user: User
 		}
 		interface PageData {
 			session: Session | null
+			user: User
 		}
 	}
 }
