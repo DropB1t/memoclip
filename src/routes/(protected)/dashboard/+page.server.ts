@@ -7,14 +7,21 @@ export const load: PageServerLoad = async ({ url, fetch, parent }) => {
 
 	if (!user) throw redirect(307, '/login')
 
-	const response = await fetch(
-		`/api/memos/${user.username}/dashboard_feed?start=${url.searchParams.get('start') || ''}`
-	)
-	const { memos, next } = await response.json()
+	const fetchMemo = async () => {
+		const response = await fetch(
+			`/api/memos/${user.username}/dashboard_feed?start=${url.searchParams.get('start') || ''}`
+		)
+		const { memos, next } = await response.json()
+		return {
+			memos: memos as Memo[],
+			next: next as string
+		}
+	}
 
 	return {
-		memos: memos as Memo[],
-		next: next as string,
-		user
+		user,
+		streamed: {
+			data: fetchMemo()
+		}
 	}
 }

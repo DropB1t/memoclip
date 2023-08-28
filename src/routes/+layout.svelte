@@ -45,12 +45,13 @@
 	{@html webManifestLink}
 </svelte:head>
 
-<Toaster />
 <Header />
+<Toaster />
+<GoTop />
+
 <div class="px-2 md:px-20 pt-8 pb-16 z-0">
 	<slot />
 </div>
-<GoTop />
 
 {#if session}
 	<Navbar />

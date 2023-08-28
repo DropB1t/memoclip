@@ -1,6 +1,6 @@
 import type { ToastOptions } from 'svelte-french-toast'
 
-export const PAGE_SIZE = 25
+export const PAGE_SIZE = 5
 
 export function handleLoginRedirect(url: URL) {
 	const fromUrl = url.pathname + url.search

@@ -12,7 +12,7 @@ export const GET: RequestHandler = async ({ locals, url, params }) => {
 	const { data: user, error: err_auth } = await locals.supabase
 		.from('profiles')
 		.select('username, followed_tags')
-		.eq('id', session?.user.id)
+		.eq('id', session.user.id)
 		.single()
 
 	if (err_auth) {

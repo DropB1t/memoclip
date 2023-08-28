@@ -16,7 +16,7 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 
 	const { data: memos, error: err } = await locals.supabase
 		.rpc('get_memos_with_favorites', {
-			current_user_id: locals.user?.id ?? null
+			current_user_id: session.user.id
 		})
 		.textSearch('fts', `'${query.trim()}'`)
 		.lte('created_at', start)

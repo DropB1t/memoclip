@@ -52,7 +52,7 @@
 </script>
 
 <svelte:head>
-	<title>{memo.title} - MemoClip</title>
+	<title>{memo.title} • MemoClip</title>
 	<meta name="description" content={memo.description} />
 </svelte:head>
 
@@ -155,6 +155,7 @@
 			<a
 				class="w-fit lg:w-full bg-accent link-hover text-accent-content text-md lg:text-lg font-medium inline-flex justify-evenly items-center rounded-lg p-2"
 				href={memo.link}
+				aria-label="Link to {memo.title} post"
 				target="_blank"
 			>
 				<ExternalLink size="18" /> Read Post

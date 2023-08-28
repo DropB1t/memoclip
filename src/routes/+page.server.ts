@@ -84,12 +84,11 @@ export const actions: Actions = {
 			})
 
 			if (err) {
-				/* return fail(404, {
+				return fail(404, {
 					err: true,
 					err_msg: 'Failed in following the tag'
-				}) */
-
-				throw error(500, 'Something went wrong :(')
+				})
+				/* throw error(500, 'Something went wrong :(') */
 			}
 			return { success: true }
 		} else {
@@ -99,7 +98,11 @@ export const actions: Actions = {
 			})
 
 			if (err) {
-				throw error(500, 'Something went wrong :(')
+				return fail(404, {
+					err: true,
+					err_msg: 'Failed in following the tag'
+				})
+				/* throw error(500, 'Something went wrong :(') */
 			}
 			return { success: true }
 		}
@@ -107,11 +110,16 @@ export const actions: Actions = {
 }
 
 export const load: PageServerLoad = async ({ url, fetch }) => {
-	const response = await fetch(`/api/memos/feed?start=${url.searchParams.get('start') || ''}`)
-	const { memos, next } = await response.json()
+	const fetchMemo = async () => {
+		const response = await fetch(`/api/memos/feed?start=${url.searchParams.get('start') || ''}`)
+		const { memos, next } = await response.json()
+		return {
+			memos: memos as Memo[],
+			next: next as string
+		}
+	}
 
 	return {
-		memos: memos as Memo[],
-		next: next as string
+		streamed: { data: fetchMemo() }
 	}
 }

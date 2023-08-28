@@ -24,7 +24,7 @@
 </script>
 
 <svelte:head>
-	<title>Edit Memo</title>
+	<title>Edit Memo • MemoClip</title>
 	<meta name="description" content="Edit page for your memos" />
 </svelte:head>
 

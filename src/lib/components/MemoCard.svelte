@@ -5,7 +5,7 @@
 	import { enhance } from '$app/forms'
 	import toast from 'svelte-french-toast'
 	import { toast_opt } from '$lib/utils'
-	import { beforeUpdate } from 'svelte'
+	import { afterUpdate } from 'svelte'
 	import { state, update_memo } from '$lib/memo_state'
 	import logo from '$lib/assets/logo.png'
 
@@ -31,12 +31,10 @@
 		if ($state[memo.id] && memo.is_favorite != $state[memo.id].is_favorite)
 			memo.is_favorite = $state[memo.id].is_favorite
 
-		if ($state[memo.id] && memo.pins != $state[memo.id].pins) {
-			memo.pins = $state[memo.id].pins
-		}
+		if ($state[memo.id] && memo.pins != $state[memo.id].pins) memo.pins = $state[memo.id].pins
 	}
 
-	beforeUpdate(() => {
+	afterUpdate(() => {
 		sync()
 	})
 
@@ -46,12 +44,13 @@
 			if (result.type === 'success') {
 				if (result.data!.action === 'pinned') {
 					memo.is_favorite = true
-					memo.pins = $state[memo.id].pins + 1
+					memo.pins = memo.pins + 1
 				} else if (result.data!.action === 'unpinned') {
 					memo.is_favorite = false
-					memo.pins = $state[memo.id].pins - 1
+					memo.pins = memo.pins - 1
 				}
 				update_memo(memo.id, memo.pins, memo.is_favorite)
+
 				toast.success(memo.is_favorite ? 'Successfully pinned' : 'Successfully unpinned', toast_opt)
 			}
 			if (result.type === 'failure') {
@@ -66,7 +65,6 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
-	data-memo-id={memo.id}
 	class="memo group card indicator bg-base-100 rounded-lg w-[22rem] h-[560px] border-2 border-secondary not-prose my-2"
 >
 	{#if created > five_hours}
@@ -85,8 +83,7 @@
 		{#if memo.image_url}
 			<img
 				loading="lazy"
-				class="rounded-lg w-full border-2 border-primary"
-				style="aspect-ratio: 2"
+				class="rounded-lg w-full border-2 border-primary h-[170px]"
 				src={memo.image_url}
 				alt={memo.title}
 				width="340"
@@ -94,7 +91,7 @@
 			/>
 		{:else}
 			<div
-				class="artboard-demo artboard-horizontal w-full h-[154px] bg-base-200/25 border-2 border-primary rounded-lg"
+				class="artboard-demo artboard-horizontal w-full h-[170px] bg-base-200/25 border-2 border-primary rounded-lg"
 			>
 				<img src={logo} alt="MemoClip Logo" width="48" height="48" />
 			</div>
@@ -129,7 +126,12 @@
 
 		<div class="divider my-0.5" />
 		<div class="card-actions flex justify-start items-center">
-			<a class="btn btn-sm md:btn-md btn-outline btn-accent" href={memo.link} target="_blank">
+			<a
+				class="btn btn-sm md:btn-md btn-outline btn-accent"
+				href={memo.link}
+				aria-label="Link to {memo.title} post"
+				target="_blank"
+			>
 				<ExternalLink size="18" />
 			</a>
 

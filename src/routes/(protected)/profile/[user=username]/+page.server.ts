@@ -4,10 +4,9 @@ import type { Memo } from '$lib/db_types'
 export const load: PageServerLoad = async ({ url, fetch, params }) => {
 	const fetchMemo = async () => {
 		const response = await fetch(
-			`/api/memos/${params.user}/fav?start=${url.searchParams.get('start') || ''}`
+			`/api/memos/${params.user}/feed?start=${url.searchParams.get('start') || ''}`
 		)
 		const { memos, next } = await response.json()
-
 		return {
 			memos: memos as Memo[],
 			next: next as string
@@ -15,6 +14,8 @@ export const load: PageServerLoad = async ({ url, fetch, params }) => {
 	}
 
 	return {
-		streamed: { data: fetchMemo() }
+		streamed: {
+			data: fetchMemo()
+		}
 	}
 }

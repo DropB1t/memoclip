@@ -9,7 +9,5 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 				.data as User)
 		: null
 
-	locals.user = user
-
 	return { session, user }
 }

@@ -63,7 +63,7 @@
 </script>
 
 <svelte:head>
-	<title>Add Memo</title>
+	<title>Add Memo • MemoClip</title>
 	<meta name="description" content="Create new Memo for the community" />
 </svelte:head>
 

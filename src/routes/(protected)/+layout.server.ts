@@ -2,7 +2,7 @@ import { redirect } from '@sveltejs/kit'
 import type { LayoutServerLoad } from './$types'
 import { handleLoginRedirect } from '$lib/utils'
 
-export const load = (async ({ parent, locals, url }) => {
+export const load = (async ({ parent, url }) => {
 	const { session, user } = await parent()
 
 	if (!session) {

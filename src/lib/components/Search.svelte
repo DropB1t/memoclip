@@ -51,7 +51,7 @@
 		hiLiteIndex = 0
 	}
 
-	const submitValue = async () => {
+	/* const submitValue = async () => {
 		if (value) {
 			if ($page.url.pathname !== '/search') {
 				goto(`/search/?query=${value}`)
@@ -68,7 +68,7 @@
 				}
 			}
 		}
-	}
+	} */
 
 	const navigateList = (e: KeyboardEvent) => {
 		if (!focused) return
@@ -93,7 +93,7 @@
 		class="w-full max-w-2xl inline-flex justify-center items-center rounded-lg input input-bordered border-2 focus-within:input-primary"
 		autocomplete="off"
 	>
-		<button type="submit" class="hover:scale-95">
+		<button type="submit" name="search" class="hover:scale-95">
 			<Search />
 		</button>
 

@@ -3,8 +3,8 @@ import { error, fail, redirect } from '@sveltejs/kit'
 import type { Actions, PageServerLoad } from './$types'
 
 export const actions: Actions = {
-	deleteMemo: async ({ locals, request }) => {
-		const session = await locals.getSession()
+	deleteMemo: async ({ locals: { supabase, getSession }, request }) => {
+		const session = await getSession()
 
 		if (!session) throw error(401)
 
@@ -13,7 +13,7 @@ export const actions: Actions = {
 		const id = Number(data.get('id'))
 		if (!id) return fail(412) // Precondition Failed
 
-		const { error: err } = await locals.supabase.from('memos').delete().eq('id', id)
+		const { error: err } = await supabase.from('memos').delete().eq('id', id)
 
 		if (err) {
 			return fail(404, {
@@ -22,7 +22,7 @@ export const actions: Actions = {
 			})
 		}
 
-		throw redirect(303, locals.user ? `/profile/${locals.user.username}` : '/')
+		throw redirect(303, '/')
 	}
 }
 
