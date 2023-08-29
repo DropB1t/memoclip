@@ -1,8 +1,9 @@
-/* Write your global styles here, in PostCSS syntax */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html {
-	@apply !bg-base-200;
+@layer base {
+	html {
+		@apply !bg-base-200;
+	}
 }

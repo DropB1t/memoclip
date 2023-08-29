@@ -16,10 +16,6 @@
 	import { onMount } from 'svelte'
 	import { page } from '$app/stores'
 
-	import { pwaInfo } from 'virtual:pwa-info'
-
-	$: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : ''
-
 	export let data: LayoutData
 
 	if ($page.form?.err) {
@@ -41,10 +37,6 @@
 	})
 </script>
 
-<svelte:head>
-	{@html webManifestLink}
-</svelte:head>
-
 <Header />
 <Toaster />
 <GoTop />
@@ -59,6 +51,6 @@
 
 <style>
 	:global(body) {
-		font-family: 'Open Sans Variable', sans-serif, system-ui;
+		font-family: 'Zen Kaku Gothic New', sans-serif;
 	}
 </style>

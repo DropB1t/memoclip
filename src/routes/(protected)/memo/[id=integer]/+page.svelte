@@ -64,7 +64,7 @@
 			<h1 class="text-2xl text-base-content font-bold mb-5">
 				{memo.title}
 			</h1>
-			<h2 class="text-lg text-info font-semibold">TLDR</h2>
+			<h2 class="text-lg text-info font-medium">TLDR</h2>
 			<p class="lg:w-3/4 text-base border-l-2 border-info px-5 mb-1">{memo.description}</p>
 			<div class="block mb-1">
 				{#each memo.tags as tag}
