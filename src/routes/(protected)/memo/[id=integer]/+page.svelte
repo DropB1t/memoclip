@@ -51,6 +51,11 @@
 	}
 </script>
 
+<svelte:head>
+	<title>{memo.title} • MemoClip</title>
+	<meta name="description" content={memo.description} />
+</svelte:head>
+
 <div
 	class="w-full max-w-4xl border-2 bg-base-100 text-base-content border-secondary shadow-md rounded-lg p-5 mx-auto"
 >
@@ -59,7 +64,7 @@
 			<h1 class="text-2xl text-base-content font-bold mb-5">
 				{memo.title}
 			</h1>
-			<h2 class="text-lg text-info font-semibold">TLDR</h2>
+			<h2 class="text-lg text-info font-medium">TLDR</h2>
 			<p class="lg:w-3/4 text-base border-l-2 border-info px-5 mb-1">{memo.description}</p>
 			<div class="block mb-1">
 				{#each memo.tags as tag}
@@ -150,6 +155,7 @@
 			<a
 				class="w-fit lg:w-full bg-accent link-hover text-accent-content text-md lg:text-lg font-medium inline-flex justify-evenly items-center rounded-lg p-2"
 				href={memo.link}
+				aria-label="Link to {memo.title} post"
 				target="_blank"
 			>
 				<ExternalLink size="18" /> Read Post

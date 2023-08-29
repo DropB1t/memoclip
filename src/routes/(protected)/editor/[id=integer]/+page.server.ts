@@ -1,7 +1,7 @@
 import type { Actions, PageServerLoad } from './$types'
 import { AuthApiError } from '@supabase/supabase-js'
 import { superValidate, message } from 'sveltekit-superforms/server'
-import { fail, redirect } from '@sveltejs/kit'
+import { error, fail, redirect } from '@sveltejs/kit'
 import { memo_to_edit } from '$lib/schemas'
 import type { Memo } from '$lib/db_types'
 
@@ -14,7 +14,11 @@ export const load = (async ({ params, fetch }) => {
 }) satisfies PageServerLoad
 
 export const actions: Actions = {
-	updateMemo: async ({ request, locals: { supabase } }) => {
+	updateMemo: async ({ request, locals: { supabase, getSession } }) => {
+		const session = await getSession()
+
+		if (!session) throw error(401)
+
 		const form = await superValidate(request, memo_to_edit)
 
 		if (!form.valid) {

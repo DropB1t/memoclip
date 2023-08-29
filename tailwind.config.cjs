@@ -9,8 +9,8 @@ const config = {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: 'Zen Kaku Gothic New, Helvetica, Arial, sans-serif',
-				mono: 'Roboto Mono Variable, ui-monospace, monospace'
+				sans: ['Zen Kaku Gothic New', 'sans-serif'],
+				mono: ['ui-monospace', 'monospace']
 			}
 		}
 	},

@@ -23,6 +23,11 @@
 	$: src_img = $form.image_url ?? null
 </script>
 
+<svelte:head>
+	<title>Edit Memo • MemoClip</title>
+	<meta name="description" content="Edit page for your memos" />
+</svelte:head>
+
 <div class="flex flex-col items-center justify-center mt-5">
 	<div
 		class="flex flex-col items-stretch justify-stretch max-w-lg w-full min-h-[590px] border-2 border-base-300 bg-base-100 text-base-content shadow-md rounded-lg md:ml-5 mt-5 md:mt-0"

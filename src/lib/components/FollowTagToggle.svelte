@@ -12,6 +12,8 @@
 	$: if (tag) fetchFollow()
 
 	async function fetchFollow() {
+		if (!$page.data.user) return
+
 		loading = true
 		const { data, error: err } = await $page.data.supabase
 			.from('profiles')

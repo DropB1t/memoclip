@@ -62,6 +62,11 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Add Memo • MemoClip</title>
+	<meta name="description" content="Create new Memo for the community" />
+</svelte:head>
+
 <div class="flex flex-col md:flex-row items-start justify-center mt-5">
 	<div class="flex flex-col gap-2 max-w-lg w-full">
 		<div class="w-full border-2 border-base-300 bg-base-100 text-base-content shadow-md rounded-lg">

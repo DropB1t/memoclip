@@ -15,7 +15,7 @@ export const GET: RequestHandler = async ({ locals, url, params }) => {
 		.rpc('get_favorites', {
 			in_username: params.user
 		})
-		.lte('created_at', start)
+		.lte('added_at', start)
 		.order('added_at', { ascending: false })
 		.limit(PAGE_SIZE + 1)
 
@@ -23,7 +23,7 @@ export const GET: RequestHandler = async ({ locals, url, params }) => {
 		throw error(500, 'Something went wrong while fetching the feed')
 	}
 
-	const next = memos.length > PAGE_SIZE ? memos.pop()!.created_at : null
+	const next = memos.length > PAGE_SIZE ? memos.pop()!.added_at : null
 
 	return json({
 		memos: memos,

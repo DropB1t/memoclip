@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores'
-	import { createEventDispatcher, tick } from 'svelte'
+	import { createEventDispatcher } from 'svelte'
 	import type { Memo } from '$lib/db_types'
 	import MemoCard from '$lib/components/MemoCard.svelte'
 	import InfiniteScroll from 'svelte-infinite-scroll'
@@ -22,9 +22,12 @@
 
 	let loading = false
 
-	$: if ($page.url.pathname === `/profile/${$page.data.user.username}/favorites`) {
+	$: if (
+		$page.data.user &&
+		$page.url.pathname === `/profile/${$page.data.user.username}/favorites`
+	) {
 		memos = memos.filter((memo) => {
-			return $state[memo.id].is_favorite
+			return $state[memo.id] ? $state[memo.id].is_favorite : memo.is_favorite
 		})
 	}
 
@@ -39,7 +42,6 @@
 	}
 
 	async function restorePos(scroll_pos: number) {
-		await tick()
 		window.scrollTo({ top: scroll_pos, behavior: 'instant' })
 	}
 
@@ -55,11 +57,7 @@
 		if (response.ok) {
 			const fetched_memo: Memo[] = result.memos
 			const new_next: string = result.next
-			/*
-			memos = [...memos, ...fetched_memo]
-			next = new_next
-			*/
-			init_memos(fetched_memo)
+
 			dispatch('loaded', { fetched_memo, new_next })
 		} else {
 			toast.error('Failed to load memos :c', toast_opt)

@@ -1,15 +1,20 @@
 <script lang="ts">
 	import '../app.postcss'
+	import '@fontsource/zen-kaku-gothic-new/400.css'
+	import '@fontsource/zen-kaku-gothic-new/500.css'
+	import '@fontsource/zen-kaku-gothic-new/700.css'
+
+	import type { LayoutData } from './$types'
+
 	import Header from '$lib/components/Header.svelte'
 	import Navbar from '$lib/components/Navbar.svelte'
 	import GoTop from '$lib/components/GoTop.svelte'
 	import { Toaster, toast } from 'svelte-french-toast'
+	import { toast_opt } from '$lib/utils'
 
-	import type { LayoutData } from './$types'
 	import { invalidate } from '$app/navigation'
 	import { onMount } from 'svelte'
 	import { page } from '$app/stores'
-	import { toast_opt } from '$lib/utils'
 
 	export let data: LayoutData
 
@@ -32,13 +37,20 @@
 	})
 </script>
 
-<Toaster />
 <Header />
+<Toaster />
+<GoTop />
+
 <div class="px-2 md:px-20 pt-8 pb-16 z-0">
 	<slot />
 </div>
-<GoTop />
 
 {#if session}
 	<Navbar />
 {/if}
+
+<style>
+	:global(body) {
+		font-family: 'Zen Kaku Gothic New', sans-serif;
+	}
+</style>

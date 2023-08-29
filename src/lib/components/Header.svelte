@@ -100,7 +100,7 @@
 			<div class="inline-flex justify-end items-center">
 				<ThemeToggle />
 				<div class="hidden md:flex divider divider-horizontal py-1 mx-1" />
-				{#if $page.data.session}
+				{#if $page.data.session && $page.data.user}
 					<!-- <button class="btn btn-ghost p-3 m-1">
 						<div class="indicator">
 							<Bell />
@@ -121,7 +121,7 @@
 						>
 							<li class="menu-title text-base-content">{$page.data.user.username}</li>
 							<li><a href="/profile">Profile</a></li>
-							<li><a href="/settings">Settings</a></li>
+							<!-- <li><a href="/settings">Settings</a></li> -->
 							<li>
 								<form
 									action="/api/logout"

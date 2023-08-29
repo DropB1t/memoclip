@@ -4,9 +4,22 @@ import { PAGE_SIZE } from '$lib/utils'
 
 export const GET: RequestHandler = async ({ locals, url, params }) => {
 	const session = await locals.getSession()
-	const user = locals.user
 
-	if (!session || !user || user.username !== params.user) throw error(401)
+	/* session.user.user_metadata.username */
+
+	if (!session) throw error(401)
+
+	const { data: user, error: err_auth } = await locals.supabase
+		.from('profiles')
+		.select('username, followed_tags')
+		.eq('id', session.user.id)
+		.single()
+
+	if (err_auth) {
+		throw error(500, 'Something went wrong while fetching the feed')
+	}
+
+	if (user.username !== params.user) throw error(401)
 
 	const start = url.searchParams.get('start')?.replace(' ', '+') || 'now()'
 

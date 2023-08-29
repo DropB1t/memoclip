@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { navigating, page } from '$app/stores'
+	import { navigating } from '$app/stores'
 	import MemoList from '$lib/components/MemoList.svelte'
 	import Search from '$lib/components/Search.svelte'
 	import { tick } from 'svelte'
@@ -36,6 +36,11 @@
 		}
 	}
 </script>
+
+<svelte:head>
+	<title>Search • MemoClip</title>
+	<meta name="description" content="Search memos" />
+</svelte:head>
 
 <Search
 	value={query}
