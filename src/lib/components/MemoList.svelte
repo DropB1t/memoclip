@@ -79,7 +79,7 @@
 	{/each}
 	<InfiniteScroll
 		window={true}
-		threshold={500}
+		threshold={300}
 		{hasMore}
 		on:loadMore={() => {
 			fetchMemos()

@@ -3,6 +3,7 @@
 	<head>
 		<title>MemoClip</title>
 		<link rel="icon" href="%sveltekit.assets%/favicon.ico" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1" />
 		<meta
@@ -10,10 +11,10 @@
 			content="Share & Pin your favourite discovered resources on the Web 🗂️"
 		/>
 		<link rel="manifest" crossorigin="use-credentials" href="%sveltekit.assets%/manifest.json" />
-
+		<meta name="theme-color" content="#0f1729" />
 		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover">
+	<body data-sveltekit-preload-data="tap">
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>

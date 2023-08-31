@@ -2,9 +2,11 @@ import type { PageServerLoad } from './$types'
 import type { Memo } from '$lib/db_types'
 
 export const load: PageServerLoad = async ({ url, fetch, params }) => {
+	const tag = params.tag
+
 	const fetchMemo = async () => {
 		const response = await fetch(
-			`/api/memos/tags/${params.tag}?start=${url.searchParams.get('start') || ''}`
+			`/api/memos/tags/${tag}?start=${url.searchParams.get('start') || ''}`
 		)
 		const { memos, next } = await response.json()
 		return {
@@ -14,7 +16,7 @@ export const load: PageServerLoad = async ({ url, fetch, params }) => {
 	}
 
 	return {
-		tag: params.tag as string,
+		tag: tag as string,
 		streamed: { data: fetchMemo() }
 	}
 }
