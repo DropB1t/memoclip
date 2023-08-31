@@ -93,7 +93,13 @@
 		class="w-full max-w-2xl inline-flex justify-center items-center rounded-lg input input-bordered border-2 focus-within:input-primary"
 		autocomplete="off"
 	>
-		<button type="submit" name="search" class="hover:scale-95">
+		<button
+			type="submit"
+			name="search"
+			id="search"
+			aria-label="Search Button"
+			class="hover:scale-95"
+		>
 			<Search />
 		</button>
 

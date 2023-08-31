@@ -38,35 +38,25 @@
 		<div class="divider px-4 my-0.5 max-w-[72px]" />
 		<ul class="menu">
 			<li class="navbar-li group">
-				<a href="/" class="navbar-link hover:!active" class:active={$page.url.pathname === '/'}>
+				<a href="/" class="navbar-link" class:active={$page.url.pathname === '/'}>
 					<div class="p-4"><Compass /></div>
 					Explore
 				</a>
 			</li>
 			<li class="navbar-li group">
-				<a
-					href="/dashboard"
-					class="navbar-link hover:!active"
-					class:active={$page.url.pathname === '/dashboard'}
+				<a href="/dashboard" class="navbar-link" class:active={$page.url.pathname === '/dashboard'}
 					><div class="p-4"><LayoutDashboard /></div>
 					Dashboard</a
 				>
 			</li>
 			<li class="navbar-li group">
-				<a
-					href="/search"
-					class="navbar-link hover:!active"
-					class:active={$page.url.pathname === '/search'}
+				<a href="/search" class="navbar-link" class:active={$page.url.pathname === '/search'}
 					><div class="p-4"><Search /></div>
 					Search</a
 				>
 			</li>
 			<li class="navbar-li group">
-				<a
-					href="/editor"
-					class="navbar-link hover:!active"
-					class:active={$page.url.pathname === '/editor'}
-				>
+				<a href="/editor" class="navbar-link" class:active={$page.url.pathname === '/editor'}>
 					<div class="p-4"><Plus /></div>
 					Add Memo
 				</a>
@@ -74,7 +64,7 @@
 			<li class="navbar-li group">
 				<a
 					href="/favorites"
-					class="navbar-link hover:!active"
+					class="navbar-link"
 					class:active={$page.url.pathname === `/profile/${$page.data.user?.username}/favorites`}
 				>
 					<div class="p-4"><Star /></div>
