@@ -1,7 +1,7 @@
 {
     "theme_color": "#ededed",
     "background_color": "#ededed",
-    "display": "fullscreen",
+    "display": "standalone",
     "scope": "/",
     "start_url": "/",
     "description": "Share &Pin your favourite discovered resources on the Web \ud83d\uddc2\ufe0f",
