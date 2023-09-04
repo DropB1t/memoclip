@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { invalidate } from '$app/navigation'
 	import { navigating } from '$app/stores'
 	import FollowTagToggle from '$lib/components/FollowTagToggle.svelte'
 	import MemoList from '$lib/components/MemoList.svelte'

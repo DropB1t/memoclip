@@ -35,8 +35,8 @@ sw.addEventListener('activate', (event) => {
 
 sw.addEventListener('fetch', (event) => {
 	const matchUrl = new URL(event.request.url)
-	if (event.request.method !== 'GET') return
 	if (matchUrl.pathname.startsWith('/api')) return
+	if (event.request.method !== 'GET') return
 
 	async function respond() {
 		const url = new URL(event.request.url)
@@ -78,6 +78,43 @@ sw.addEventListener('fetch', (event) => {
 	event.respondWith(respond())
 })
 
+sw.addEventListener('notificationclick', (event: any) => {
+	const clickedNotification = event?.notification
+
+	console.log(clickedNotification)
+	clickedNotification.close()
+
+	const url = clickedNotification.data.url
+
+	event.waitUntil(
+		sw.clients
+			.matchAll({ type: 'window' })
+			.then((clientsArr) => {
+				// console.log('matching sw', clientsArr)
+
+				// https://web-push-book.gauntface.com/common-notification-patterns/
+
+				// If we have a client, pick the first one and open it
+				const hadWindowToFocus = clientsArr.length && clientsArr.length > 0
+
+				// Otherwise, open a new tab to the applicable URL and focus it.
+				if (hadWindowToFocus) {
+					const client = clientsArr[0]
+					if (!client.url.includes(url)) {
+						client.navigate(url)
+					}
+					client.focus()
+				} else
+					sw.clients
+						.openWindow(url)
+						.then((windowClient) => (windowClient ? windowClient.focus() : null))
+			})
+			.catch((e) => {
+				console.error(e)
+			})
+	)
+})
+
 const offlinePage = `
 <!DOCTYPE html>
 <html lang="en">
@@ -110,12 +147,23 @@ const offlinePage = `
 				margin-block: 1rem;
 			}
 
-			button {
+			button,
+			a {
+				color: #18182f;
 				display: block;
-				margin-left: auto;
 				padding: 0.5rem;
-				border-radius: 0.5rem;
-				border-style: double;
+				border: solid 1px #0c0c16;
+				border-radius: 0.5em;
+				text-decoration: none;
+				cursor: pointer;
+			}
+
+			#btn-block {
+				margin-left: auto;
+				display: flex;
+				gap: 1rem;
+				justify-content: end;
+				align-items: stretch;
 			}
 		</style>
 	</head>
@@ -123,14 +171,15 @@ const offlinePage = `
 		<h2>Memo Clip • You are offline</h2>
 
 		<p>Click the button below to try reloading.</p>
-		<button type="button">⤾ Reload</button>
+		<div id="btn-block">
+			<a href="/">Go to Explore</a>
+			<button type="button">⤾ Reload</button>
+		</div>
 		<script>
 			document.querySelector('button').addEventListener('click', () => {
 				window.location.reload()
 			})
 
-			// Listen to changes in the network state, reload when online.
-			// This handles the case when the device is completely offline.
 			window.addEventListener('online', () => {
 				window.location.reload()
 			})
