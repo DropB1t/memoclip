@@ -8,6 +8,7 @@
 	import { afterUpdate } from 'svelte'
 	import { state, update_memo } from '$lib/memo_state'
 	import logo from '$lib/assets/logo.png'
+	import { fly } from 'svelte/transition'
 
 	export let memo: Memo
 
@@ -59,12 +60,11 @@
 			loading = false
 		}
 	}
-
-	/* w-96 md:h-[450px] */
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
+	in:fly={{ y: 50, duration: 300, delay: 50 }}
 	class="memo group card indicator bg-base-100 rounded-lg w-[22rem] h-[560px] border-2 border-secondary not-prose my-2"
 >
 	{#if created > five_hours}
