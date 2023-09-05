@@ -7,16 +7,48 @@
 	import { flip } from 'svelte/animate'
 	import { XCircle, CornerDownLeft } from 'lucide-svelte'
 	import logo from '$lib/assets/logo.png'
+	import toast from 'svelte-french-toast'
+	import { toast_opt } from '$lib/utils'
 
 	export let data: PageData
 
 	const { form, errors, constraints, message, enhance, capture, restore } = superForm(data.form, {
 		taintedMessage: null,
 		validators: memo,
-		dataType: 'json'
+		dataType: 'json',
+		resetForm: true
 	})
 
 	export const snapshot = { capture, restore }
+
+	async function displayNotificationMemoCreated(url: string) {
+		if (!('serviceWorker' in navigator)) return
+		const sw = await navigator.serviceWorker.ready
+
+		const title = 'Memo Created'
+		const options = {
+			body: 'Click the notification to see the new Memo',
+			icon: logo,
+			data: { url }
+		}
+
+		if (window.Notification && Notification.permission === 'granted') {
+			sw.showNotification(title, options)
+		} else if (window.Notification && Notification.permission !== 'denied') {
+			Notification.requestPermission((status) => {
+				if (status === 'granted') {
+					sw.showNotification(title, options)
+				}
+			})
+		}
+
+		message.set({})
+	}
+
+	$: if ($message && $message.status === 'success' && $message.id) {
+		toast.success($message.text, toast_opt)
+		displayNotificationMemoCreated(`/memo/${$message.id}`)
+	}
 
 	let err: string | null = null
 	let link_input: HTMLInputElement
@@ -121,10 +153,10 @@
 				<span>{err}</span>
 			</div>
 		{/if}
-		{#if $message}
+		{#if $message && $message.status == 'error'}
 			<div class="alert alert-error rounded-lg shadow-md mt-2">
 				<XCircle />
-				<span>{$message}</span>
+				<span>{$message.text}</span>
 			</div>
 		{/if}
 	</div>

@@ -4,7 +4,6 @@ import { json } from '@sveltejs/kit'
 
 export const POST: RequestHandler = async ({ request }) => {
 	const link = await request.text()
-	/* const link = data.get('link') as string */
 	try {
 		const article = await extract(link, { contentLengthThreshold: 0 } as ParserOptions)
 		if (article) {

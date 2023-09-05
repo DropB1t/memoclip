@@ -1,20 +1,19 @@
 <script lang="ts">
 	import '../app.postcss'
-	import '@fontsource/zen-kaku-gothic-new/400.css'
-	import '@fontsource/zen-kaku-gothic-new/500.css'
-	import '@fontsource/zen-kaku-gothic-new/700.css'
+	import '@fontsource/zen-kaku-gothic-new'
 
 	import type { LayoutData } from './$types'
 
 	import Header from '$lib/components/Header.svelte'
 	import Navbar from '$lib/components/Navbar.svelte'
 	import GoTop from '$lib/components/GoTop.svelte'
+	import Preloading from '$lib/components/Preloading.svelte'
 	import { Toaster, toast } from 'svelte-french-toast'
 	import { toast_opt } from '$lib/utils'
 
 	import { invalidate } from '$app/navigation'
 	import { onMount } from 'svelte'
-	import { page } from '$app/stores'
+	import { navigating, page } from '$app/stores'
 
 	export let data: LayoutData
 
@@ -36,6 +35,10 @@
 		return () => subscription.unsubscribe()
 	})
 </script>
+
+{#if $navigating}
+	<Preloading />
+{/if}
 
 <Header />
 <Toaster />

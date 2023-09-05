@@ -33,7 +33,7 @@
 	const toggleFollow: SubmitFunction = () => {
 		loading = true
 
-		return async ({ update, result }) => {
+		return async ({ result }) => {
 			if (result.type === 'success') {
 				following = !following
 				toast.success('Successfully followed the tag', toast_opt)
@@ -42,11 +42,8 @@
 				toast.error('Failed to follow the tag', toast_opt)
 			}
 			loading = false
-			await update()
 		}
 	}
-
-	//onMount(async () => fetchFollow())
 </script>
 
 <div class="ml-auto">
