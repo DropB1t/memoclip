@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores'
+	import { navigating, page } from '$app/stores'
 	import { createEventDispatcher } from 'svelte'
 	import type { Memo } from '$lib/db_types'
 	import MemoCard from '$lib/components/MemoCard.svelte'
@@ -32,12 +32,14 @@
 	}
 
 	let scroll_pos: number
+	let animate: boolean = true && !$navigating
 
 	export function capture() {
 		return scroll_pos
 	}
 
 	export function restore(scroll_pos: number) {
+		animate = false
 		restorePos(scroll_pos)
 	}
 
@@ -71,15 +73,18 @@
 
 <slot name="header" />
 
-<div class="flex flex-col md:flex-row md:flex-wrap gap-5 justify-center items-center md:px-2">
+<div
+	id="memo-list"
+	class="flex flex-col md:flex-row md:flex-wrap gap-5 justify-center items-center md:px-2"
+>
 	{#each memos as memo (memo.id)}
-		<MemoCard {memo} />
+		<MemoCard {memo} {animate} />
 	{:else}
 		<slot name="empy"><p class="text-center">No memos yet :c</p></slot>
 	{/each}
 	<InfiniteScroll
 		window={true}
-		threshold={300}
+		threshold={400}
 		{hasMore}
 		on:loadMore={() => {
 			fetchMemos()

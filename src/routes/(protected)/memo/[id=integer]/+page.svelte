@@ -8,6 +8,7 @@
 	import { toast_opt } from '$lib/utils'
 	import { state, update_memo } from '$lib/memo_state.js'
 	import logo from '$lib/assets/logo.png'
+	import { fly } from 'svelte/transition'
 
 	export let data: PageData
 
@@ -57,6 +58,7 @@
 </svelte:head>
 
 <div
+	in:fly={{ y: 100, duration: 300, delay: 50 }}
 	class="w-full max-w-4xl border-2 bg-base-100 text-base-content border-secondary shadow-md rounded-lg p-5 mx-auto"
 >
 	<div class="flex flex-col lg:flex-row">

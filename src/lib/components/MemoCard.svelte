@@ -8,9 +8,12 @@
 	import { afterUpdate } from 'svelte'
 	import { state, update_memo } from '$lib/memo_state'
 	import logo from '$lib/assets/logo.png'
-	import { fly } from 'svelte/transition'
+	import { inview } from 'svelte-inview'
 
 	export let memo: Memo
+
+	export let animate: boolean
+	let isInView: boolean
 
 	let tags_len = 0
 	let tags: string[]
@@ -64,103 +67,113 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
-	in:fly={{ y: 50, duration: 300, delay: 50 }}
-	class="memo group card indicator bg-base-100 rounded-lg w-[22rem] h-[560px] border-2 border-secondary not-prose my-2"
+	use:inview={{ unobserveOnEnter: true, rootMargin: '-6%' }}
+	on:inview_change={({ detail }) => {
+		isInView = detail.inView && animate
+	}}
 >
-	{#if created > five_hours}
-		<div class="indicator-item indicator-center badge badge-lg border-2 border-secondary p-1 py-3">
-			<Flame size="18" color="#f87272" />
-		</div>
-	{/if}
-	<div class="px-5 pt-5">
-		<a
-			class="mb-1 link link-hover link-info inline-flex justify-start items-center"
-			href="/profile/{memo.profile_username}"
-		>
-			<AtSign size="15" />
-			<span class="text-base font-bold ml-0.5">{memo.profile_username}</span>
-		</a>
-		{#if memo.image_url}
-			<img
-				loading="lazy"
-				class="rounded-lg w-full border-2 border-primary h-[170px]"
-				src={memo.image_url}
-				alt={memo.title}
-				width="340"
-				height="170"
-			/>
-		{:else}
+	<div
+		class:play-slide-in={isInView}
+		class:slide-in-bottom={animate}
+		class="memo group card indicator bg-base-100 rounded-lg w-[22rem] h-[560px] border-2 border-secondary not-prose my-2"
+	>
+		{#if created > five_hours}
 			<div
-				class="artboard-demo artboard-horizontal w-full h-[170px] bg-base-200/25 border-2 border-primary rounded-lg"
+				class="indicator-item indicator-center badge badge-lg border-2 border-secondary p-1 py-3"
 			>
-				<img src={logo} alt="MemoClip Logo" width="48" height="48" />
+				<Flame size="18" color="#f87272" />
 			</div>
 		{/if}
-	</div>
-
-	<div class="card-body text-base-content p-5">
-		<a
-			href="/memo/{memo.id}"
-			class="card-title h-full max-h-[56px] line-clamp-2 cursor-pointer select-text hover:text-secondary"
-		>
-			{memo.title}
-		</a>
-		<p class="text-md h-full max-h-[95px] select-text line-clamp-4 my-1">
-			{memo.description}
-		</p>
-		<div class="my-1 h-full max-h-12">
-			{#if tags_len > 0}
-				{#each tags as tag}
-					<a
-						href="/tags/{tag}"
-						class="font-bold text-base badge badge-secondary badge-outline hover:text-accent-focus mr-1"
-					>
-						#{tag}
-					</a>
-				{/each}
-				{#if tags_len > 2}
-					<span class="text-secondary ml-0.5 self-end">...</span>
-				{/if}
+		<div class="px-5 pt-5">
+			<a
+				class="mb-1 link link-hover link-info inline-flex justify-start items-center"
+				href="/profile/{memo.profile_username}"
+			>
+				<AtSign size="15" />
+				<span class="text-base font-bold ml-0.5">{memo.profile_username}</span>
+			</a>
+			{#if memo.image_url}
+				<img
+					loading="lazy"
+					class="rounded-lg w-full border-2 border-primary h-[170px]"
+					src={memo.image_url}
+					alt={memo.title}
+					width="340"
+					height="170"
+				/>
+			{:else}
+				<div
+					class="artboard-demo artboard-horizontal w-full h-[170px] bg-base-200/25 border-2 border-primary rounded-lg"
+				>
+					<img src={logo} alt="MemoClip Logo" width="48" height="48" />
+				</div>
 			{/if}
 		</div>
 
-		<div class="divider my-0.5" />
-		<div class="card-actions flex justify-start items-center">
+		<div class="card-body text-base-content p-5">
 			<a
-				class="btn btn-sm md:btn-md btn-outline btn-accent"
-				href={memo.link}
-				aria-label="Link to {memo.title} post"
-				target="_blank"
+				href="/memo/{memo.id}"
+				class="card-title h-full max-h-[56px] line-clamp-2 cursor-pointer select-text hover:text-secondary"
 			>
-				<ExternalLink size="18" />
+				{memo.title}
 			</a>
+			<p class="text-md h-full max-h-[95px] select-text line-clamp-4">
+				{memo.description}
+			</p>
+			<div class="my-1 h-full max-h-12">
+				{#if tags_len > 0}
+					{#each tags as tag}
+						<a
+							href="/tags/{tag}"
+							class="font-bold text-base badge badge-secondary badge-outline hover:text-accent-focus mr-1"
+						>
+							#{tag}
+						</a>
+					{/each}
+					{#if tags_len > 2}
+						<span class="text-secondary ml-0.5 self-end">...</span>
+					{/if}
+				{/if}
+			</div>
 
-			<div class="ml-auto inline-flex items-center">
-				<div
-					class="px-2 font-bold border-l-[1px] border-y-[1px] border-success rounded-s-lg inline-flex justify-around items-center"
+			<div class="divider my-0.5" />
+			<div class="card-actions flex justify-start items-center">
+				<a
+					class="btn btn-sm md:btn-md btn-outline btn-accent"
+					href={memo.link}
+					aria-label="Link to {memo.title} post"
+					target="_blank"
 				>
-					<Boxes size="24" />
-					<span class="pl-1">{pins}</span>
-				</div>
+					<ExternalLink size="18" />
+				</a>
 
-				<form action="/?/toggleFav" method="post" use:enhance={toggleFav}>
-					<input type="hidden" name="id" value={memo.id} />
-					<button
-						aria-label={is_favorite ? 'pinned' : 'unpinned'}
-						type="submit"
-						name="pinned"
-						value={is_favorite ? 'false' : 'true'}
-						class="btn btn-sm md:btn-md btn-outline btn-success text-center rounded-s-none md:rounded-lg"
+				<div class="ml-auto inline-flex items-center">
+					<div
+						class="px-2 font-bold border-l-[1px] border-y-[1px] border-success rounded-s-lg inline-flex justify-around items-center"
 					>
-						{#if loading}
-							<span class="loading loading-spinner w-[18px]" />
-						{:else if is_favorite}
-							<Check size="18" />
-						{:else}
-							<Plus size="18" />
-						{/if}
-					</button>
-				</form>
+						<Boxes size="24" />
+						<span class="pl-1">{pins}</span>
+					</div>
+
+					<form action="/?/toggleFav" method="post" use:enhance={toggleFav}>
+						<input type="hidden" name="id" value={memo.id} />
+						<button
+							aria-label={is_favorite ? 'pinned' : 'unpinned'}
+							type="submit"
+							name="pinned"
+							value={is_favorite ? 'false' : 'true'}
+							class="btn btn-sm md:btn-md btn-outline btn-success text-center rounded-s-none md:rounded-lg"
+						>
+							{#if loading}
+								<span class="loading loading-spinner w-[18px]" />
+							{:else if is_favorite}
+								<Check size="18" />
+							{:else}
+								<Plus size="18" />
+							{/if}
+						</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -172,5 +185,28 @@
 	}
 	.memo:hover {
 		transform: scale(1.01);
+	}
+	.slide-in-bottom {
+		animation: slide-in-bottom 0.3s cubic-bezier(0.075, 0.82, 0.165, 1) both;
+		animation-play-state: paused;
+	}
+	.play-slide-in {
+		animation-play-state: running;
+	}
+	@keyframes slide-in-bottom {
+		0% {
+			-webkit-transform: translateY(700px) scaleY(1.2) scaleX(0.8);
+			transform: translateY(700px) scaleY(1.2) scaleX(0.8);
+			-webkit-filter: blur(8px);
+			filter: blur(8px);
+			opacity: 0;
+		}
+		100% {
+			-webkit-transform: translateY(0) scaleY(1) scaleX(1);
+			transform: translateY(0) scaleY(1) scaleX(1);
+			-webkit-filter: blur(0px);
+			filter: blur(0px);
+			opacity: 1;
+		}
 	}
 </style>

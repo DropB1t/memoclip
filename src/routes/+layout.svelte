@@ -1,8 +1,6 @@
 <script lang="ts">
 	import '../app.postcss'
-	import '@fontsource/zen-kaku-gothic-new/400.css'
-	import '@fontsource/zen-kaku-gothic-new/500.css'
-	import '@fontsource/zen-kaku-gothic-new/700.css'
+	import '@fontsource/zen-kaku-gothic-new'
 
 	import type { LayoutData } from './$types'
 
