@@ -70,7 +70,7 @@
 	>
 		<div slot="header" class="my-5 mt-12 px-2 text-start md:text-center">
 			<h1 class="text-2xl">Dashboard</h1>
-			<h3 class="text-md">All memos from your followed topics are here</h3>
+			<h2 class="text-md">All memos from your followed topics are here</h2>
 		</div>
 	</MemoList>
 {/if}
